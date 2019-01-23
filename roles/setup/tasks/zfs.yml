@@ -1,0 +1,30 @@
+---
+- name: install zfs
+  apt:
+    name: zfsutils-linux
+    state: present
+  become: yes
+
+- name: check if pool exists
+  shell: zpool status {{ zfs_pool }}
+  register: ifexists
+
+- name: import zpool
+  shell: /sbin/zpool import -fm {{ zfs_pool }}
+  become: yes
+  when: ifexists.stdout is search("/cannot/")
+
+- name: add cache
+  shell: zpool add -f {{ zfs_pool }} cache {{ zfs_cache }}
+  become: yes
+  when: ifexists.stdout is search("/cannot/")
+
+- name: add log
+  shell: zpool add -f {{ zfs_pool }} log {{ zfs_log }}
+  become: yes
+  when: ifexists.stdout is search("/cannot/")
+
+- shell: echo 'zpool remove pool <failed_device>'
+  register: myecho
+
+- debug: msg="{{ myecho.stdout }}"

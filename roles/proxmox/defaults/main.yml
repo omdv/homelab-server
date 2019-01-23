@@ -1,0 +1,10 @@
+---
+lxc_template: /pool/template/cache/debian-9.0-standard_9.5-1_amd64.tar.gz
+lxc_storage: zfs-containers
+lxc_size: 4
+lxc_subnet: 192.168.0.
+lxc_gateway: 192.168.0.1
+lxc_cpus: 1
+lxc_memory: 512
+lxc_swap: 512
+ssh_config: /etc/ssh/sshd_config

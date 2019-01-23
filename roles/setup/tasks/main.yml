@@ -1,0 +1,12 @@
+---
+- import_tasks: zfs.yml
+  tags:
+    - zfs
+
+- import_tasks: lxd.yml
+  tags:
+    - lxd
+
+- import_tasks: misc.yml
+  tags:
+    - misc

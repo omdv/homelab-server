@@ -1,0 +1,11 @@
+---
+- name: setup ubuntu server
+  hosts: server
+  roles:
+    - setup
+    # - { role: geerlingguy.postfix, become: yes }
+  vars:
+    - user: om
+      zfs_cache: /dev/sda4
+      zfs_log: /dev/sda5
+      zfs_pool: pool

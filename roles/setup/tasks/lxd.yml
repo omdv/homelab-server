@@ -1,0 +1,23 @@
+---
+- name: install snapd
+  apt:
+    name: snapd
+  become: yes
+
+- name: check if user is in lxd group
+  shell: groups
+  register: groups
+
+- name: add user to lxd group
+  shell: groupadd --system lxd && usermod --append --groups lxd {{ user }}
+  become: yes
+  when: ifexists.stdout is not search("/lxd/")
+
+- name: install lxd
+  shell: snap install lxd
+  become: yes
+
+- name: initialize lxd
+  shell: lxd init --auto --storage-backend=zfs --storage-pool={{ zfs_pool }}/lxd
+  become: yes
+  ignore_errors: yes
