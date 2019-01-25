@@ -14,8 +14,8 @@
   roles:
     - lxd
 
-- hosts: containers
-  tasks:
-    - name: Install vim
-      apt:
-        name: vim
+# - hosts: containers
+#   tasks:
+#     - name: Install vim
+#       apt:
+#         name: vim

@@ -2,3 +2,7 @@
 - import_tasks: create.yml
   tags:
     - create
+
+- import_tasks: delete.yml
+  tags:
+    - delete

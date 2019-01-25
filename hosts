@@ -3,7 +3,7 @@
 
 [containers]
 192.168.0.101 name=c1
-192.168.0.102 name=c2
+192.168.0.103 name=c3
 
 [server:vars]
 ansible_user=om

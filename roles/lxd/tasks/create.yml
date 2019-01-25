@@ -46,7 +46,7 @@
 - name: create started containers
   loop: "{{ groups['containers'] }}"
   shell: /snap/bin/lxc launch ubuntu:18.04 {{ hostvars[item].name }} -p {{ hostvars[item].name }}
-  when: item not in existing.stdout
+  when: hostvars[item].name not in existing.stdout
 
 - pause:
     seconds: 5
