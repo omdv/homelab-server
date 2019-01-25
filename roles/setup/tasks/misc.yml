@@ -1,18 +1,8 @@
 ---
-- name: install various packages
+- name: Install misc apt packages
   apt:
     name: "{{ packages }}"
-    state: present
   vars:
     packages:
-    - mailutils
+    - vim
   become: yes
-
-- name: install canonical livepatch
-  shell: snap install canonical-livepatch
-  become: yes
-
-- name: activate canonical patches
-  shell: canonical-livepatch enable {{ lookup('env','UBUNTU_CANONICAL') | quote }}
-  become: yes
-  ignore_errors: yes

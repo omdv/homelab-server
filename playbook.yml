@@ -1,0 +1,21 @@
+---
+# - name: -- SETUP --
+#   hosts: server
+#   roles:
+#     - setup
+#   vars:
+#     - user: om
+#       zfs_cache: /dev/sda4
+#       zfs_log: /dev/sda5
+#       zfs_pool: pool
+
+- name: -- CONTAINERS --
+  hosts: server
+  roles:
+    - lxd
+
+- hosts: containers
+  tasks:
+    - name: Install vim
+      apt:
+        name: vim

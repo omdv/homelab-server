@@ -1,0 +1,7 @@
+network:
+  version: 2
+  ethernets:
+    eth0:
+    	addresses: [{{ ip_container }}/24]
+    	gateway4: {{ ip_gateway }}
+    	dhcp4: no

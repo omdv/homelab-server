@@ -7,6 +7,10 @@
   tags:
     - lxd
 
+- import_tasks: canonical.yml
+  tags:
+    - canonical
+
 - import_tasks: misc.yml
   tags:
-    - misc
+    - misc:apt

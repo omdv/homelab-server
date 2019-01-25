@@ -1,2 +1,15 @@
 [server]
-192.168.0.24 ansible_user=om ansible_python_interpreter=/usr/bin/python3
+192.168.0.24
+
+[containers]
+192.168.0.101 name=c1
+192.168.0.102 name=c2
+
+[server:vars]
+ansible_user=om
+ansible_python_interpreter=/usr/bin/python3
+
+[containers:vars]
+ansible_user=ubuntu
+ansible_sudo_pass=''
+ansible_python_interpreter=/usr/bin/python3
