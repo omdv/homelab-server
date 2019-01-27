@@ -28,3 +28,12 @@
   register: myecho
 
 - debug: msg="{{ myecho.stdout }}"
+
+- name: configure zed
+  template:
+    src: zed.j2
+    dest: /etc/zfs/zed.d/zed.rc
+    owner: root
+    group: root
+    mode: "u=rw,g=,o="
+  become: yes

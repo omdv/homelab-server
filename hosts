@@ -1,9 +1,11 @@
 [server]
 192.168.0.24
 
-[containers]
+[email]
 192.168.0.101 name=c1
-192.168.0.103 name=c3
+
+[containers:children]
+email
 
 [server:vars]
 ansible_user=om

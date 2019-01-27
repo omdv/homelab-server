@@ -1,0 +1,17 @@
+---
+- name: install smartmontools
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - smartmontools
+  become: yes
+
+- name: configure smartmontools
+  template:
+    src: smartd.j2
+    dest: /etc/smartd.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  become: yes

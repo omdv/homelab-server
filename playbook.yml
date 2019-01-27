@@ -1,18 +1,19 @@
 ---
-# - name: -- SETUP --
-#   hosts: server
-#   roles:
-#     - setup
-#   vars:
-#     - user: om
-#       zfs_cache: /dev/sda4
-#       zfs_log: /dev/sda5
-#       zfs_pool: pool
-
-- name: -- CONTAINERS --
+- name: -- SERVER SETUP --
   hosts: server
   roles:
-    - lxd
+    - setup-server
+  vars:
+    - user: om
+      zfs_cache: /dev/sda4
+      zfs_log: /dev/sda5
+      zfs_pool: pool
+
+
+- name: -- LXD SETUP--
+  hosts: server
+  roles:
+    - setup-lxd
 
 # - hosts: containers
 #   tasks:

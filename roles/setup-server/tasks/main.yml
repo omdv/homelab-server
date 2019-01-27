@@ -11,6 +11,14 @@
   tags:
     - canonical
 
+- import_tasks: email.yml
+  tags:
+    - email
+
+- import_tasks: monitoring.yml
+  tags:
+    - monitoring
+
 - import_tasks: misc.yml
   tags:
     - misc:apt

@@ -32,7 +32,7 @@
   become: yes
   when: ansible_default_ipv4.interface != "br0"
 
-- name: Reboot and wait
+- name: reboot and wait
   reboot:
     reboot_timeout: 30
   become: yes
