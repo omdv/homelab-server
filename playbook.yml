@@ -1,19 +1,40 @@
 ---
-- name: -- SERVER SETUP --
+- name: -- HOST SETUP --
   hosts: server
   roles:
-    - setup-server
+    - manage-host
   vars:
     - user: om
       zfs_cache: /dev/sda4
       zfs_log: /dev/sda5
       zfs_pool: pool
 
-
-- name: -- LXD SETUP--
+- name: -- DOCKER SETUP--
   hosts: server
   roles:
-    - setup-lxd
+    - manage-docker
+  vars:
+    - docker_volumes: /pool/docker
+
+- name: generate docker certs
+  hosts: server
+  gather_facts: no
+  become: yes
+  roles:
+    - role: alexinthesky.secure-docker-daemon
+  vars:
+    - dds_host: 0.0.0.0
+    - dds_server_cert_path: /home/om/.docker
+    - dds_client_cert_path: /home/om/.docker
+    - dds_restart_docker: yes
+  tags:
+    - docker
+    - certificates
+
+# - name: -- LXD SETUP--
+#   hosts: server
+#   roles:
+#     - setup-lxd
 
 # - hosts: containers
 #   tasks:

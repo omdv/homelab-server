@@ -19,6 +19,10 @@
   tags:
     - monitoring
 
+- import_tasks: docker.yml
+  tags:
+    - docker
+
 - import_tasks: misc.yml
   tags:
     - misc:apt

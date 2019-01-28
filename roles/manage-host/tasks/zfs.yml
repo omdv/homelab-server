@@ -37,3 +37,36 @@
     group: root
     mode: "u=rw,g=,o="
   become: yes
+
+- name: create scrub service
+  template:
+    src: systemd-service.j2
+    dest: /etc/systemd/system/zpool-scrub.service
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  become: yes
+  vars:
+    - service_description: zpool scrub service
+    - service_command: /sbin/zpool scrub pool
+    - service_user: root
+    - service_group: root
+
+- name: create scrub timer
+  template:
+    src: systemd-timer.j2
+    dest: /etc/systemd/system/zpool-scrub.timer
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  become: yes
+  vars:
+    - timer_description: zpool scrub timer
+    - timer_oncalendar: Tue *-*-* 09:00:00
+    - service_name: zpool-scrub
+
+- name: enable scrub service
+  systemd:
+    name: zpool-scrub
+    enabled: yes
+  become: yes
