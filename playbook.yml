@@ -3,33 +3,63 @@
   hosts: server
   roles:
     - manage-host
+    # - secure-docker-daemon
+  post_tasks:
+    # - name: use fetch to get docker .pem files
+    #   fetch:
+    #     src: "{{ item }}"
+    #     dest: ~/.docker/
+    #     flat: yes
+    #   with_items:
+    #     - "{{ dds_client_cert_path }}/ca.pem"
+    #     - "{{ dds_client_cert_path }}/cert.pem"
+    #     - "{{ dds_client_cert_path }}/key.pem"
+    # - name: transfer dockerd conf file
+    #   template:
+    #     src: daemon.json.j2
+    #     dest: /etc/docker/daemon.json
+    #     owner: root
+    #     group: root
+    #     mode: 0755
+    - name: restart docker service
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: docker
   vars:
     - user: om
-      zfs_cache: /dev/sda4
-      zfs_log: /dev/sda5
-      zfs_pool: pool
-
-- name: -- DOCKER SETUP--
-  hosts: server
-  roles:
-    - manage-docker
-  vars:
-    - docker_volumes: /pool/docker
-
-- name: generate docker certs
-  hosts: server
-  gather_facts: no
-  become: yes
-  roles:
-    - role: alexinthesky.secure-docker-daemon
-  vars:
-    - dds_host: 0.0.0.0
-    - dds_server_cert_path: /home/om/.docker
+    - zfs_cache: /dev/sda4
+    - zfs_log: /dev/sda5
+    - zfs_pool: pool
+    - dds_host: 192.168.0.24
+    - dds_server_cert_path: /etc/docker
     - dds_client_cert_path: /home/om/.docker
     - dds_restart_docker: yes
-  tags:
-    - docker
-    - certificates
+  become: yes
+
+# - name: -- DOCKER SETUP--
+#   hosts: server
+#   roles:
+#     - manage-docker
+#   vars:
+#     - docker_volumes: /pool/docker
+#   become: yes
+
+
+# - name: generate docker certs
+#   hosts: server
+#   gather_facts: no
+#   become: yes
+#   roles:
+#     - role: alexinthesky.secure-docker-daemon
+#   vars:
+#     - dds_host: 0.0.0.0
+#     - dds_server_cert_path: /etc/docker
+#     - dds_client_cert_path: /home/om/.docker
+#     - dds_restart_docker: yes
+#   tags:
+#     - docker
+#     - certificates
 
 # - name: -- LXD SETUP--
 #   hosts: server

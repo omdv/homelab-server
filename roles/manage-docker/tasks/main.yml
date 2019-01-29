@@ -1,5 +1,1 @@
 ---
-- import_tasks: rancher.yml
-  tags:
-    - docker
-    - rancher

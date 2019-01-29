@@ -1,27 +1,19 @@
 ---
-- name: install zfs
+- name: install and configure zfs pool
   apt:
     name: zfsutils-linux
     state: present
-  become: yes
 
-- name: check if pool exists
-  shell: zpool status {{ zfs_pool }}
+- shell: zpool status {{ zfs_pool }}
   register: ifexists
 
-- name: import zpool
-  shell: /sbin/zpool import -fm {{ zfs_pool }}
-  become: yes
+- shell: /sbin/zpool import -fm {{ zfs_pool }}
   when: ifexists.stdout is search("/cannot/")
 
-- name: add cache
-  shell: zpool add -f {{ zfs_pool }} cache {{ zfs_cache }}
-  become: yes
+- shell: zpool add -f {{ zfs_pool }} cache {{ zfs_cache }}
   when: ifexists.stdout is search("/cannot/")
 
-- name: add log
-  shell: zpool add -f {{ zfs_pool }} log {{ zfs_log }}
-  become: yes
+- shell: zpool add -f {{ zfs_pool }} log {{ zfs_log }}
   when: ifexists.stdout is search("/cannot/")
 
 - shell: echo 'zpool remove pool <failed_device>'
@@ -29,44 +21,37 @@
 
 - debug: msg="{{ myecho.stdout }}"
 
-- name: configure zed
+- name: configure zed and bi-weekly scrub
   template:
     src: zed.j2
     dest: /etc/zfs/zed.d/zed.rc
     owner: root
     group: root
     mode: "u=rw,g=,o="
-  become: yes
 
-- name: create scrub service
-  template:
+- template:
     src: systemd-service.j2
     dest: /etc/systemd/system/zpool-scrub.service
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
-  become: yes
   vars:
     - service_description: zpool scrub service
     - service_command: /sbin/zpool scrub pool
     - service_user: root
     - service_group: root
 
-- name: create scrub timer
-  template:
+- template:
     src: systemd-timer.j2
     dest: /etc/systemd/system/zpool-scrub.timer
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
-  become: yes
   vars:
     - timer_description: zpool scrub timer
     - timer_oncalendar: Tue *-*-* 09:00:00
     - service_name: zpool-scrub
 
-- name: enable scrub service
-  systemd:
+- systemd:
     name: zpool-scrub
     enabled: yes
-  become: yes

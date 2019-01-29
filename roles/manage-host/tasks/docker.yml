@@ -9,7 +9,6 @@
     - curl
     - software-properties-common
     - python3-pip
-  become: yes
 
 - name: install docker pip
   shell: /usr/bin/pip3 install docker
@@ -18,29 +17,24 @@
   group:
     name: docker
     state: present
-  become: yes
 
 - name: add user to docker group
   user: name={{ user }}
         groups=docker
         append=yes
-  become: yes
 
 - name: get certificate
   shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-  become: yes
   args:
     warn: false
 
 - name: add repository
   shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-  become: yes
 
 - name: install docker package
   apt:
     name: docker-ce
     update_cache: yes
-  become: yes
 
 - name: install docker-compose
   get_url:
@@ -50,41 +44,36 @@
     group: root
     mode: 0755
     force: yes
-  become: yes
   vars:
     version: 1.23.2
 
-- name: create drop-in directory
-  file:
-    path: /etc/systemd/system/docker.service.d
-    state: directory
-    mode: 0755
-  become: yes
+# - name: create drop-in directory
+#   file:
+#     path: /etc/systemd/system/docker.service.d
+#     state: directory
+#     mode: 0755
 
-- name: transfer file with drop-in settings
-  copy:
-    src: remote_api.conf
-    dest: /etc/systemd/system/docker.service.d/remote_api.conf
-    owner: root
-    group: root
-    mode: 0755
-  become: yes
+# - name: transfer file with drop-in settings
+#   copy:
+#     src: remote_api.conf
+#     dest: /etc/systemd/system/docker.service.d/remote_api.conf
+#     owner: root
+#     group: root
+#     mode: 0755
 
-- name: transfer daemon conf file
-  copy:
-    src: daemon.json
-    dest: /etc/docker/daemon.json
-    owner: root
-    group: root
-    mode: 0755
-  become: yes
+# - name: transfer daemon conf file
+#   template:
+#     src: daemon.json.j2
+#     dest: /etc/docker/daemon.json
+#     owner: root
+#     group: root
+#     mode: 0755
 
-- name: restart service
-  systemd:
-    state: restarted
-    daemon_reload: yes
-    name: docker
-  become: yes
+# - name: restart service
+#   systemd:
+#     state: restarted
+#     daemon_reload: yes
+#     name: docker
 
 # - name: docker login
 #   shell: docker login -u {{ lookup('env','DOCKER_USER') }} -p {{ lookup('env','DOCKER_PASS') }}

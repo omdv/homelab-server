@@ -1,9 +1,6 @@
 ---
-- name: install canonical livepatch
+- name: install and activate canonical livepatch
   shell: snap install canonical-livepatch
-  become: yes
 
-- name: activate canonical patches
-  shell: canonical-livepatch enable {{ lookup('env','UBUNTU_CANONICAL') | quote }}
-  become: yes
+- shell: canonical-livepatch enable {{ lookup('env','UBUNTU_CANONICAL') | quote }}
   ignore_errors: yes

@@ -1,47 +1,41 @@
 ---
-- name: install snapd
+- name: install lxd and create group and user
   apt:
     name: "{{ packages }}"
   vars:
     packages:
     - snapd
     - bridge-utils
-  become: yes
 
-- name: add user to lxd group
-  shell: groupadd --system lxd && usermod --append --groups lxd {{ user }}
-  become: yes
-  ignore_errors: yes
+- group:
+    name: lxd
+    state: present
 
-- name: install lxd
-  shell: snap install lxd
-  become: yes
+- user: name={{ user }}
+        groups=lxd
+        append=yes
 
-- name: backup current interfaces
+- shell: snap install lxd
+
+- name: configure lxd public ip interfaces
   shell: cp /etc/network/interfaces /etc/network/interfaces.bak
-  become: yes
   when: ansible_default_ipv4.interface != "br0"
 
-- name: create a new interface
-  template:
+- template:
     src: interfaces.j2
     dest: /etc/network/interfaces
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
-  become: yes
   when: ansible_default_ipv4.interface != "br0"
 
-- name: reboot and wait
-  reboot:
+- reboot:
     reboot_timeout: 30
-  become: yes
   when: ansible_default_ipv4.interface != "br0"
 
 - name: initialize lxd
   shell: lxd init --auto --storage-backend=zfs --storage-pool={{ zfs_pool }}/lxd
-  become: yes
   ignore_errors: yes
 
-- name: prepare for remote control
+- name: configure lxd remote control
   shell: /snap/bin/lxc config set core.https_address [::]:8443 && /snap/bin/lxc config set core.trust_password replace-this-with-a-secure-password

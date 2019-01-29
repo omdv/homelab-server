@@ -1,5 +1,5 @@
 ---
-- name: install email
+- name: install and configure email
   apt:
     name: "{{ packages }}"
   vars:
@@ -8,13 +8,10 @@
     - msmtp
     - msmtp-mta 
     - s-nail
-  become: yes
 
-- name: configure email
-  template:
+- template:
     src: msmtprc.j2
     dest: /etc/msmtprc
     owner: root
     group: root
     mode: "u=rw,g=,o="
-  become: yes
