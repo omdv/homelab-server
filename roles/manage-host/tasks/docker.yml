@@ -47,33 +47,31 @@
   vars:
     version: 1.23.2
 
-# - name: create drop-in directory
-#   file:
-#     path: /etc/systemd/system/docker.service.d
-#     state: directory
-#     mode: 0755
+- name: enable passwordless sudo while deploying
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^om'
+    line: 'om ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
 
-# - name: transfer file with drop-in settings
-#   copy:
-#     src: remote_api.conf
-#     dest: /etc/systemd/system/docker.service.d/remote_api.conf
-#     owner: root
-#     group: root
-#     mode: 0755
+- name: delete old docker machine
+  command: /usr/local/bin/docker-machine rm -f {{ docker_machine }}
+  delegate_to: 127.0.0.1
+  become: no
 
-# - name: transfer daemon conf file
-#   template:
-#     src: daemon.json.j2
-#     dest: /etc/docker/daemon.json
-#     owner: root
-#     group: root
-#     mode: 0755
+- name: create new docker machine
+  command: /usr/local/bin/docker-machine create --driver generic \
+    --generic-ip-address={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }} \
+    --generic-ssh-key ~/.ssh/id_rsa \
+    --generic-ssh-user={{ user }} {{ docker_machine }}
+  delegate_to: 127.0.0.1
+  become: no
 
-# - name: restart service
-#   systemd:
-#     state: restarted
-#     daemon_reload: yes
-#     name: docker
-
-# - name: docker login
-#   shell: docker login -u {{ lookup('env','DOCKER_USER') }} -p {{ lookup('env','DOCKER_PASS') }}
+- name: disable passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: absent
+    regexp: '^om'
+    line: 'om ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'

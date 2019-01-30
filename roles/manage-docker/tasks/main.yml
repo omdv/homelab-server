@@ -1,1 +1,10 @@
 ---
+- import_tasks: traefik.yml
+  tags:
+    - traefik
+    - docker
+
+- import_tasks: grafana.yml
+  tags:
+    - grafana
+    - docker
