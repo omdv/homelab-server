@@ -3,3 +3,7 @@
   file:
     path: "{{ docker_volumes }}/grafana"
     state: directory
+
+- file:
+    path: "{{ docker_volumes }}/grafana/plugins"
+    state: directory

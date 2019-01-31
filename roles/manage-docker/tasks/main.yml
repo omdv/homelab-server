@@ -8,3 +8,8 @@
   tags:
     - grafana
     - docker
+
+- import_tasks: influxdb.yml
+  tags:
+    - influxdb
+    - docker

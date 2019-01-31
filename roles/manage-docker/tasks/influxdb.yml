@@ -1,0 +1,5 @@
+---
+- name: create directory for influxdb
+  file:
+    path: "{{ docker_volumes }}/influxdb"
+    state: directory

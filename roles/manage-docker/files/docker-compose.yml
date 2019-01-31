@@ -2,7 +2,7 @@ version: "3"
 
 services:
   traefik:
-    image: traefik:latest
+    image: traefik:alpine
     container_name: traefik
     restart: always
     networks:
@@ -15,6 +15,17 @@ services:
       - /pool/docker/traefik/traefik.toml:/traefik.toml
       - /pool/docker/traefik/acme.json:/acme.json
 
+  influxdb:
+    image: influxdb:alpine
+    container_name: influxdb
+    restart: always
+    networks:
+      - web
+    ports:
+      - 8086:8086
+    volumes:
+      - /pool/docker/influxdb:/var/lib/influxdb
+
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -25,6 +36,8 @@ services:
       - 3000:3000
     volumes:
       - /pool/docker/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
 
 networks:
   web:

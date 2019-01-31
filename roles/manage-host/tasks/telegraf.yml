@@ -1,0 +1,25 @@
+---
+- name: install telegraf
+  shell: curl -sL https://repos.influxdata.com/influxdb.key | apt-key add -
+  args:
+    warn: false
+
+- shell: echo "deb https://repos.influxdata.com/ubuntu bionic stable" | tee /etc/apt/sources.list.d/influxdb.list
+
+- apt:
+    name: telegraf
+    update_cache: yes 
+
+- file:
+    src: /{{ zfs_pool }}/telegraf/telegraf.conf
+    dest: /etc/telegraf/telegraf.conf
+    owner: root
+    group: root
+    state: link
+    force: yes
+
+- name: start service
+  systemd:
+    state: started
+    enabled: yes
+    name: telegraf
