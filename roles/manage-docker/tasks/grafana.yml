@@ -3,7 +3,14 @@
   file:
     path: "{{ docker_volumes }}/grafana"
     state: directory
+    owner: 472
+    group: 472
+  become: yes
 
 - file:
     path: "{{ docker_volumes }}/grafana/plugins"
     state: directory
+    mode: 0755
+    owner: 472
+    group: 472
+  become: yes

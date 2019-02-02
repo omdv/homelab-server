@@ -1,0 +1,15 @@
+---
+- name: create directory for nginx
+  file:
+    path: "{{ docker_volumes }}/nginx"
+    state: directory
+    owner: "{{ user }}"
+    group: docker
+
+- name: copy static file
+  copy:
+    src: index.html
+    dest: "{{ docker_volumes }}/nginx/index.html"
+    owner: om
+    group: docker
+    force: yes

@@ -1,0 +1,7 @@
+---
+- name: create directory for plex
+  file:
+    path: "{{ docker_volumes }}/plex"
+    state: directory
+    owner: "{{ user }}"
+    group: docker

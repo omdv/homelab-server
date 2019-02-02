@@ -3,3 +3,5 @@
   file:
     path: "{{ docker_volumes }}/influxdb"
     state: directory
+    owner: "{{ user }}"
+    group: docker

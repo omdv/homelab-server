@@ -10,6 +10,14 @@
     name: telegraf
     update_cache: yes 
 
+- name: copy telegraf config
+  copy:
+    src: telegraf.conf
+    dest: /{{ zfs_pool }}/telegraf/telegraf.conf
+    owner: om
+    group: om
+    force: yes
+
 - file:
     src: /{{ zfs_pool }}/telegraf/telegraf.conf
     dest: /etc/telegraf/telegraf.conf
@@ -20,6 +28,6 @@
 
 - name: start service
   systemd:
-    state: started
+    state: restarted
     enabled: yes
     name: telegraf

@@ -13,3 +13,23 @@
   tags:
     - influxdb
     - docker
+
+- import_tasks: plex.yml
+  tags:
+    - plex
+    - docker
+
+- import_tasks: portainer.yml
+  tags:
+    - portainer
+    - docker
+
+- import_tasks: nginx.yml
+  tags:
+    - nginx
+    - docker
+
+- import_tasks: postgres.yml
+  tags:
+    - postgres
+    - docker

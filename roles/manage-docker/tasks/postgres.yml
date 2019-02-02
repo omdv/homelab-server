@@ -1,0 +1,7 @@
+---
+- name: create directory for postgres data
+  file:
+    path: "{{ docker_volumes }}/postgres"
+    state: directory
+    owner: "{{ user }}"
+    group: docker

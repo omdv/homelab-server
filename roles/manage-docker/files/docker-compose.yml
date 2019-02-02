@@ -5,11 +5,16 @@ services:
     image: traefik:alpine
     container_name: traefik
     restart: always
+    command: --api --docker
     networks:
-      - web
+      - proxy
     ports:
       - 80:80
+      - 443:443
       - 8080:8080
+    # labels:
+      # - "traefik.frontend.rule=Host:e2.pe"
+      # - "traefik.port=8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /pool/docker/traefik/traefik.toml:/traefik.toml
@@ -20,7 +25,7 @@ services:
     container_name: influxdb
     restart: always
     networks:
-      - web
+      - internal
     ports:
       - 8086:8086
     volumes:
@@ -31,13 +36,72 @@ services:
     container_name: grafana
     restart: always
     networks:
-      - web
+      - internal
+      - proxy
     ports:
       - 3000:3000
+    # labels:
+    #   - "traefik.frontend.rule=Host:e2.pe/grafana"
+    #   - "traefik.port=3000"
     volumes:
       - /pool/docker/grafana:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
 
+  plex:
+    image: linuxserver/plex:latest
+    container_name: plex
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=America/Chicago
+      - VERSION=latest
+      - PLEX_UID=1000
+      - PLEX_GID=998
+    hostname: e2.pe
+    volumes:
+      - /pool/docker/plex/config:/config
+      - /pool/docker/plex/transcode:/transcode
+      - /pool/media:/data
+
+  watchtower:
+    image: v2tec/watchtower
+    container_name: watchtower
+    command: --cleanup
+    restart: always
+    networks:
+      - internal
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    restart: always
+    networks:
+      - internal
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /pool/portainer:/data
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    networks:
+      - internal
+      - proxy
+    # labels:
+    #   - traefik.backend=nginx
+    #   - traefik.frontend.rule=Host:e2.pe
+    #   - traefik.docker.network=proxy
+    #   - traefik.port=80
+    volumes:
+      - /pool/docker/nginx/:/usr/share/nginx/html:ro
+
 networks:
-  web:
+  proxy:
+    external: true
+  internal:
+    external: false

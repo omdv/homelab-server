@@ -1,0 +1,7 @@
+---
+- name: create directory for portainer
+  file:
+    path: "{{ docker_volumes }}/portainer"
+    state: directory
+    owner: "{{ user }}"
+    group: docker

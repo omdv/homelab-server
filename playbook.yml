@@ -17,6 +17,7 @@
     - manage-docker
   vars:
     - docker_volumes: /pool/docker
+    - user: om
 
 # - name: -- LXD SETUP--
 #   hosts: server

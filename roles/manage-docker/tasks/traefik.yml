@@ -11,8 +11,10 @@
     force: no
     mode: 0600
 
-- name: ensure traefik.toml exists
+- name: copy traefik config
   copy:
-    content: ""
+    src: traefik.toml
     dest: "{{ docker_volumes }}/traefik/traefik.toml"
-    force: no
+    owner: om
+    group: docker
+    force: yes

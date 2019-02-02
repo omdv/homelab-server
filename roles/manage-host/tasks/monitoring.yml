@@ -5,6 +5,8 @@
   vars:
     packages:
     - smartmontools
+    - hddtemp
+    - lm-sensors
 
 - template:
     src: smartd.j2
