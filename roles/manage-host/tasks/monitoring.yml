@@ -1,12 +1,20 @@
 ---
-- name: install and configure smartmontools
-  apt:
+- name: install and configure monitoring tools and agents
+  shell: curl -sL https://repos.influxdata.com/influxdb.key | apt-key add -
+  args:
+    warn: false
+
+- shell: echo "deb https://repos.influxdata.com/ubuntu bionic stable" | tee /etc/apt/sources.list.d/influxdb.list
+
+- apt:
     name: "{{ packages }}"
+    update_cache: yes 
   vars:
     packages:
     - smartmontools
     - hddtemp
     - lm-sensors
+    - telegraf
 
 - template:
     src: smartd.j2
@@ -14,3 +22,29 @@
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
+
+- copy:
+    src: telegraf.yml
+    dest: /{{ zfs_pool }}/telegraf/telegraf.conf
+    owner: om
+    group: om
+    force: yes
+
+- file:
+    src: /{{ zfs_pool }}/telegraf/telegraf.conf
+    dest: /etc/telegraf/telegraf.conf
+    owner: root
+    group: root
+    state: link
+    force: yes
+
+- name: adding telegraf user to docker group
+  user:
+    name: telegraf
+    groups: docker
+    append: yes
+
+- systemd:
+    state: restarted
+    enabled: yes
+    name: telegraf

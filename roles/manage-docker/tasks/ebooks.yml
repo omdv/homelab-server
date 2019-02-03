@@ -1,0 +1,34 @@
+---
+- name: make sure book_volume exists
+  file:
+    path: "{{ book_volume }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0755
+  become: yes
+
+- name: create persistent config dir for ebooks
+  file:
+    path: "{{ config_volume }}/ebooks"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0755
+  become: yes
+
+- name: start ebooks container
+  docker_container:
+    name: ebooks
+    image: linuxserver/ubooquity:latest
+    ports:
+      - 2202:2202
+      - 2203:2203
+    env:
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - "{{ book_volume }}/books:/books"
+      - "{{ book_volume }}/comics:/comics"
+      - "{{ book_volume }}/files:/files"
+      - "{{ config_volume }}/ebooks:/config"

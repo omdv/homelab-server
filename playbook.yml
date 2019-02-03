@@ -9,6 +9,10 @@
     - zfs_log: /dev/sda5
     - zfs_pool: pool
     - docker_machine: remote
+    - psql_db_user: test
+    - psql_db_name: test
+    - psql_db_password: test
+    - database_location: /pool/database/
   become: yes
 
 - name: -- DOCKER SETUP--
@@ -16,7 +20,10 @@
   roles:
     - manage-docker
   vars:
-    - docker_volumes: /pool/docker
+    - config_volume: /pool/config
+    - data_volume: /pool/databases
+    - media_volume: /pool/media
+    - book_volume: /pool/books
     - user: om
 
 # - name: -- LXD SETUP--

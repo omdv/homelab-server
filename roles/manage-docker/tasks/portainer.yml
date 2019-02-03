@@ -5,3 +5,4 @@
     state: directory
     owner: "{{ user }}"
     group: docker
+    mode: 0755

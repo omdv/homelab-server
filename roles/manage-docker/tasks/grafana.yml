@@ -1,16 +1,28 @@
 ---
-- name: create directory for grafana
+- name: create persistent dir for grafana
   file:
-    path: "{{ docker_volumes }}/grafana"
+    path: "{{ config_volume }}/grafana"
     state: directory
     owner: 472
     group: 472
   become: yes
 
 - file:
-    path: "{{ docker_volumes }}/grafana/plugins"
+    path: "{{ config_volume }}/grafana/plugins"
     state: directory
     mode: 0755
     owner: 472
     group: 472
   become: yes
+
+- name: start grafana container
+  docker_container:
+    name: grafana
+    state: started
+    image: grafana/grafana:latest
+    volumes:
+      - "{{ config_volume }}/grafana:/var/lib/grafana"
+    ports:
+      - 3000:3000
+    env:
+      GF_SECURITY_ADMIN_PASSWORD: password

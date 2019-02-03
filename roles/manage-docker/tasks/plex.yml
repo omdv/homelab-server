@@ -1,7 +1,23 @@
 ---
-- name: create directory for plex
+- name: create persistent dir for plex
   file:
-    path: "{{ docker_volumes }}/plex"
+    path: "{{ config_volume }}/plex"
     state: directory
     owner: "{{ user }}"
     group: docker
+    mode: 0755
+
+- name: start plex container
+  docker_container:
+    name: plex
+    image: linuxserver/plex:latest
+    network_mode: host
+    env:
+      TZ: America/Chicago
+      VERSION: latest
+      PLEX_UID: 1000
+      PLEX_GID: 998
+    volumes:
+      - "{{ config_volume }}/plex/config:/config"
+      - "{{ config_volume }}/plex/transcode:/transcode"
+      - "{{ media_volume }}:/data"

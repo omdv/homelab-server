@@ -15,18 +15,20 @@
   tags:
     - email
 
+- import_tasks: databases.yml
+  tags:
+    - databases
+
 - import_tasks: monitoring.yml
   tags:
     - monitoring
+    - telegraf
 
 - import_tasks: docker.yml
   tags:
     - docker
 
-- import_tasks: telegraf.yml
-  tags:
-    - telegraf
-
 - import_tasks: misc.yml
   tags:
     - misc:apt
+

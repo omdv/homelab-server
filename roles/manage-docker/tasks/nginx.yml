@@ -5,6 +5,7 @@
     state: directory
     owner: "{{ user }}"
     group: docker
+    mode: 0755
 
 - name: copy static file
   copy:
