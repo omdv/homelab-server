@@ -14,9 +14,9 @@
     - torrent
     - docker
 
-- import_tasks: ebooks.yml
+- import_tasks: files.yml
   tags:
-    - ebooks
+    - files
     - docker
 
 - import_tasks: traefik.yml
@@ -27,9 +27,4 @@
 - import_tasks: portainer.yml
   tags:
     - portainer
-    - docker
-
-- import_tasks: nginx.yml
-  tags:
-    - nginx
     - docker

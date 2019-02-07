@@ -1,0 +1,71 @@
+version: "3"
+
+services:
+  traefik:
+    image: traefik:alpine
+    container_name: traefik
+    restart: always
+    command: --api --docker
+    networks:
+      - proxy
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    # labels:
+      # - "traefik.frontend.rule=Host:e2.pe"
+      # - "traefik.port=8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /pool/docker/traefik/traefik.toml:/traefik.toml
+      - /pool/docker/traefik/acme.json:/acme.json
+
+  # watchtower:
+  #   image: v2tec/watchtower
+  #   container_name: watchtower
+  #   command: --cleanup
+  #   restart: always
+  #   networks:
+  #     - internal
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+
+  # portainer:
+  #   image: portainer/portainer
+  #   container_name: portainer
+  #   restart: always
+  #   networks:
+  #     - internal
+  #   ports:
+  #     - 9000:9000
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /pool/portainer:/data
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    networks:
+      - internal
+      - proxy
+    labels:
+      - traefik.backend=nginx
+      - traefik.frontend.rule=Host:test.server.local
+      - traefik.docker.network=proxy
+      - traefik.port=80
+    volumes:
+      - /pool/config/nginx/:/usr/share/nginx/html:ro
+
+  # filebrowser:
+  #   volumes:
+  #     - /pool/media:/srv 
+  #   ports:
+  #     - 8000:80
+  #   image: filebrowser/filebrowser
+  #   container_name: filebrowser
+
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false

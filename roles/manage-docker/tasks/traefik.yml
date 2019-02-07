@@ -1,20 +1,18 @@
 ---
-- name: create directory for traefik
-  file:
-    path: "{{ docker_volumes }}/traefik"
-    state: directory
-
-- name: ensure acme.json exists
-  copy:
-    content: ""
-    dest: "{{ docker_volumes }}/traefik/acme.json"
-    force: no
-    mode: 0600
-
-- name: copy traefik config
-  copy:
-    src: traefik.toml
-    dest: "{{ docker_volumes }}/traefik/traefik.toml"
-    owner: om
-    group: docker
-    force: yes
+- name: start traefik container
+  docker_container:
+    name: traefik
+    state: started
+    networks:
+      - name: bridge
+    labels:
+      traefik.docker.network: bridge
+      traefik.port: "8080"
+    ports:
+      - 80:80
+      - 8080:8080
+    image: traefik:latest
+    command: --api --docker --docker.domain=local
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev/null:/traefik.toml

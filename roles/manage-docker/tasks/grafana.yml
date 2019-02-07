@@ -19,10 +19,13 @@
   docker_container:
     name: grafana
     state: started
+    networks:
+      - name: bridge
+    labels:
+      traefik.docker.network: bridge
+      traefik.port: "3000"
     image: grafana/grafana:latest
     volumes:
       - "{{ config_volume }}/grafana:/var/lib/grafana"
-    ports:
-      - 3000:3000
     env:
       GF_SECURITY_ADMIN_PASSWORD: password

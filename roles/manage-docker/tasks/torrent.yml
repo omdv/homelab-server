@@ -4,11 +4,14 @@
     name: torrent
     state: started
     image: haugene/transmission-openvpn:latest
+    networks:
+      - name: bridge
+    labels:
+      traefik.docker.network: bridge
+      traefik.port: "9091"
     volumes:
       - "{{ media_volume }}:/data"
       - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 9091:9091
     capabilities: NET_ADMIN
     devices: /dev/net/tun
     env:
@@ -17,7 +20,7 @@
       OPENVPN_USERNAME: "{{ lookup('env', 'VPN_USER') }}"
       OPENVPN_PASSWORD: "{{ lookup('env', 'VPN_PASSWORD') }}"
       WEBPROXY_ENABLED: false
-      ENABLE_UFW: true
+      ENABLE_UFW: false
       LOCAL_NETWORK: 192.168.0.0/24
       PUID: 1000
       PGID: 1000

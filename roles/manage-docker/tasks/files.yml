@@ -1,0 +1,13 @@
+---
+- name: start files container
+  docker_container:
+    name: files
+    state: started
+    image: filebrowser/filebrowser
+    networks:
+      - name: bridge
+    labels:
+      traefik.docker.network: bridge
+      traefik.port: "80"
+    volumes:
+      - "{{ media_volume }}:/srv"

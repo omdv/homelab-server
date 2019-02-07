@@ -1,8 +1,36 @@
 ---
 - name: create directory for portainer
   file:
-    path: "{{ docker_volumes }}/portainer"
+    path: "{{ config_volume }}/portainer"
     state: directory
     owner: "{{ user }}"
     group: docker
     mode: 0755
+
+- name: start portainer container
+  docker_container:
+    name: portainer
+    state: started
+    restart: yes
+    networks:
+      - name: bridge
+    labels:
+      traefik.docker.network: bridge
+      traefik.port: "9000"
+    image: portainer/portainer:latest
+    volumes:
+      - "{{ config_volume }}/portainer:/data"
+      - /var/run/docker.sock:/var/run/docker.sock
+
+- name: start watchtower container
+  docker_container:
+    name: watchtower
+    state: started
+    restart: yes
+    networks:
+      - name: bridge
+    labels:
+      traefik.enable: "false"
+    image: v2tec/watchtower:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

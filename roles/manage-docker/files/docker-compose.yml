@@ -1,60 +1,41 @@
-version: "3"
+version: '3'
 
 services:
-  traefik:
-    image: traefik:alpine
-    container_name: traefik
-    restart: always
-    command: --api --docker
-    networks:
-      - proxy
+  reverse-proxy:
+    image: traefik # The official Traefik docker image
+    command: --api --docker --docker.domain=server.local --logLevel=DEBUG
     ports:
-      - 80:80
-      - 443:443
-      - 8080:8080
+      - "80:80"     # The HTTP port
+      - "8080:8080" # The Web UI (enabled by --api)
     # labels:
-      # - "traefik.frontend.rule=Host:e2.pe"
+      # - "traefik.frontend.rule=Host:traefik.server.local"
       # - "traefik.port=8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /pool/docker/traefik/traefik.toml:/traefik.toml
-      - /pool/docker/traefik/acme.json:/acme.json
-
-  watchtower:
-    image: v2tec/watchtower
-    container_name: watchtower
-    command: --cleanup
-    restart: always
-    networks:
-      - internal
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
-  portainer:
-    image: portainer/portainer
-    container_name: portainer
-    restart: always
-    networks:
-      - internal
-    ports:
-      - 9000:9000
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /pool/portainer:/data
-
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
     networks:
       - internal
       - proxy
-    # labels:
-    #   - traefik.backend=nginx
-    #   - traefik.frontend.rule=Host:e2.pe
-    #   - traefik.docker.network=proxy
-    #   - traefik.port=80
     volumes:
-      - /pool/docker/nginx/:/usr/share/nginx/html:ro
+      - /var/run/docker.sock:/var/run/docker.sock #So that Traefik can listen to the Docker events
+
+  whoami:
+    image: containous/whoami # A container that exposes an API to show its IP address
+    # networks:
+    #   - internal
+    #   - proxy
+    labels:
+      - "traefik.backend=whoami"
+      - "traefik.frontend.rule=Host:whoami.server.local"
+
+  # nginx:
+  #   image: nginxdemos/hello
+  #   networks:
+  #     - internal
+  #     - proxy
+  #   labels:
+  #     - "traefik.backend=nginx"
+  #     - "traefik.frontend.rule=Host:nginx.server.local"
+  #     - "traefik.docker.network=proxy"
+  #     # - "traefik.port=80"
+
 
 networks:
   proxy:

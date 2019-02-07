@@ -12,6 +12,7 @@
     name: plex
     image: linuxserver/plex:latest
     network_mode: host
+    state: present
     env:
       TZ: America/Chicago
       VERSION: latest
