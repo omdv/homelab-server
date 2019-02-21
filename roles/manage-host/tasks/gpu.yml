@@ -1,0 +1,25 @@
+---
+- name: install kernel headers
+  shell: apt-get install linux-headers-$(uname -r) warn=no
+  become: yes
+
+- name: copy cuda installation file
+  copy:
+    src: cuda-repo-ubuntu1804_10.0.130-1_amd64.deb
+    dest: /var/local/cuda-repo-ubuntu1804_10.0.130-1_amd64.deb
+    owner: root
+    group: root
+  become: yes
+
+- name: prepare for cuda installation
+  shell: dpkg -i /var/local/cuda-repo-ubuntu1804_10.0.130-1_amd64.deb
+  become: yes
+
+- shell: apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+  become: yes
+
+- name: install cuda
+  apt:
+    name: cuda
+    update_cache: yes
+  become: yes

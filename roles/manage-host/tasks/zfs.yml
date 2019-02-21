@@ -21,37 +21,30 @@
 
 - debug: msg="{{ myecho.stdout }}"
 
-- name: configure zed and bi-weekly scrub
+- name: configure zed and weekly scrub
   template:
     src: zed.j2
     dest: /etc/zfs/zed.d/zed.rc
     owner: root
     group: root
-    mode: "u=rw,g=,o="
+    mode: 0600
 
 - template:
-    src: systemd-service.j2
-    dest: /etc/systemd/system/zpool-scrub.service
+    src: zfs.scrub.service.j2
+    dest: /etc/systemd/system/zfs-scrub.service
     owner: root
     group: root
-    mode: "u=rw,g=r,o=r"
-  vars:
-    - service_description: zpool scrub service
-    - service_command: /sbin/zpool scrub pool
-    - service_user: root
-    - service_group: root
+    mode: 0644
 
 - template:
-    src: systemd-timer.j2
-    dest: /etc/systemd/system/zpool-scrub.timer
+    src: zfs.scrub.timer.j2
+    dest: /etc/systemd/system/zfs-scrub.timer
     owner: root
     group: root
-    mode: "u=rw,g=r,o=r"
-  vars:
-    - timer_description: zpool scrub timer
-    - timer_oncalendar: Tue *-*-* 09:00:00
-    - service_name: zpool-scrub
+    mode: 0644
 
 - systemd:
-    name: zpool-scrub
+    name: zfs-scrub.timer
+    daemon_reload: yes
     enabled: yes
+    state: started

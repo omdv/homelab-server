@@ -19,11 +19,14 @@
   docker_container:
     name: grafana
     state: started
+    restart_policy: always
     networks:
       - name: bridge
     labels:
       traefik.docker.network: bridge
       traefik.port: "3000"
+      dockboard.enabled: "yes"
+      dockboard.port: "3000"
     image: grafana/grafana:latest
     volumes:
       - "{{ config_volume }}/grafana:/var/lib/grafana"

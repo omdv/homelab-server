@@ -3,6 +3,7 @@
   docker_container:
     name: traefik
     state: started
+    restart_policy: always
     networks:
       - name: bridge
     labels:

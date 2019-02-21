@@ -21,6 +21,7 @@
   docker_container:
     name: ebooks
     image: linuxserver/ubooquity:latest
+    restart_policy: always
     ports:
       - 2202:2202
       - 2203:2203

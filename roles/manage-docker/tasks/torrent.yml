@@ -4,6 +4,7 @@
     name: torrent
     state: started
     image: haugene/transmission-openvpn:latest
+    restart_policy: always
     networks:
       - name: bridge
     labels:

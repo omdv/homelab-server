@@ -1,0 +1,26 @@
+---
+- name: create persistent dir for seafile
+  file:
+    path: "{{ config_volume }}/seafile"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- name: start seafile container
+  docker_container:
+    name: seafile
+    state: started
+    restart_policy: always
+    networks:
+      - name: bridge
+    labels:
+      traefik.docker.network: bridge
+      traefik.port: "80"
+    image: seafileltd/seafile:latest
+    volumes:
+      - "{{ config_volume }}/seafile:/shared"
+    env:
+      SEAFILE_SERVER_HOSTNAME: seafile.example.com
+      SEAFILE_ADMIN_EMAIL: me@example.com
+      SEAFILE_ADMIN_PASSWORD: a_very_secret_password

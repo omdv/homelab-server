@@ -1,0 +1,52 @@
+---
+- name: ensure backup folder exists
+  file:
+    path: "{{ backup_pool }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+
+- name: install borg
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - borgbackup
+
+- name: create repositories
+  shell: borg init --encryption=repokey-blake2 {{ backup_pool }}/{{ item.dir }}
+  environment:
+    BORG_PASSPHRASE: "{{ item.pass }}"
+  become: yes
+  become_user: "{{ item.user }}"
+  ignore_errors: yes
+  with_items: "{{ backup_repos }}"
+
+- name: transfer local backup script
+  template:
+    src: borg-self-backup.sh.j2
+    dest: "{{ backup_pool }}/borg-self-backup.sh"
+    owner: root
+    group: root
+    mode: 700
+
+- template:
+    src: borg.backup.service.j2
+    dest: /etc/systemd/system/borg-backup.service
+    owner: root
+    group: root
+    mode: 0644
+
+- template:
+    src: borg.backup.timer.j2
+    dest: /etc/systemd/system/borg-backup.timer
+    owner: root
+    group: root
+    mode: 0644
+
+- systemd:
+    name: borg-backup.timer
+    daemon_reload: yes
+    enabled: yes
+    state: started

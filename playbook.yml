@@ -13,6 +13,14 @@
     - psql_db_name: test
     - psql_db_password: test
     - database_location: /pool/database/
+    - backup_pool: /pool/backup
+    - backup_repos:
+      - dir: repo-derp
+        user: om
+        pass: "{{ lookup('env','BORG_PASSPHRASE') }}"
+      - dir: repo-server
+        user: root
+        pass: "{{ lookup('env','HOMELAB_BORG_PASSPHRASE') }}"
   become: yes
 
 - name: -- DOCKER SETUP--

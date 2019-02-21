@@ -28,3 +28,8 @@
   tags:
     - portainer
     - docker
+
+- import_tasks: seafile.yml
+  tags:
+    - seafile
+    - docker

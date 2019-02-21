@@ -4,10 +4,13 @@
     name: files
     state: started
     image: filebrowser/filebrowser
+    restart_policy: always
     networks:
       - name: bridge
     labels:
       traefik.docker.network: bridge
       traefik.port: "80"
+      dockboard.enabled: "yes"
+      dockboard.port: "80"
     volumes:
       - "{{ media_volume }}:/srv"

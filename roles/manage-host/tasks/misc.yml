@@ -5,3 +5,4 @@
   vars:
     packages:
     - vim
+    - ubuntu-drivers-common
