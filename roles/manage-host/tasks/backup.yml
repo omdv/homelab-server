@@ -50,3 +50,44 @@
     daemon_reload: yes
     enabled: yes
     state: started
+
+- name: install rclone
+  shell: curl https://rclone.org/install.sh | bash
+  args:
+    warn: False
+  ignore_errors: yes
+
+- name: configure rclone
+  file:
+    path: /home/{{ user }}/.config/rclone
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0775
+
+- template:
+    src: rclone.conf.j2
+    dest: /home/{{ user }}/.config/rclone/rclone.conf
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0600
+
+- template:
+    src: rclone.b2.service.j2
+    dest: /etc/systemd/system/rclone-b2.service
+    owner: root
+    group: root
+    mode: 0644
+
+- template:
+    src: rclone.b2.timer.j2
+    dest: /etc/systemd/system/rclone-b2.timer
+    owner: root
+    group: root
+    mode: 0644
+
+- systemd:
+    name: rclone-b2.timer
+    daemon_reload: yes
+    enabled: yes
+    state: started

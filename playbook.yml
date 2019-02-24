@@ -21,6 +21,7 @@
       - dir: repo-server
         user: root
         pass: "{{ lookup('env','HOMELAB_BORG_PASSPHRASE') }}"
+    - backup_b2_bucket: om-backup
   become: yes
 
 - name: -- DOCKER SETUP--
