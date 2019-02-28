@@ -1,0 +1,13 @@
+- name: start launch panel container
+  docker_container:
+    name: launchpanel
+    state: started
+    restart: yes
+    restart_policy: always
+    image: omdv/docker-launch-panel:alpine
+    ports:
+      - 80:8081
+    labels:
+      traefik.enable: "false"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

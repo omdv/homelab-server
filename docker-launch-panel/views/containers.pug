@@ -1,0 +1,17 @@
+html
+	head
+		style
+			include main.css
+	body
+		div(class="center")
+			h2 SERVICES
+			table
+				tbody
+					each ct in containers
+						tr
+							td
+								a(href='http://'+ct.ip+':'+ct.port) #{ct.name}
+							td #{ct.image}
+							td #{ct.state}
+							td #{ct.status}
+							td #{ct.port}

@@ -67,9 +67,9 @@
 
 - template:
     src: rclone.conf.j2
-    dest: /home/{{ user }}/.config/rclone/rclone.conf
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    dest: /root/.config/rclone/rclone.conf
+    owner: root
+    group: root
     mode: 0600
 
 - template:

@@ -21,6 +21,6 @@
     volumes:
       - "{{ config_volume }}/seafile:/shared"
     env:
-      SEAFILE_SERVER_HOSTNAME: seafile.example.com
-      SEAFILE_ADMIN_EMAIL: me@example.com
-      SEAFILE_ADMIN_PASSWORD: a_very_secret_password
+      SEAFILE_SERVER_HOSTNAME: seafile.e2.pe
+      SEAFILE_ADMIN_EMAIL: "{{ lookup('env','HOMELAB_SEAFILE_ADMIN') }}"
+      SEAFILE_ADMIN_PASSWORD: "{{ lookup('env','HOMELAB_SEAFILE_ADMIN_PASS') }}"

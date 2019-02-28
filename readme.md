@@ -18,6 +18,8 @@ ansible-playbook playbook.yml  -i hosts --extra-vars "ansible_sudo_pass="$HOMELA
 - telegraf smartctl
 - docker remote api certs
 - automate removal of failed zpool devices
+- automatically add endpoint to portainer during provisioning
 
 ## Manual Steps
 1. Configure backup from laptop to homeserver
+2. Update No-IP to include sub hosts

@@ -5,12 +5,13 @@
     state: started
     image: filebrowser/filebrowser
     restart_policy: always
-    networks:
-      - name: bridge
+    ports:
+      - 9080:80
     labels:
-      traefik.docker.network: bridge
-      traefik.port: "80"
-      dockboard.enabled: "yes"
-      dockboard.port: "80"
+      traefik.enable: "false"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "files"
+      launchpanel.port: "9080"
     volumes:
       - "{{ media_volume }}:/srv"

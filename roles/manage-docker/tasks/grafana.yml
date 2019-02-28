@@ -20,13 +20,14 @@
     name: grafana
     state: started
     restart_policy: always
-    networks:
-      - name: bridge
+    ports:
+      - 3000:3000
     labels:
-      traefik.docker.network: bridge
-      traefik.port: "3000"
-      dockboard.enabled: "yes"
-      dockboard.port: "3000"
+      traefik.enable: "false"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "grafana"
+      launchpanel.port: "3000"
     image: grafana/grafana:latest
     volumes:
       - "{{ config_volume }}/grafana:/var/lib/grafana"

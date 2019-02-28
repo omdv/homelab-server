@@ -9,11 +9,15 @@
     labels:
       traefik.docker.network: bridge
       traefik.port: "8080"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "traefik"
+      launchpanel.port: "8080"
     ports:
-      - 80:80
+      - 8000:80
       - 8080:8080
     image: traefik:latest
-    command: --api --docker --docker.domain=local
+    command: --api --docker --docker.domain=e2.pe
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /dev/null:/traefik.toml

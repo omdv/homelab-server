@@ -1,0 +1,18 @@
+ul {
+  list-style-type: none;
+}
+
+table {
+	margin: 20px;
+}
+
+td {
+	padding: 0 10px 0 10px;
+}
+
+.center {
+  margin: auto;
+  width: 70%;
+  border: 0px;
+  padding: 10px;
+}
