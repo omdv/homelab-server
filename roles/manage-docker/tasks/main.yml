@@ -38,3 +38,8 @@
   tags:
     - launchpanel
     - docker
+
+- import_tasks: nginx.yml
+  tags:
+    - nginx
+    - docker

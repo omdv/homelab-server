@@ -11,12 +11,11 @@
   docker_container:
     name: seafile
     state: started
+    restart: yes
     restart_policy: always
-    networks:
-      - name: bridge
     labels:
-      traefik.docker.network: bridge
       traefik.port: "80"
+      traefik.enable: "true"
     image: seafileltd/seafile:latest
     volumes:
       - "{{ config_volume }}/seafile:/shared"

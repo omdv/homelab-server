@@ -1,16 +1,30 @@
 ---
 - name: create directory for nginx
   file:
-    path: "{{ docker_volumes }}/nginx"
+    path: "{{ config_volume }}/nginx"
     state: directory
     owner: "{{ user }}"
-    group: docker
+    group: "{{ user }}"
     mode: 0755
 
 - name: copy static file
   copy:
     src: index.html
-    dest: "{{ docker_volumes }}/nginx/index.html"
+    dest: "{{ config_volume }}/nginx/index.html"
     owner: om
     group: docker
     force: yes
+
+- name: start nginx container
+  docker_container:
+    name: nginx
+    state: started
+    restart: yes
+    restart_policy: always
+    labels:
+      traefik.enable: "true"
+      traefik.port: "80"
+      traefik.frontend.rule: "Host:e2.pe"
+    image: nginx:1.15-alpine
+    volumes:
+      - "{{ config_volume }}/nginx/:/usr/share/nginx/html:ro"

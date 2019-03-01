@@ -1,5 +1,30 @@
-defaultEntryPoints = ["http", "https"]
+debug = false
+
+logLevel = "ERROR"
+defaultEntryPoints = ["http", "http2", "https"]
 
 [entryPoints]
   [entryPoints.http]
   address = ":80"
+  [entryPoints.http2]
+  address = ":8000"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "e2.pe"
+watch = true
+exposedByDefault = false
+
+[acme]
+email = "omdv@fastmail.com"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+
+[acme.httpChallenge]
+entryPoint = "http"

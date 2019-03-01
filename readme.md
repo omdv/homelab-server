@@ -7,6 +7,8 @@ Expected environment variables on the host running ansible:
 - HOMELAB_SMTP_FASTMAIL_PASS
 - HOMELAB_NOTIFY_EMAIL
 - HOMELAB_BORG_PASSPHRASE
+- HOMELAB_SEAFILE_ADMIN
+- HOMELAB_SEAFILE_ADMIN_PASS
 
 Execution:
 ```
