@@ -1,0 +1,70 @@
+---
+- name: create persistent dir for pihole
+  file:
+    path: "{{ config_volume }}/pihole"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- file:
+    path: "{{ config_volume }}/pihole/pihole"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- file:
+    path: "{{ config_volume }}/pihole/dnsmasq"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- name: disable dnsmasq
+  lineinfile:
+    path: /etc/systemd/resolved.conf
+    regexp: 'DNSStubListener='
+    line: '#DNSStubListener=no'
+  become: yes
+
+- name: restart resolved service
+  service:
+    name: systemd-resolved
+    state: restarted
+  become: yes
+
+- name: start pihole container
+  docker_container:
+    name: pihole
+    state: started
+    restart: yes
+    restart_policy: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8053:80"
+    labels:
+      traefik.enable: "true"
+      traefik.frontend.rule: "HostRegexp:pihole.MYHOST.org,{catchall:.*}"
+      traefik.frontend.priority: "1"
+      traefik.port: "80"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "pihole"
+      launchpanel.port: "8053"
+    image: pihole/pihole:latest
+    volumes:
+      - "{{ config_volume }}/pihole/pihole/:/etc/pihole/"
+      - "{{ config_volume }}/pihole/dnsmasq/:/etc/dnsmasq.d/"
+    #capabilities:
+    #  - NET_ADMIN
+    #dns_servers:
+    #  - 1.1.1.1
+    #  - 127.0.0.1
+    env:
+      PGID: 1001
+      PUID: 1001
+      TZ: America/Los_Angeles
+      ServerIP: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      WEBPASSWORD: PASSWORD

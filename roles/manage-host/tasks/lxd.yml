@@ -17,21 +17,9 @@
 
 - shell: snap install lxd
 
-- name: configure lxd public ip interfaces
-  shell: cp /etc/network/interfaces /etc/network/interfaces.bak
-  when: ansible_default_ipv4.interface != "br0"
-
-- template:
-    src: interfaces.j2
-    dest: /etc/network/interfaces
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  when: ansible_default_ipv4.interface != "br0"
-
-- reboot:
-    reboot_timeout: 30
-  when: ansible_default_ipv4.interface != "br0"
+- name: destroy existing lxd zpool
+  shell: zfs destroy -r {{ zfs_pool }}/lxd
+  ignore_errors: yes
 
 - name: initialize lxd
   shell: lxd init --auto --storage-backend=zfs --storage-pool={{ zfs_pool }}/lxd

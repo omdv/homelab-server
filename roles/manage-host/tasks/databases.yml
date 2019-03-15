@@ -1,73 +1,5 @@
 ---
-# - name: install and configure postgresql
-#   apt: 
-#     name: ['postgresql', 'postgresql-contrib', 'libpq-dev', 'python-psycopg2']
-#     update_cache: true
-#     state: present
-#   become: yes
-
-# - name: install psycopg2 for ansible
-#   shell: /usr/bin/pip3 install psycopg2
-
-# - name: create postgresql data directory
-#   file:
-#     path: "{{ database_location }}/postgres"
-#     state: directory
-#     owner: postgres
-#     group: postgres
-#     mode: 0755
-
-# - name: initialize database location
-#   command: "{{ postgresql_bin_path }}/initdb -D {{ postgresql_data_dir }}"
-#   when: not pgdata_dir_version.stat.exists
-#   become: true
-#   become_user: "{{ postgresql_user }}"
-#   # See: https://github.com/ansible/ansible/issues/16048#issuecomment-229012509
-#   vars:
-#     ansible_ssh_pipelining: true
-
-# - name: ensure the postgresql service is running
-#   systemd:
-#     state: started
-#     enabled: yes
-#     name: postgresql
-
-# - name: ensure database is created
-#   become: yes
-#   become_user: postgres
-#   vars:
-#     ansible_ssh_pipelining: true
-#   postgresql_db:
-#     name: "{{ psql_db_name }}"
-#     encoding: UTF-8
-#     lc_collate: en_US.UTF-8
-#     lc_ctype: en_US.UTF-8
-#     template: template0
-
-# - name: ensure user has access to the database
-#   become: yes
-#   become_user: postgres
-#   vars:
-#     ansible_ssh_pipelining: true
-#   postgresql_user:
-#     db: "{{ psql_db_name }}"
-#     name: "{{ psql_db_user }}"
-#     password: "{{ psql_db_password }}"
-#     priv: ALL
-#     state: present
-
-# - name: ensure user does not have unnecessary privileges
-#   become: yes
-#   become_user: postgres
-#   vars:
-#     ansible_ssh_pipelining: true
-#   postgresql_user:
-#     name: "{{ psql_db_user }}"
-#     role_attr_flags: NOSUPERUSER,NOCREATEDB
-#     state: present
-
 # --------------- INFLUXDB 
-
 - name: install and configure influxdb
   shell: curl -sL https://repos.influxdata.com/influxdb.key | apt-key add -
   args:
@@ -86,6 +18,9 @@
     owner: influxdb
     group: influxdb
     mode: 0755
+
+- name: ensure directory permissions are correct
+  shell: chown influxdb:influxdb -R {{ database_location }}/influxdb
 
 - name: push influxdb configuration
   template:

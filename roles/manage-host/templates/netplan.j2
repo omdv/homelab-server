@@ -1,0 +1,23 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s31f6:
+      dhcp4: no
+      dhcp6: no
+  bridges:
+    br0:
+      dhcp4: no
+      dhcp6: no
+      interfaces:
+        - enp0s31f6
+      addresses: [{{ wanted_ip }}/24]
+      gateway4: 192.168.0.1
+      nameservers:
+          addresses:
+              - 192.168.0.15
+              - 8.8.8.8
+              - 8.8.4.4
+      parameters:
+          stp: false
+          forward-delay: 0

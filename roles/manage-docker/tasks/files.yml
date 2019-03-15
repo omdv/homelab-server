@@ -3,6 +3,7 @@
   docker_container:
     name: files
     state: started
+    restart: yes
     image: filebrowser/filebrowser
     restart_policy: always
     ports:
@@ -14,4 +15,4 @@
       launchpanel.name: "files"
       launchpanel.port: "9080"
     volumes:
-      - "{{ media_volume }}:/srv"
+      - "{{ pool }}:/srv"

@@ -43,3 +43,13 @@
   tags:
     - nginx
     - docker
+
+- import_tasks: books.yml
+  tags:
+    - books
+    - docker
+
+# - import_tasks: pihole.yml
+#   tags:
+#     - pihole
+#    - docker

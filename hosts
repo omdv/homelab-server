@@ -1,11 +1,11 @@
 [server]
 192.168.0.24
 
-[email]
-192.168.0.101 name=c1
+[pihole]
+192.168.0.101 name=pihole
 
 [containers:children]
-email
+pihole
 
 [server:vars]
 ansible_user=om

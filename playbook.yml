@@ -5,14 +5,15 @@
     - manage-host
   vars:
     - user: om
-    - zfs_cache: /dev/sda4
-    - zfs_log: /dev/sda5
+    - wanted_ip: 192.168.0.24
+    - zfs_cache: /dev/nvme0n1p2
+    - zfs_log: /dev/nvme0n1p3
     - zfs_pool: pool
     - docker_machine: remote
     - psql_db_user: test
     - psql_db_name: test
     - psql_db_password: test
-    - database_location: /pool/database/
+    - database_location: /pool/database
     - backup_pool: /pool/backup
     - backup_repos:
       - dir: repo-derp
@@ -29,19 +30,23 @@
   roles:
     - manage-docker
   vars:
+    - pool: /pool
     - config_volume: /pool/config
     - data_volume: /pool/databases
     - media_volume: /pool/media
     - book_volume: /pool/books
     - user: om
 
-# - name: -- LXD SETUP--
-#   hosts: server
-#   roles:
-#     - setup-lxd
+- name: -- LXD SETUP--
+  hosts: server
+  tags:
+    - lxd
+  roles:
+    - manage-lxd
 
-# - hosts: containers
-#   tasks:
-#     - name: Install vim
-#       apt:
-#         name: vim
+- hosts: pihole
+  tags:
+    - pihole
+    - lxd
+  roles:
+    - stevenharradine.pihole

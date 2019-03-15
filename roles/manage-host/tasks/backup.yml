@@ -65,6 +65,16 @@
     group: "{{ user }}"
     mode: 0775
 
+- name: configure rclone
+  file:
+    path: "{{item}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  with_items:
+      - ["/root/.config","/root/.config/rclone"]
+
 - template:
     src: rclone.conf.j2
     dest: /root/.config/rclone/rclone.conf

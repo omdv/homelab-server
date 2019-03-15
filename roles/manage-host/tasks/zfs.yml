@@ -11,10 +11,10 @@
   when: ifexists.stdout is search("/cannot/")
 
 - shell: zpool add -f {{ zfs_pool }} cache {{ zfs_cache }}
-  when: ifexists.stdout is search("/cannot/")
+  ignore_errors: True
 
 - shell: zpool add -f {{ zfs_pool }} log {{ zfs_log }}
-  when: ifexists.stdout is search("/cannot/")
+  ignore_errors: True
 
 - shell: echo 'zpool remove pool <failed_device>'
   register: myecho

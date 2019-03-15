@@ -1,4 +1,8 @@
 ---
+- import_tasks: network.yml
+  tags:
+    - network
+
 - import_tasks: zfs.yml
   tags:
     - zfs

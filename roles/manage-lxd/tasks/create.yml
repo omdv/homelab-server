@@ -24,7 +24,7 @@
                   ipv4: true
                   address: {{ item }}
                   netmask: 255.255.255.0
-                  gateway: 192.168.0.15
+                  gateway: 192.168.0.1
                   control: auto
     description: bridge profile
     devices:

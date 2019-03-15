@@ -10,22 +10,31 @@
 
 - name: create persistent config dir for ebooks
   file:
-    path: "{{ config_volume }}/ebooks"
+    path: "{{ config_volume }}/books"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0755
   become: yes
 
-- name: start ebooks container
+- name: start ubooquity container
   docker_container:
-    name: ebooks
+    name: books
     image: linuxserver/ubooquity:latest
+    state: started
+    restart: yes
     restart_policy: always
+    labels:
+      traefik.enable: "false"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "books"
+      launchpanel.port: "8202"
     ports:
-      - 2202:2202
-      - 2203:2203
+      - 8202:2202
+      - 8303:2203
     env:
+      TZ: America/Chicago
       PUID: 1000
       PGID: 1000
     volumes:
