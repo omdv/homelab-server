@@ -15,7 +15,8 @@
         groups=lxd
         append=yes
 
-- shell: snap install lxd
+- name: install lxd
+  shell: snap install lxd
 
 - name: destroy existing lxd zpool
   shell: zfs destroy -r {{ zfs_pool }}/lxd

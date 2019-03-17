@@ -5,7 +5,8 @@
     - manage-host
   vars:
     - user: om
-    - wanted_ip: 192.168.0.24
+    - ip4: 192.168.0.24
+    - interface: enp0s31f6
     - zfs_cache: /dev/nvme0n1p2
     - zfs_log: /dev/nvme0n1p3
     - zfs_pool: pool
@@ -43,6 +44,8 @@
     - lxd
   roles:
     - manage-lxd
+  vars:
+    - interface: enp0s31f6
 
 - hosts: pihole
   tags:

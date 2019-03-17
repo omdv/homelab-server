@@ -5,8 +5,8 @@
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
-  when: ansible_default_ipv4.interface != "br0"
+  when: ansible_default_ipv4.interface == {{ interface }}
 
 - reboot:
     reboot_timeout: 30
-  when: ansible_default_ipv4.interface != "br0"
+  when: ansible_default_ipv4.interface == {{ interface }}

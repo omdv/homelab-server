@@ -29,9 +29,8 @@
     description: bridge profile
     devices:
       eth0:
-        name: eth0
-        nictype: bridged
-        parent: br0
+        nictype: macvlan
+        parent: "{{ interface }}"
         type: nic
       rootfs:
         size: "2GB"
