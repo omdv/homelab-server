@@ -336,7 +336,7 @@
   ## A * as the device name will return the temperature values of all disks.
   ##
   # address = "127.0.0.1:7634"
-  # devices = ["sda", "*"]
+  devices = ["/dev/sda", "/dev/sdb", "/dev/sdc"]
 
 
 # # Read InfluxDB-formatted JSON metrics from one or more HTTP endpoints
@@ -810,7 +810,7 @@
   ## Setting 'use_sudo' to true will make use of sudo to run smartctl.
   ## Sudo must be configured to to allow the telegraf user to run smartctl
   ## with out password.
-  # use_sudo = false
+  use_sudo = true
   #
   ## Skip checking disks in this power mode. Defaults to
   ## "standby" to not wake up disks that have stoped rotating.
@@ -823,7 +823,7 @@
   ## Gather detailed metrics for each SMART Attribute.
   ## Defaults to "false"
   ##
-  # attributes = false
+  attributes = true
   #
   ## Optionally specify devices to exclude from reporting.
   # excludes = [ "/dev/pass6" ]

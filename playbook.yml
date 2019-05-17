@@ -46,10 +46,3 @@
     - manage-lxd
   vars:
     - interface: enp0s31f6
-
-- hosts: pihole
-  tags:
-    - pihole
-    - lxd
-  roles:
-    - stevenharradine.pihole

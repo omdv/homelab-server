@@ -19,6 +19,11 @@
     - files
     - docker
 
+- import_tasks: cloudcmd.yml
+  tags:
+    - cloudcmd
+    - docker
+
 - import_tasks: traefik.yml
   tags:
     - traefik
