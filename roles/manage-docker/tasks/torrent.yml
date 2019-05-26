@@ -3,6 +3,7 @@
   docker_container:
     name: torrent
     state: started
+    restart: yes
     image: haugene/transmission-openvpn:latest
     restart_policy: always
     ports:
@@ -20,7 +21,7 @@
     devices: /dev/net/tun
     env:
       OPENVPN_PROVIDER: PUREVPN
-      OPENVPN_CONFIG: Canada-tcp
+      OPENVPN_CONFIG: Panama-tcp
       OPENVPN_USERNAME: "{{ lookup('env', 'VPN_USER') }}"
       OPENVPN_PASSWORD: "{{ lookup('env', 'VPN_PASSWORD') }}"
       WEBPROXY_ENABLED: false

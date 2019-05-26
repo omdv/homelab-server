@@ -37,6 +37,8 @@
     - media_volume: /pool/media
     - book_volume: /pool/books
     - user: om
+    - samba_user: "{{ lookup('env','HOMELAB_SAMBA_USER') }}"
+    - samba_pass: "{{ lookup('env','HOMELAB_SAMBA_PASSWORD') }}"
 
 - name: -- LXD SETUP--
   hosts: server

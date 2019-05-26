@@ -54,6 +54,11 @@
     - books
     - docker
 
+- import_tasks: samba.yml
+  tags:
+    - samba
+    - docker
+
 # - import_tasks: pihole.yml
 #   tags:
 #     - pihole
