@@ -9,7 +9,6 @@ export BORG_PASSPHRASE="{{ lookup('env','HOMELAB_BORG_PASSPHRASE') }}"
 	    $REPOSITORY::"{hostname}-{now:%Y-%m-%d %H:%M}" /{{ zfs_pool }} \
 	    --exclude "/{{ zfs_pool }}/backup"                             \
 	    --exclude "/{{ zfs_pool }}/media"                           \
-	    --exclude "/{{ zfs_pool }}/dump"                             \
 	    --exclude "*.img"                                        \
 	    --exclude "*.iso"                                        \
 

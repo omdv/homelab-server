@@ -23,6 +23,12 @@
   tags:
     - gpu
 
+- import_tasks: conda.yml
+  become: yes
+  become_user: "{{ user }}"
+  tags:
+    - conda
+
 - import_tasks: databases.yml
   tags:
     - databases

@@ -1,0 +1,9 @@
+name: jupyter
+dependencies:
+  - numpy
+  - pandas
+  - scikit-learn
+  - keras
+  - tensorflow
+  - jupyterlab
+  - matplotlib

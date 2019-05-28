@@ -11,9 +11,11 @@
       - 445:445
     labels:
       traefik.enable: "false"
-      launchpanel.enabled: "false"
     volumes:
       - "{{ pool }}:/pool"
     env:
       USER: "{{ samba_user }};{{ samba_pass }}"
       SHARE: "pool;/pool;yes;no;no;{{ samba_user }};{{ samba_user }};{{ samba_user }}"
+      RECYCLE: "false"
+      USERID: "10101"
+      GROUPID: "10101"
