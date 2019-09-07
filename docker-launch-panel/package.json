@@ -9,7 +9,7 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "morgan": "^1.9.1",
     "node-docker-api": "^1.1.22",
     "pug": "^2.0.3"
