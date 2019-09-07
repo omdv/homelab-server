@@ -13,6 +13,7 @@
     state: started
     restart: yes
     restart_policy: always
+    command: --no-auth
     ports:
       - 9000:9000
     labels:
@@ -24,18 +25,4 @@
     image: portainer/portainer:latest
     volumes:
       - "{{ config_volume }}/portainer:/data"
-      - /var/run/docker.sock:/var/run/docker.sock
-
-- name: start watchtower container
-  docker_container:
-    name: watchtower
-    state: started
-    restart: yes
-    restart_policy: always
-    networks:
-      - name: bridge
-    labels:
-      traefik.enable: "false"
-    image: v2tec/watchtower:latest
-    volumes:
       - /var/run/docker.sock:/var/run/docker.sock

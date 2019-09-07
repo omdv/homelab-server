@@ -16,6 +16,7 @@ ansible-playbook playbook.yml  -i hosts --extra-vars "ansible_sudo_pass="$HOMELA
 ```
 
 **TODO**
+- watchtower email notifications
 - unattended upgrades
 - telegraf smartctl
 - docker remote api certs

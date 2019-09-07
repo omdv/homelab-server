@@ -59,6 +59,16 @@
     - samba
     - docker
 
+- import_tasks: elasticsearch.yml
+  tags:
+    - elasticsearch
+    - docker
+
+- import_tasks: watchtower.yml
+  tags:
+    - watchtower
+    - docker
+
 # - import_tasks: pihole.yml
 #   tags:
 #     - pihole

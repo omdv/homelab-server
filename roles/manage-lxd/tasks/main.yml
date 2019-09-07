@@ -1,8 +1,10 @@
 ---
 - import_tasks: create.yml
   tags:
+    - containers
     - create
 
 - import_tasks: delete.yml
   tags:
+    - containers
     - delete

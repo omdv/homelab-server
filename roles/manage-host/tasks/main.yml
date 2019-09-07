@@ -49,3 +49,7 @@
   tags:
     - monitoring
     - telegraf
+
+# - import_tasks: screepsstats.yml
+#   tags:
+#     - screepsstats
