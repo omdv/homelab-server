@@ -24,29 +24,14 @@
     - cloudcmd
     - docker
 
-- import_tasks: traefik.yml
-  tags:
-    - traefik
-    - docker
-
 - import_tasks: portainer.yml
   tags:
     - portainer
     - docker
 
-- import_tasks: seafile.yml
-  tags:
-    - seafile
-    - docker
-
 - import_tasks: launchpanel.yml
   tags:
     - launchpanel
-    - docker
-
-- import_tasks: nginx.yml
-  tags:
-    - nginx
     - docker
 
 - import_tasks: books.yml
@@ -59,15 +44,44 @@
     - samba
     - docker
 
-- import_tasks: elasticsearch.yml
-  tags:
-    - elasticsearch
-    - docker
-
 - import_tasks: watchtower.yml
   tags:
     - watchtower
     - docker
+
+- import_tasks: traefik.yml
+  tags:
+    - traefik
+    - docker
+    - webservices
+
+- import_tasks: seafile.yml
+  tags:
+    - seafile
+    - docker
+    - webservices
+
+- import_tasks: radicale.yml
+  tags:
+    - radicale
+    - docker
+    - webservices
+
+- import_tasks: nginx.yml
+  tags:
+    - nginx
+    - docker
+    - webservices
+
+# - import_tasks: elastic.yml
+#   tags:
+#     - elastic
+#     - docker
+
+# - import_tasks: kibana.yml
+#   tags:
+#     - kibana
+#     - docker
 
 # - import_tasks: pihole.yml
 #   tags:

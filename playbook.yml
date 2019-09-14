@@ -44,7 +44,10 @@
     - notify_smtp_server: smtp.fastmail.com
     - notify_smtp_user: "{{ lookup('env','HOMELAB_SMTP_FASTMAIL_USER') }}"
     - notify_smtp_pass: "{{ lookup('env','HOMELAB_SMTP_FASTMAIL_PASS') }}"
-
+    - docker_user: "{{ lookup('env','DOCKER_USER') }}"
+    - docker_pass: "{{ lookup('env','DOCKER_PASS') }}"
+    - caldav_user: "{{ lookup('env','HOMELAB_CALDAV_USER') }}"
+    - caldav_pass: "{{ lookup('env','HOMELAB_CALDAV_PASS') }}"
 
 - name: -- LXD SETUP --
   hosts: server

@@ -1,5 +1,5 @@
 ---
-- name: create directory for nginx
+- name: create persistent dir for nginx
   file:
     path: "{{ config_volume }}/nginx"
     state: directory
@@ -11,7 +11,7 @@
   copy:
     src: index.html
     dest: "{{ config_volume }}/nginx/index.html"
-    owner: om
+    user: "{{ user }}"
     group: docker
     force: yes
 
@@ -26,5 +26,11 @@
       traefik.port: "80"
       traefik.frontend.rule: "Host:e2.pe"
     image: nginx:1.15-alpine
+    # healthcheck:
+    #   test: ["CMD", "curl", "--fail", "http://localhost:80"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 30s
     volumes:
       - "{{ config_volume }}/nginx/:/usr/share/nginx/html:ro"

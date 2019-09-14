@@ -1,3 +1,4 @@
+# watchtower with email notifications
 - name: start watchtower container
   docker_container:
     name: watchtower
@@ -10,6 +11,9 @@
       traefik.enable: "false"
     image: containrrr/watchtower:latest
     env:
+      REPO_USER: "{{ docker_user }}"
+      REPO_PASS: "{{ docker_pass }}"
+      WATCHTOWER_NOTIFICATIONS_LEVEL: warn
       WATCHTOWER_NOTIFICATIONS: email
       WATCHTOWER_NOTIFICATION_EMAIL_FROM: watchtower@home.server
       WATCHTOWER_NOTIFICATION_EMAIL_TO: "{{ notify_email }}"

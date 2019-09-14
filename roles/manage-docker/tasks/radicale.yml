@@ -1,0 +1,69 @@
+---
+- name: create persistent dir for radicale
+  become: yes
+  file:
+    path: "{{ config_volume }}/radicale"
+    state: directory
+    owner: '2999'
+    group: '2999'
+    mode: 0755
+
+- name: create persistent data dir for radicale
+  become: yes
+  file:
+    path: "{{ config_volume }}/radicale/data"
+    state: directory
+    owner: '2999'
+    group: '2999'
+    mode: 0755
+
+- name: install required modules
+  become: yes
+  pip:
+    name:
+      - passlib
+      - bcrypt
+
+- name: create passwd user file
+  become: yes
+  htpasswd:
+    path: "{{ config_volume }}/radicale/users"
+    name: "{{ caldav_user }}"
+    password: "{{ caldav_pass }}"
+    crypt_scheme: bcrypt
+    create: yes
+    owner: '2999'
+    group: '2999'
+    mode: 0640
+
+- name: copy config file
+  become: yes
+  copy:
+    src: radicale.conf
+    dest: "{{ config_volume }}/radicale/config"
+    owner: '2999'
+    group: '2999'
+    mode: 0644
+
+- name: start radicale container
+  docker_container:
+    name: radicale
+    state: started
+    restart: yes
+    restart_policy: always
+    image: tomsquest/docker-radicale:latest
+    volumes:
+      - "{{ config_volume }}/radicale/data:/data"
+      - "{{ config_volume }}/radicale:/config:ro"
+    labels:
+      traefik.enable: "true"
+      traefik.port: "5232"
+    pids_limit: 20
+    init: yes
+    security_opts: "no-new-privileges:true"
+    cap_drop: ALL
+    capabilities:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - KILL

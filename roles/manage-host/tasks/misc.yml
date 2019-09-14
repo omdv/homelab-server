@@ -6,3 +6,4 @@
     packages:
     - vim
     - ubuntu-drivers-common
+    - apache2-utils
