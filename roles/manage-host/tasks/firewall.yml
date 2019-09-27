@@ -1,0 +1,6 @@
+- name: add firewall rules
+  shell: >
+    sudo ufw allow ssh &&
+    sudo ufw allow http &&
+    sudo ufw enable
+

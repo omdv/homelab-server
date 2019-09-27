@@ -6,16 +6,17 @@
     owner: "{{ user }}"
     group: "{{ user }}"
 
-- name: copy traefik.toml
-  copy:
-    src: traefik.toml
-    dest: "{{ config_volume }}/traefik/traefik.toml"
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    mode: 0644
+# - name: copy traefik.toml
+#   copy:
+#     src: traefik.toml
+#     dest: "{{ config_volume }}/traefik/traefik.toml"
+#     owner: "{{ user }}"
+#     group: "{{ user }}"
+#     mode: 0644
 
 - name: create empty acme.json
   file:
+    state: touch
     path: "{{ config_volume }}/traefik/acme.json"
     owner: "{{ user }}"
     group: "{{ user }}"
@@ -34,12 +35,32 @@
       launchpanel.name: "traefik"
       launchpanel.port: "8080"
     ports:
-      - 8000:80
+      # - 8000:80
       - 443:443
       - 8080:8080
-    image: traefik:latest
-    command: --api --docker --docker.domain=e2.pe
+    image: traefik:v1.7.16
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      # - "--providers.docker.defaultrule=Host(`{{ '{{' }} .Name {{ '}}' }}.e2.pe`)"
+      - "--entrypoints.https.address=:443"
+      - "--certificatesresolvers.mytls.acme.tlschallenge=true"
+      - "--certificatesresolvers.mytls.acme.email=omdv@fastmail.com"
+      - "--certificatesresolvers.mytls.acme.storage=/acme.json"
+      # - "--api.insecure=true"
+      # - "--providers.docker.endpoint='unix:///var/run/docker.sock'"
+      # - "--entrypoints.http.address=:80"
+      # - "--entrypoints.https.address=:443"
+      # - "--defaultentrypoints=http,https"
+      # - "--acme.storage=/acme.json"
+      # - "--acme.entryPoint=https"
+      # - "--acme.httpChallenge.entryPoint=http"
+      # - "--acme.onHostRule=true"
+      # - "--acme.onDemand=false"
+      # - "--acme.email=omdv@fastmail.com"
+      # - "--docker"
+      # - "--docker.domain=e2.pe"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - "{{ config_volume }}/traefik/traefik.toml:/traefik.toml"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "{{ config_volume }}/traefik/acme.json:/acme.json"

@@ -50,6 +50,10 @@
     - monitoring
     - telegraf
 
-# - import_tasks: screepsstats.yml
+- import_tasks: kubernetes.yml
+  tags:
+    - kubernetes
+
+# - import_tasks: firewall.yml
 #   tags:
-#     - screepsstats
+#     - firewall

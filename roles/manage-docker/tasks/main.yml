@@ -34,11 +34,6 @@
     - launchpanel
     - docker
 
-- import_tasks: books.yml
-  tags:
-    - books
-    - docker
-
 - import_tasks: samba.yml
   tags:
     - samba
@@ -49,29 +44,39 @@
     - watchtower
     - docker
 
-- import_tasks: traefik.yml
+- import_tasks: stacks.yml
   tags:
-    - traefik
+    - stacks
     - docker
-    - webservices
 
-- import_tasks: seafile.yml
-  tags:
-    - seafile
-    - docker
-    - webservices
+# - import_tasks: books.yml
+#   tags:
+#     - books
+#     - docker
 
-- import_tasks: radicale.yml
-  tags:
-    - radicale
-    - docker
-    - webservices
+# - import_tasks: traefik.yml
+#   tags:
+#     - traefik
+#     - docker
+#     - web
 
-- import_tasks: nginx.yml
-  tags:
-    - nginx
-    - docker
-    - webservices
+# - import_tasks: seafile.yml
+#   tags:
+#     - seafile
+#     - docker
+#     - web
+
+# - import_tasks: nginx.yml
+#   tags:
+#     - nginx
+#     - docker
+#     - web
+
+# - import_tasks: radicale.yml
+#   tags:
+#     - radicale
+#     - docker
+#     - web
 
 # - import_tasks: elastic.yml
 #   tags:
@@ -82,8 +87,3 @@
 #   tags:
 #     - kibana
 #     - docker
-
-# - import_tasks: pihole.yml
-#   tags:
-#     - pihole
-#    - docker

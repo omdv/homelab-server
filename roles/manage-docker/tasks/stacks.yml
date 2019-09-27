@@ -1,0 +1,61 @@
+---
+- name: create persistent dir for the stack definitions
+  file:
+    path: "{{ config_volume }}/stacks"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0755
+
+# ------- STACK SPECIFIC
+- name: create persistent dir for traefik
+  file:
+    path: "{{ config_volume }}/traefik"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: create empty acme.json
+  file:
+    state: touch
+    path: "{{ config_volume }}/traefik/acme.json"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0600
+
+- name: create persistent dir for nginx
+  file:
+    path: "{{ config_volume }}/website"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0755
+
+- name: copy static file
+  copy:
+    src: index.html
+    dest: "{{ config_volume }}/website/index.html"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    force: yes
+
+- name: create persistent dir for seafile
+  file:
+    path: "{{ config_volume }}/seafile"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+# --------- TODO - LOOP
+
+- name: copy stack definition
+  template:
+    src: stacks-whoami.yml
+    dest: "{{ config_volume }}/stacks/stacks-whoami.yml"
+    owner: "{{ user }}"
+    group: docker
+    force: yes
+
+- name: deploy stack
+  shell: "docker-compose -p whoami -f {{ config_volume }}/stacks/stacks-whoami.yml up -d --build"

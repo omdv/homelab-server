@@ -24,7 +24,10 @@
     labels:
       traefik.enable: "true"
       traefik.port: "80"
-      traefik.frontend.rule: "Host:e2.pe"
+      traefik.http.routers.to_nginx.rule: "Host(`e2.pe`)"
+      traefik.http.routers.to_nginx.entrypoints: "http"
+      # traefik.http.routers.whoami.entrypoints: "https"
+      # traefik.http.routers.whoami.tls.certresolver: "mytls"
     image: nginx:1.15-alpine
     # healthcheck:
     #   test: ["CMD", "curl", "--fail", "http://localhost:80"]

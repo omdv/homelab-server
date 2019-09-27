@@ -7,3 +7,9 @@
     - vim
     - ubuntu-drivers-common
     - apache2-utils
+
+- name: install required pip modules
+  pip:
+    name:
+      - passlib
+      - bcrypt

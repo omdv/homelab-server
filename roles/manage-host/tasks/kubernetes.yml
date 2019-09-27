@@ -1,0 +1,15 @@
+---
+# - name: install kubectl
+#   shell: snap install kubectl --classic
+
+- name: install microk8s
+  shell: snap install microk8s --classic
+
+- name: add current user to microk8s list
+  shell: usermod -a -G microk8s om
+
+- name: alias kubectl
+  shell: snap alias microk8s.kubectl kubectl
+
+# need to generate config by microk8s.config > config
+# then download file and place to ~/.kube/config

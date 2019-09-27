@@ -16,6 +16,7 @@ ansible-playbook playbook.yml  -i hosts --extra-vars "ansible_sudo_pass="$HOMELA
 ```
 
 **TODO**
+- protect docker.sock
 - local docker registry
 - unattended upgrades
 - telegraf smartctl
@@ -25,4 +26,5 @@ ansible-playbook playbook.yml  -i hosts --extra-vars "ansible_sudo_pass="$HOMELA
 
 ## Manual Steps
 1. Configure backup from laptop to homeserver
-2. Update No-IP to include sub hosts
+2. Update No-IP to include sub hosts, done on a local router
+3. Prepare environment variables
