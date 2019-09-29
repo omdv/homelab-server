@@ -1,6 +1,24 @@
-- name: add firewall rules
-  shell: >
-    sudo ufw allow ssh &&
-    sudo ufw allow http &&
-    sudo ufw enable
+---
+- name: UFW reset
+  ufw: state=reset
 
+- name: UFW local network access ports
+  ufw:
+    rule: allow
+    direction: in
+    proto: tcp
+    src: 192.168.0.24/24
+    dest: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    to_port: "{{ item.port }}"
+    comment: "{{ item.comment }}"
+  with_items:
+    - {port: "22", comment: ssh}
+    - {port: "80", comment: www}
+    - {port: "2376", comment: docker}
+    - {port: "3000", comment: grafana}
+    - {port: "6443", comment: k8s}
+    - {port: "32400", comment: plex}
+
+
+- name: UFW enable
+  ufw: state=enabled policy=reject logging=medium

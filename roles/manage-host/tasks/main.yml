@@ -3,6 +3,10 @@
   tags:
     - network
 
+- import_tasks: firewall.yml
+  tags:
+    - firewall
+
 - import_tasks: zfs.yml
   tags:
     - zfs
@@ -53,7 +57,3 @@
 - import_tasks: kubernetes.yml
   tags:
     - kubernetes
-
-# - import_tasks: firewall.yml
-#   tags:
-#     - firewall

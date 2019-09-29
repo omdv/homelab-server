@@ -1,15 +1,21 @@
 ---
-# - name: install kubectl
-#   shell: snap install kubectl --classic
+- name: install k3s
+  shell: curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644
+  # shell: curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy traefik servicelb" sh -s - --write-kubeconfig-mode 644
+  args:
+    warn: false
 
-- name: install microk8s
-  shell: snap install microk8s --classic
+- name: Create context for kube-space namespace
+  shell: kubectl config set-context dev --namespace=kube-system --cluster=default --user=default
 
-- name: add current user to microk8s list
-  shell: usermod -a -G microk8s om
+- name: Replace a localhost entry with our IP
+  lineinfile:
+    path: /etc/rancher/k3s/k3s.yaml
+    regexp: 'https://127\.0\.0\.1'
+    line: "    server: https://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:6443"
 
-- name: alias kubectl
-  shell: snap alias microk8s.kubectl kubectl
-
-# need to generate config by microk8s.config > config
-# then download file and place to ~/.kube/config
+- name: fetch k3s config file
+  fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: /Users/om/.kube/config
+    flat: yes
