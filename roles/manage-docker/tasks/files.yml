@@ -7,12 +7,12 @@
     image: filebrowser/filebrowser
     restart_policy: always
     ports:
-      - 9080:80
+      - 8002:80
     labels:
       traefik.enable: "false"
       launchpanel.enabled: "yes"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "files"
-      launchpanel.port: "9080"
+      launchpanel.port: "8002"
     volumes:
       - "{{ pool }}:/srv"

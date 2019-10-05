@@ -2,23 +2,22 @@
 - name: UFW reset
   ufw: state=reset
 
-- name: UFW local network access ports
+- name: UFW access ports
   ufw:
     rule: allow
-    direction: in
     proto: tcp
-    src: 192.168.0.24/24
     dest: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     to_port: "{{ item.port }}"
     comment: "{{ item.comment }}"
   with_items:
     - {port: "22", comment: ssh}
-    - {port: "80", comment: www}
+    - {port: "80", comment: http}
+    - {port: "443", comment: https}
     - {port: "2376", comment: docker}
-    - {port: "3000", comment: grafana}
     - {port: "6443", comment: k8s}
+    - {port: "8086", comment: influxdb}
     - {port: "32400", comment: plex}
 
 
 - name: UFW enable
-  ufw: state=enabled policy=reject logging=medium
+  ufw: state=enabled policy=reject logging=medium comment=firewalled

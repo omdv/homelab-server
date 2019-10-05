@@ -19,8 +19,8 @@
     env:
       TZ: America/Chicago
       VERSION: latest
-      PLEX_UID: 1000
-      PLEX_GID: 998
+      PLEX_UID: "1000"
+      PLEX_GID: "998"
     volumes:
       - "{{ config_volume }}/plex/config:/config"
       - "{{ config_volume }}/plex/transcode:/transcode"

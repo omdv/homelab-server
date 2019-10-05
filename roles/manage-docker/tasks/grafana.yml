@@ -21,13 +21,13 @@
     state: started
     restart_policy: always
     ports:
-      - 3000:3000
+      - 8003:3000
     labels:
       traefik.enable: "false"
       launchpanel.enabled: "yes"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "grafana"
-      launchpanel.port: "3000"
+      launchpanel.port: "8003"
     image: grafana/grafana:latest
     volumes:
       - "{{ config_volume }}/grafana:/var/lib/grafana"

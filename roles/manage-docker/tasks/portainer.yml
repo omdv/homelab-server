@@ -15,13 +15,13 @@
     restart_policy: always
     command: --no-auth
     ports:
-      - 9000:9000
+      - 8001:9000
     labels:
       traefik.enable: "false"
       launchpanel.enabled: "yes"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "portainer"
-      launchpanel.port: "9000"
+      launchpanel.port: "8001"
     image: portainer/portainer:latest
     volumes:
       - "{{ config_volume }}/portainer:/data"

@@ -7,13 +7,13 @@
     image: haugene/transmission-openvpn:latest
     restart_policy: always
     ports:
-      - 9091:9091
+      - 8004:9091
     labels:
       traefik.enable: "false"
       launchpanel.enabled: "yes"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "torrent"
-      launchpanel.port: "9091"
+      launchpanel.port: "8004"
     volumes:
       - "{{ media_volume }}:/data"
       - /etc/localtime:/etc/localtime:ro
@@ -24,8 +24,8 @@
       OPENVPN_CONFIG: Panama-tcp
       OPENVPN_USERNAME: "{{ lookup('env', 'VPN_USER') }}"
       OPENVPN_PASSWORD: "{{ lookup('env', 'VPN_PASSWORD') }}"
-      WEBPROXY_ENABLED: false
-      ENABLE_UFW: false
+      WEBPROXY_ENABLED: "false"
+      ENABLE_UFW: "false"
       LOCAL_NETWORK: 192.168.0.0/24
-      PUID: 1000
-      PGID: 1000
+      PUID: "1000"
+      PGID: "1000"

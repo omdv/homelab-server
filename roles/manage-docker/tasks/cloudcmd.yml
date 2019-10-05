@@ -7,12 +7,12 @@
     image: coderaiser/cloudcmd
     restart_policy: always
     ports:
-      - 11800:8000
+      - 8005:8000
     labels:
       traefik.enable: "false"
       launchpanel.enabled: "yes"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "cloudcmd"
-      launchpanel.port: "11800"
+      launchpanel.port: "8005"
     volumes:
       - "{{ pool }}:/pool"

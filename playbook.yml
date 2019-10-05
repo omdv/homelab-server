@@ -11,7 +11,7 @@
     - zfs_log: /dev/nvme0n1p3
     - zfs_pool: pool
     - conda_link: https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-    - docker_machine: remote
+    - docker_machine_name: remote
     - psql_db_user: test
     - psql_db_name: test
     - psql_db_password: test

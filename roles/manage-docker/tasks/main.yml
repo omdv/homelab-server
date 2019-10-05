@@ -29,11 +29,6 @@
     - portainer
     - docker
 
-- import_tasks: launchpanel.yml
-  tags:
-    - launchpanel
-    - docker
-
 - import_tasks: samba.yml
   tags:
     - samba
@@ -44,10 +39,15 @@
     - watchtower
     - docker
 
-- import_tasks: stacks.yml
-  tags:
-    - stacks
-    - docker
+# - import_tasks: launchpanel.yml
+#   tags:
+#     - launchpanel
+#     - docker
+
+# - import_tasks: stacks.yml
+#   tags:
+#     - stacks
+#     - docker
 
 # - import_tasks: books.yml
 #   tags:

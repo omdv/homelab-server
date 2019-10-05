@@ -12,7 +12,7 @@
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://0.0.0.0:80"]
+      test: "curl --fail http://0.0.0.0:80 || exit 1"
       interval: 30s
       timeout: 10s
       retries: 3

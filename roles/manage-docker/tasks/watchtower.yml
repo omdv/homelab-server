@@ -5,8 +5,6 @@
     state: started
     restart: yes
     restart_policy: always
-    networks:
-      - name: bridge
     labels:
       traefik.enable: "false"
     image: containrrr/watchtower:latest
@@ -18,7 +16,7 @@
       WATCHTOWER_NOTIFICATION_EMAIL_FROM: watchtower@home.server
       WATCHTOWER_NOTIFICATION_EMAIL_TO: "{{ notify_email }}"
       WATCHTOWER_NOTIFICATION_EMAIL_SERVER: "{{ notify_smtp_server }}"
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: 587
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: "587"
       WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: "{{ notify_smtp_user }}"
       WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: "{{ notify_smtp_pass }}"
     volumes:

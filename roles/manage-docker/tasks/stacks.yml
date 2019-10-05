@@ -25,7 +25,7 @@
 
 - name: create persistent dir for nginx
   file:
-    path: "{{ config_volume }}/website"
+    path: "{{ config_volume }}/nginx"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
@@ -34,7 +34,7 @@
 - name: copy static file
   copy:
     src: index.html
-    dest: "{{ config_volume }}/website/index.html"
+    dest: "{{ config_volume }}/nginx/index.html"
     owner: "{{ user }}"
     group: "{{ user }}"
     force: yes
@@ -47,7 +47,23 @@
     group: "{{ user }}"
   become: yes
 
-# --------- TODO - LOOP
+- name: create persistent dir for grafana
+  file:
+    path: "{{ config_volume }}/grafana"
+    state: directory
+    owner: 472
+    group: 472
+  become: yes
+
+- file:
+    path: "{{ config_volume }}/grafana/plugins"
+    state: directory
+    mode: 0755
+    owner: 472
+    group: 472
+  become: yes
+
+# RUN STACK
 
 - name: copy stack definition
   template:

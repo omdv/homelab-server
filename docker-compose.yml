@@ -1,0 +1,155 @@
+version: "3.7"
+
+services:
+
+  traefik:
+    image: "traefik:v2.0.1"
+    container_name: "traefik"
+    command:
+      - "--global.sendanonymoususage=false"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.http.address=:80"
+      - "--entrypoints.https.address=:443"
+      - "--certificatesresolvers.mytls.acme.tlschallenge=true"
+      - "--certificatesresolvers.mytls.acme.email=${SSL_CERT_EMAIL}"
+      - "--certificatesresolvers.mytls.acme.storage=/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    labels:
+      - "launchpanel.enabled=yes"
+      - "launchpanel.ip=192.168.0.24"
+      - "launchpanel.name=traefik"
+      - "launchpanel.port=8080"
+    volumes:
+      - "/pool/config/traefik/acme.json:/acme.json"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: always
+
+  whoami:
+    image: "containous/whoami"
+    container_name: "whoami"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.${TLD}`)"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.whoami.middlewares=https_redirect"
+      - "traefik.http.routers.whoami-secured.rule=Host(`whoami.${TLD}`)"
+      - "traefik.http.routers.whoami-secured.tls.certresolver=mytls"
+      - "traefik.http.routers.whoami-secured.tls"
+    restart: always
+
+  hidden:
+    image: "containous/whoami"
+    container_name: "hidden"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hidden.rule=Host(`hidden.${TLD}`)"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.hidden.middlewares=https_redirect"
+      - "traefik.http.routers.hidden-secured.rule=Host(`hidden.${TLD}`)"
+      - "traefik.http.routers.hidden-secured.tls.certresolver=mytls"
+      - "traefik.http.routers.hidden-secured.tls"
+      - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
+      - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+      - "traefik.http.routers.hidden-secured.middlewares=auth@docker"
+    restart: always
+
+  traefik-forward-auth:
+    image: omdv/traefik-forward-auth:2.0.1
+    container_name: "traefik-forward-auth"
+    environment:
+      - CLIENT_ID=${OAUTH_CLIENT_ID}
+      - CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
+      - SECRET=${OAUTH_SECRET}
+      - AUTH_HOST=auth.${TLD}
+      - COOKIE_DOMAIN=${TLD}
+      - LIFETIME=2592000
+      - WHITELIST=${OAUTH_WHITELIST}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.forward-auth.rule=Host(`auth.${TLD}`)"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.forward-auth.middlewares=https_redirect"
+      - "traefik.http.routers.forward-auth-secured.rule=Host(`auth.${TLD}`)"
+      - "traefik.http.routers.forward-auth-secured.tls.certresolver=mytls"
+      - "traefik.http.routers.forward-auth-secured.tls"
+      - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
+      - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+      # - "traefik.http.routers.forward-auth.middlewares=auth@docker"
+      - "traefik.http.routers.forward-auth-secured.middlewares=auth@docker"
+
+  panel:
+    image: omdv/docker-launch-panel:alpine
+    container_name: "panel"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.panel.rule=Host(`panel.${TLD}`)"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.panel.middlewares=https_redirect"
+      - "traefik.http.routers.panel-secured.tls"
+      - "traefik.http.routers.panel-secured.rule=Host(`panel.${TLD}`)"
+      - "traefik.http.routers.panel-secured.tls.certresolver=mytls"
+      - "traefik.http.routers.panel-secured.entrypoints=https"
+      - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
+      - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+      - "traefik.http.routers.panel-secured.middlewares=auth@docker"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: always
+
+  # torrent:
+  #   image: haugene/transmission-openvpn:latest
+  #   container_name: "p2p"
+  #   environment:
+  #     - OPENVPN_PROVIDER=PUREVPN
+  #     - OPENVPN_CONFIG=Panama-tcp
+  #     - OPENVPN_USERNAME=${VPN_USER}
+  #     - OPENVPN_PASSWORD=${VPN_PASSWORD}
+  #     - WEBPROXY_ENABLED="false"
+  #     - ENABLE_UFW="false"
+  #     # - LOCAL_NETWORK=192.168.0.0/24
+  #     - PUID="1000"
+  #     - PGID="1000"
+  #   cap_add:
+  #     - NET_ADMIN
+  #   devices:
+  #     - /dev/net/tun
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.services.p2p.loadbalancer.server.port=9091"
+  #     - "traefik.http.routers.p2p.rule=Host(`p2p.${TLD}`)"
+  #     - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+  #     - "traefik.http.routers.p2p.middlewares=https_redirect"
+  #     - "traefik.http.routers.p2p-secured.tls"
+  #     - "traefik.http.routers.p2p-secured.rule=Host(`p2p.${TLD}`)"
+  #     - "traefik.http.routers.p2p-secured.tls.certresolver=mytls"
+  #     - "traefik.http.routers.p2p-secured.entrypoints=https"
+  #     - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
+  #     - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
+  #     - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+  #     - "traefik.http.routers.p2p-secured.middlewares=auth@docker"
+  #   volumes:
+  #     - /pool/media:/data
+  #     - /etc/localtime:/etc/localtime:ro
+  #   restart: always
+
+  nginx:
+    image: nginx:1.15-alpine
+    container_name: "nginx"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.rule=Host(`${TLD}`)"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.nginx.middlewares=https_redirect"
+      - "traefik.http.routers.nginx-secured.rule=Host(`${TLD}`)"
+      - "traefik.http.routers.nginx-secured.tls"
+    volumes:
+      - "/pool/config/nginx/:/usr/share/nginx/html:ro"
+    restart: always
