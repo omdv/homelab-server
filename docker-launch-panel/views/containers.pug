@@ -3,8 +3,10 @@ html
 		style
 			include main.css
 	body
-		div(class="center")
-			h2 SERVICES
+		div.center
+			h2
+				span.text-danger local
+				|  SERVICES
 			table
 				tbody
 					each ct in containers
@@ -12,6 +14,5 @@ html
 							td
 								a(href='http://'+ct.ip+':'+ct.port) #{ct.name}
 							td #{ct.image}
-							td #{ct.state}
 							td #{ct.status}
 							td #{ct.port}

@@ -3,9 +3,12 @@ version: "3.7"
 services:
 
   traefik:
-    image: "traefik:v2.0.1"
+    image: "traefik:latest"
     container_name: "traefik"
     command:
+      - "--metrics.influxdb=true"
+      - "--metrics.influxdb.address=localhost:8086"
+      - "--metrics.influxdb.database=traefik"
       - "--global.sendanonymoususage=false"
       - "--api.insecure=true"
       - "--providers.docker=true"
@@ -104,44 +107,8 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     restart: always
 
-  # torrent:
-  #   image: haugene/transmission-openvpn:latest
-  #   container_name: "p2p"
-  #   environment:
-  #     - OPENVPN_PROVIDER=PUREVPN
-  #     - OPENVPN_CONFIG=Panama-tcp
-  #     - OPENVPN_USERNAME=${VPN_USER}
-  #     - OPENVPN_PASSWORD=${VPN_PASSWORD}
-  #     - WEBPROXY_ENABLED="false"
-  #     - ENABLE_UFW="false"
-  #     # - LOCAL_NETWORK=192.168.0.0/24
-  #     - PUID="1000"
-  #     - PGID="1000"
-  #   cap_add:
-  #     - NET_ADMIN
-  #   devices:
-  #     - /dev/net/tun
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.http.services.p2p.loadbalancer.server.port=9091"
-  #     - "traefik.http.routers.p2p.rule=Host(`p2p.${TLD}`)"
-  #     - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-  #     - "traefik.http.routers.p2p.middlewares=https_redirect"
-  #     - "traefik.http.routers.p2p-secured.tls"
-  #     - "traefik.http.routers.p2p-secured.rule=Host(`p2p.${TLD}`)"
-  #     - "traefik.http.routers.p2p-secured.tls.certresolver=mytls"
-  #     - "traefik.http.routers.p2p-secured.entrypoints=https"
-  #     - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
-  #     - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
-  #     - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
-  #     - "traefik.http.routers.p2p-secured.middlewares=auth@docker"
-  #   volumes:
-  #     - /pool/media:/data
-  #     - /etc/localtime:/etc/localtime:ro
-  #   restart: always
-
   nginx:
-    image: nginx:1.15-alpine
+    image: nginx:alpine
     container_name: "nginx"
     labels:
       - "traefik.enable=true"

@@ -4,7 +4,7 @@
     name: cloudcmd
     state: started
     restart: yes
-    image: coderaiser/cloudcmd
+    image: coderaiser/cloudcmd:latest-alpine
     restart_policy: always
     ports:
       - 8005:8000

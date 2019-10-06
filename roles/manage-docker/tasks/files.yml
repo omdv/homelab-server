@@ -4,7 +4,7 @@
     name: files
     state: started
     restart: yes
-    image: filebrowser/filebrowser
+    image: filebrowser/filebrowser:latest
     restart_policy: always
     ports:
       - 8002:80
