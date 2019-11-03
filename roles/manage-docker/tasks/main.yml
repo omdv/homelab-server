@@ -39,36 +39,19 @@
     - watchtower
     - docker
 
-# - import_tasks: launchpanel.yml
-#   tags:
-#     - launchpanel
-#     - docker
-
-# - import_tasks: stacks.yml
-#   tags:
-#     - stacks
-#     - docker
+- import_tasks: stacks.yml
+  tags:
+    - stacks
+    - docker
 
 # - import_tasks: books.yml
 #   tags:
 #     - books
 #     - docker
 
-# - import_tasks: traefik.yml
-#   tags:
-#     - traefik
-#     - docker
-#     - web
-
 # - import_tasks: seafile.yml
 #   tags:
 #     - seafile
-#     - docker
-#     - web
-
-# - import_tasks: nginx.yml
-#   tags:
-#     - nginx
 #     - docker
 #     - web
 

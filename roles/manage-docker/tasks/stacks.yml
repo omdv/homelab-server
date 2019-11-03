@@ -1,13 +1,4 @@
 ---
-- name: create persistent dir for the stack definitions
-  file:
-    path: "{{ config_volume }}/stacks"
-    state: directory
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    mode: 0755
-
-# ------- STACK SPECIFIC
 - name: create persistent dir for traefik
   file:
     path: "{{ config_volume }}/traefik"
@@ -47,31 +38,10 @@
     group: "{{ user }}"
   become: yes
 
-- name: create persistent dir for grafana
+- name: create persistent dir for jupyter
   file:
-    path: "{{ config_volume }}/grafana"
+    path: "{{ config_volume }}/jupyter"
     state: directory
-    owner: 472
-    group: 472
-  become: yes
-
-- file:
-    path: "{{ config_volume }}/grafana/plugins"
-    state: directory
-    mode: 0755
-    owner: 472
-    group: 472
-  become: yes
-
-# RUN STACK
-
-- name: copy stack definition
-  template:
-    src: stacks-whoami.yml
-    dest: "{{ config_volume }}/stacks/stacks-whoami.yml"
     owner: "{{ user }}"
-    group: docker
-    force: yes
-
-- name: deploy stack
-  shell: "docker-compose -p whoami -f {{ config_volume }}/stacks/stacks-whoami.yml up -d --build"
+    group: "{{ user }}"
+  become: yes
