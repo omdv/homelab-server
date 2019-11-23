@@ -1,0 +1,50 @@
+- name: create persistent dir for jupyter
+  file:
+    path: "{{ config_volume }}/jupyter"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- name: launch jupyter container
+  shell: docker run -d --gpus all \ 
+    -p 8006:8888 \
+    --name jupyter \
+    --label launchpanel.enabled=yes \
+    --label launchpanel.ip=192.168.0.24 \
+    --label launchpanel.name=jupyter \
+    --label launchpanel.port=8006 \
+    jupyter/scipy-notebook:latest \
+    start.sh jupyter lab --LabApp.token=''
+
+# docker run --gpus all --name test-nvidia pytorch/pytorch:latest python -c "import torch;print(torch.cuda.is_available())"
+
+
+# - name: start jupyter container
+#   docker_container:
+#     name: jupyter
+#     image: jupyter/scipy-notebook:latest
+#     state: started
+#     restart_policy: always
+#     command: start.sh jupyter lab --LabApp.token=''
+#     labels:
+#       launchpanel.enabled: yes
+#       launchpanel.ip: 192.168.0.24
+#       launchpanel.name: jupyter
+#       launchpanel.port: 8006
+#       traefik.enable: true
+#       # traefik.http.routers.jupyter.rule: Host(`jpt.${TLD}`)
+#       # traefik.http.middlewares.https_redirect.redirectscheme.scheme: https
+#       # traefik.http.routers.jupyter.middlewares: https_redirect
+#       # traefik.http.routers.jupyter-secured.tls
+#       # traefik.http.routers.jupyter-secured.rule: Host(`jpt.${TLD}`)
+#       # traefik.http.routers.jupyter-secured.tls.certresolver: mytls
+#       # traefik.http.routers.jupyter-secured.entrypoints: https
+#       # traefik.http.middlewares.auth.forwardauth.address: http://traefik-forward-auth:4181
+#       # traefik.http.middlewares.auth.forwardauth.trustForwardHeader: true
+#       # traefik.http.middlewares.auth.forwardauth.authResponseHeaders: X-Forwarded-User
+#       # traefik.http.routers.jupyter-secured.middlewares: auth@docker
+#     volumes:
+#       - "{{ config_volume }}/jupyter:/home/jovyan/"
+#     ports:
+#       - 8006:8888

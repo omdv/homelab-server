@@ -75,3 +75,14 @@
     regexp: '^om'
     line: 'om ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
+
+# ----------- install nvidia-container-toolkit
+- name: install nvidia-container-toolkit
+  shell: distribution=$(. /etc/os-release;echo $ID$VERSION_ID) &&
+    curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - &&
+    curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list &&
+    apt-get update && 
+    apt-get install -y nvidia-container-toolkit
+
+- name: restart docker
+  shell: systemctl restart docker

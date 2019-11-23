@@ -7,6 +7,7 @@
     - vim
     - ubuntu-drivers-common
     - apache2-utils
+    - unattended-upgrades
 
 - name: install required pip modules
   pip:

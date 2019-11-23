@@ -39,14 +39,19 @@
     - watchtower
     - docker
 
+- import_tasks: jupyter.yml
+  tags:
+    - jupyter
+    - docker
+
 - import_tasks: stacks.yml
   tags:
     - stacks
     - docker
 
-# - import_tasks: books.yml
+# - import_tasks: calibre.yml
 #   tags:
-#     - books
+#     - calibre
 #     - docker
 
 # - import_tasks: seafile.yml

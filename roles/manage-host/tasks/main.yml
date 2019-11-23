@@ -40,6 +40,7 @@
 - import_tasks: docker.yml
   tags:
     - docker
+    - docker-core
 
 - import_tasks: backup.yml
   tags:
@@ -57,3 +58,7 @@
 - import_tasks: kubernetes.yml
   tags:
     - kubernetes
+
+- import_tasks: calibre.yml
+  tags:
+    - calibre

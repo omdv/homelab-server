@@ -7,48 +7,72 @@
     group: "{{ user }}"
   become: yes
 
-- name: start calibre-rdp container
-  docker_container:
-    name: calibre-rdp
-    state: started
-    restart: yes
-    restart_policy: always
-    ports:
-      - 12080:8080
-    labels:
-      traefik.enable: "false"
-      launchpanel.enabled: "yes"
-      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
-      launchpanel.name: "calibre-rdp"
-      launchpanel.port: "12080"
-    image: aptalca/docker-rdp-calibre:latest
-    volumes:
-      - "{{ config_volume }}/calibre:/config"
-    env:
-      TZ: America/New_York
-      EDGE: "0"
-      WIDTH: "1280"
-      HEIGHT: "720"
+- name: create persistent dir for books
+  file:
+    path: "{{ book_volume }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
 
-- name: start calibre-web container
-  docker_container:
-    name: calibre-web
-    state: started
-    restart: yes
-    restart_policy: always
-    ports:
-      - 8083:8083
-    labels:
-      traefik.enable: "false"
-      launchpanel.enabled: "yes"
-      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
-      launchpanel.name: "calibre-web"
-      launchpanel.port: "8083"
-    image: linuxserver/calibre-web:latest
-    volumes:
-      - "{{ config_volume }}/calibre/config/books:/books"
-      - "{{ config_volume }}/calibre:/config"
-    env:
-      TZ: America/New_York
-      PUID: 1000
-      PGID: 1000
+# - name: start calibre-web container
+#   shell: docker create \
+#       --name=calibre-web \
+#       -e PUID=1000 \
+#       -e PGID=1000 \
+#       -e America/Chicago \
+#       -p 8006:8006 \
+#       -v "{{ book_volume }}:/books"
+#       -v "{{ config_volume }}/calibre:/config"
+#       --restart unless-stopped \
+#       --label launchpanel.enabled="yes" \
+#       --label launchpanel.ip="{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}" \
+#       --label launchpanel.name="calibre" \
+#       --label launchpanel.port="8006" \
+#       --label traefik.enable=true \
+#       --label traefik.http.routers.books.rule=Host(`books.${TLD}`) \
+#       --label traefik.http.middlewares.https_redirect.redirectscheme.scheme=https \
+#       --label traefik.http.routers.books.middlewares=https_redirect \
+#       --label traefik.http.routers.books-secured.tls \
+#       --label traefik.http.routers.books-secured.rule=Host(`books.${TLD}`) \
+#       --label traefik.http.routers.books-secured.tls.certresolver=mytls \
+#       --label traefik.http.routers.books-secured.entrypoints=https \
+#       --label traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181 \
+#       --label traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true \
+#       --label traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User \
+#       --label traefik.http.routers.books-secured.middlewares=auth@docker \
+#       linuxserver/calibre-web:latest
+
+# - name: start calibre-web container
+#   docker_container:
+#     name: calibre-web
+#     state: started
+#     restart: yes
+#     restart_policy: always
+#     ports:
+#       - 8083:8083
+#     labels:
+#       launchpanel.enabled: "yes"
+#       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+#       launchpanel.name: "calibre"
+#       launchpanel.port: "8083"
+#       traefik.enable: "true"
+#       traefik.http.routers.books.rule: Host(`books.${TLD}`)
+#       traefik.http.middlewares.https_redirect.redirectscheme.scheme: https
+#       traefik.http.routers.books.middlewares: https_redirect
+#       traefik.http.routers.books-secured.tls: "true"
+#       traefik.http.routers.books-secured.rule: Host(`books.${TLD}`)
+#       traefik.http.routers.books-secured.tls.certresolver: mytls
+#       traefik.http.routers.books-secured.entrypoints: https
+#       traefik.http.middlewares.auth.forwardauth.address: http://traefik-forward-auth:4181
+#       traefik.http.middlewares.auth.forwardauth.trustForwardHeader: "true"
+#       traefik.http.middlewares.auth.forwardauth.authResponseHeaders: X-Forwarded-User
+#       traefik.http.routers.books-secured.middlewares: auth@docker
+#     image: linuxserver/calibre-web:latest
+#     volumes:
+#       - "{{ book_volume }}:/books"
+#       - "{{ config_volume }}/calibre:/config"
+#     env:
+#       TZ: America/New_York
+#       PUID: "1000"
+#       PGID: "1000"

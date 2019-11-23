@@ -38,9 +38,17 @@
     group: "{{ user }}"
   become: yes
 
-- name: create persistent dir for jupyter
+- name: create persistent dir for calibre
   file:
-    path: "{{ config_volume }}/jupyter"
+    path: "{{ config_volume }}/calibre"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- name: create persistent dir for books
+  file:
+    path: "{{ book_volume }}"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"

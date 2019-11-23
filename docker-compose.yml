@@ -6,8 +6,9 @@ services:
     image: "traefik:latest"
     container_name: "traefik"
     command:
+      # - "--log.level=DEBUG"
       - "--metrics.influxdb=true"
-      - "--metrics.influxdb.address=localhost:8086"
+      - "--metrics.influxdb.address=192.168.0.24:8086"
       - "--metrics.influxdb.database=traefik"
       - "--global.sendanonymoususage=false"
       - "--api.insecure=true"
@@ -32,35 +33,35 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     restart: always
 
-  whoami:
-    image: "containous/whoami"
-    container_name: "whoami"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.${TLD}`)"
-      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.whoami.middlewares=https_redirect"
-      - "traefik.http.routers.whoami-secured.rule=Host(`whoami.${TLD}`)"
-      - "traefik.http.routers.whoami-secured.tls.certresolver=mytls"
-      - "traefik.http.routers.whoami-secured.tls"
-    restart: always
+  # whoami:
+  #   image: "containous/whoami"
+  #   container_name: "whoami"
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.whoami.rule=Host(`whoami.${TLD}`)"
+  #     - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+  #     - "traefik.http.routers.whoami.middlewares=https_redirect"
+  #     - "traefik.http.routers.whoami-secured.rule=Host(`whoami.${TLD}`)"
+  #     - "traefik.http.routers.whoami-secured.tls.certresolver=mytls"
+  #     - "traefik.http.routers.whoami-secured.tls"
+  #   restart: always
 
-  hidden:
-    image: "containous/whoami"
-    container_name: "hidden"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.hidden.rule=Host(`hidden.${TLD}`)"
-      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.hidden.middlewares=https_redirect"
-      - "traefik.http.routers.hidden-secured.rule=Host(`hidden.${TLD}`)"
-      - "traefik.http.routers.hidden-secured.tls.certresolver=mytls"
-      - "traefik.http.routers.hidden-secured.tls"
-      - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
-      - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
-      - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
-      - "traefik.http.routers.hidden-secured.middlewares=auth@docker"
-    restart: always
+  # hidden:
+  #   image: "containous/whoami"
+  #   container_name: "hidden"
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.hidden.rule=Host(`hidden.${TLD}`)"
+  #     - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+  #     - "traefik.http.routers.hidden.middlewares=https_redirect"
+  #     - "traefik.http.routers.hidden-secured.rule=Host(`hidden.${TLD}`)"
+  #     - "traefik.http.routers.hidden-secured.tls.certresolver=mytls"
+  #     - "traefik.http.routers.hidden-secured.tls"
+  #     - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
+  #     - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
+  #     - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+  #     - "traefik.http.routers.hidden-secured.middlewares=auth@docker"
+  #   restart: always
 
   traefik-forward-auth:
     image: omdv/traefik-forward-auth:2.0.1
@@ -88,33 +89,6 @@ services:
       - "traefik.http.routers.forward-auth-secured.middlewares=auth@docker"
     restart: always
 
-  jupyter:
-    image: jupyter/scipy-notebook:latest
-    container_name: "jupyter"
-    labels:
-      - "launchpanel.enabled=yes"
-      - "launchpanel.ip=192.168.0.24"
-      - "launchpanel.name=jupyter"
-      - "launchpanel.port=8006"
-      - "traefik.enable=true"
-      - "traefik.http.routers.jupyter.rule=Host(`jpt.${TLD}`)"
-      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.jupyter.middlewares=https_redirect"
-      - "traefik.http.routers.jupyter-secured.tls"
-      - "traefik.http.routers.jupyter-secured.rule=Host(`jpt.${TLD}`)"
-      - "traefik.http.routers.jupyter-secured.tls.certresolver=mytls"
-      - "traefik.http.routers.jupyter-secured.entrypoints=https"
-      - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
-      - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
-      - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
-      - "traefik.http.routers.jupyter-secured.middlewares=auth@docker"
-    command: start.sh jupyter lab --LabApp.token=''
-    ports:
-      - 8006:8888
-    volumes:
-      - "/pool/config/jupyter:/home/jovyan/"
-    restart: always
-
   panel:
     image: omdv/docker-launch-panel:alpine
     container_name: "panel"
@@ -133,6 +107,37 @@ services:
       - "traefik.http.routers.panel-secured.middlewares=auth@docker"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: always
+
+  calibre:
+    image: linuxserver/calibre-web:latest
+    container_name: "books"
+    ports:
+      - "8006:8083"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    labels:
+      - "launchpanel.enabled=yes"
+      - "launchpanel.ip=192.168.0.24"
+      - "launchpanel.name=calibre"
+      - "launchpanel.port=8006"
+      - "traefik.enable=true"
+      - "traefik.http.routers.books.rule=Host(`books.${TLD}`)"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.books.middlewares=https_redirect"
+      - "traefik.http.routers.books-secured.tls"
+      - "traefik.http.routers.books-secured.rule=Host(`books.${TLD}`)"
+      - "traefik.http.routers.books-secured.tls.certresolver=mytls"
+      - "traefik.http.routers.books-secured.entrypoints=https"
+      - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
+      - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+      - "traefik.http.routers.books-secured.middlewares=auth@docker"
+    volumes:
+      - "/pool/books:/books"
+      - "/pool/config/calibre:/config"
     restart: always
 
   nginx:
