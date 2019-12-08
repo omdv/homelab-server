@@ -1,4 +1,5 @@
-- name: create persistent dir for jupyter
+---
+- name: create persistent dir for jupyter config
   file:
     path: "{{ config_volume }}/jupyter"
     state: directory
@@ -6,19 +7,26 @@
     group: "{{ user }}"
   become: yes
 
-- name: launch jupyter container
-  shell: docker run -d --gpus all \ 
-    -p 8006:8888 \
-    --name jupyter \
-    --label launchpanel.enabled=yes \
-    --label launchpanel.ip=192.168.0.24 \
-    --label launchpanel.name=jupyter \
-    --label launchpanel.port=8006 \
-    jupyter/scipy-notebook:latest \
-    start.sh jupyter lab --LabApp.token=''
+- name: create persistent dir for jupyter storage
+  file:
+    path: "{{ jupyter_volume }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
 
-# docker run --gpus all --name test-nvidia pytorch/pytorch:latest python -c "import torch;print(torch.cuda.is_available())"
-
+# - name: launch GPU jupyter container
+#   shell: docker run -d --gpus all --ipc=host \ 
+#     -p 8007:8888 \
+#     --name jupyter \
+#     --label launchpanel.enabled=yes \
+#     --label launchpanel.ip=192.168.0.24 \
+#     --label launchpanel.name=jupyter \
+#     --label launchpanel.port=8007 \
+#     -v /pool/jupyter:/data \
+#     -v /pool/config/jupyter:/config \
+#     omdv/deepo:10.2 \
+#     jupyter-lab --no-browser --ip=0.0.0.0 --allow-root --NotebookApp.token= --notebook-dir='/data'
 
 # - name: start jupyter container
 #   docker_container:

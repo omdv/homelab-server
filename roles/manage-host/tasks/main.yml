@@ -33,9 +33,9 @@
   tags:
     - conda
 
-- import_tasks: databases.yml
+- import_tasks: influxdb.yml
   tags:
-    - databases
+    - influxdb
 
 - import_tasks: docker.yml
   tags:

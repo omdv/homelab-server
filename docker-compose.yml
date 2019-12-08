@@ -140,6 +140,33 @@ services:
       - "/pool/config/calibre:/config"
     restart: always
 
+  jupyter:
+    image: jupyter/scipy-notebook:latest
+    container_name: "jupyter"
+    ports:
+      - "8007:8888"
+    labels:
+      - "launchpanel.enabled=yes"
+      - "launchpanel.ip=192.168.0.24"
+      - "launchpanel.name=jupyter"
+      - "launchpanel.port=8007"
+      - "traefik.enable=true"
+      - "traefik.http.routers.jpt.rule=Host(`jpt.${TLD}`)"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.jpt.middlewares=https_redirect"
+      - "traefik.http.routers.jpt-secured.tls"
+      - "traefik.http.routers.jpt-secured.rule=Host(`jpt.${TLD}`)"
+      - "traefik.http.routers.jpt-secured.tls.certresolver=mytls"
+      - "traefik.http.routers.jpt-secured.entrypoints=https"
+      - "traefik.http.middlewares.auth.forwardauth.address=http://traefik-forward-auth:4181"
+      - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+      - "traefik.http.routers.jpt-secured.middlewares=auth@docker"
+    volumes:
+      - /pool/jupyter:/home/jovyan/
+    command: start.sh jupyter lab
+    restart: always
+
   nginx:
     image: nginx:alpine
     container_name: "nginx"

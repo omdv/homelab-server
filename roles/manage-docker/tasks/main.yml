@@ -14,11 +14,6 @@
     - torrent
     - docker
 
-- import_tasks: files.yml
-  tags:
-    - files
-    - docker
-
 - import_tasks: cloudcmd.yml
   tags:
     - cloudcmd
@@ -48,6 +43,12 @@
   tags:
     - stacks
     - docker
+
+# - import_tasks: files.yml
+#   tags:
+#     - files
+#     - docker
+
 
 # - import_tasks: calibre.yml
 #   tags:
