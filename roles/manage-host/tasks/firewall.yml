@@ -1,6 +1,7 @@
 ---
 - name: UFW reset
-  ufw: state=reset
+  ufw:
+    state: reset
 
 - name: UFW access ports
   ufw:
@@ -14,10 +15,14 @@
     - {port: "80", comment: http}
     - {port: "443", comment: https}
     - {port: "2376", comment: docker}
-    - {port: "6443", comment: k8s}
+    - {port: "5432", comment: postgres}
+    # - {port: "6443", comment: k8s}
     - {port: "8086", comment: influxdb}
+    - {port: "8009", comment: homelab}
     - {port: "32400", comment: plex}
 
-
 - name: UFW enable
-  ufw: state=enabled policy=reject logging=medium comment=firewalled
+  ufw:
+    state: enabled
+    policy: deny
+    logging: medium

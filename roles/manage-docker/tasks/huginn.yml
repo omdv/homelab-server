@@ -1,0 +1,56 @@
+---
+# - name: create database for huginn
+#   postgresql_db:
+#     name: huginn
+#     login_password: "{{ postgres_pass }}"
+
+# - name: add huginn user
+#   postgresql_user:
+#     db: huginn
+#     name: huginn
+#     priv: "ALL"
+
+# - name: create database for huginn
+#   shell: export PGPASSWORD="{{ postgres_pass }}" && \
+#     psql -h localhost -U postgres -c "drop database huginn;" && \
+#     psql -h localhost -U postgres -c "drop user huginn;" && \
+#     psql -h localhost -U postgres -c "create database huginn;" && \
+#     psql -h localhost -U postgres -c "create user huginn;" && \
+#     psql -h localhost -U postgres -c "alter user huginn with encrypted password 'huginn';" && \
+#     psql -h localhost -U postgres -c "grant all privileges on database huginn to huginn;"
+
+- name: create persistent dir for huginn
+  file:
+    path: "{{ config_volume }}/huginn"
+    state: directory
+    owner: "1001"
+    group: "1001"
+    mode: "0775"
+  become: yes
+
+- name: start huginn
+  docker_container:
+    name: huginn
+    state: started
+    restart: yes
+    restart_policy: always
+    ports:
+      - 8009:3000
+    env:
+      SKIP_INVITATION_CODE: "true"
+      SMTP_DOMAIN: "fastmail.com"
+      SMTP_USER_NAME: "{{ notify_smtp_user }}"
+      SMTP_PASSWORD: "{{ notify_smtp_pass }}"
+      SMTP_SERVER: "{{ notify_smtp_server }}"
+      SMTP_PORT: "587"
+      SMTP_AUTHENTICATION: plain
+      SMTP_ENABLE_STARTTLS_AUTO: "true"
+    labels:
+      traefik.enable: "false"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "huginn"
+      launchpanel.port: "8009"
+    image: huginn/huginn:latest
+    volumes:
+      - "{{ config_volume}}/huginn:/var/lib/mysql"

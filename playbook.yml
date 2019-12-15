@@ -15,7 +15,7 @@
     - psql_db_user: test
     - psql_db_name: test
     - psql_db_password: test
-    - database_location: /pool/database
+    - database_location: /pool/databases
     - backup_pool: /pool/backup
     - backup_repos:
       - dir: repo-derp
@@ -49,6 +49,9 @@
     - docker_pass: "{{ lookup('env','DOCKER_PASS') }}"
     - caldav_user: "{{ lookup('env','HOMELAB_CALDAV_USER') }}"
     - caldav_pass: "{{ lookup('env','HOMELAB_CALDAV_PASS') }}"
+    - postgres_user: "{{ lookup('env','HOMELAB_POSTGRES_USER') }}"
+    - postgres_pass: "{{ lookup('env','HOMELAB_POSTGRES_PASS') }}"
+
 
 - name: -- LXD SETUP --
   hosts: server

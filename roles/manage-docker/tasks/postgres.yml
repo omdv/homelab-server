@@ -1,0 +1,55 @@
+---
+- name: create persistent dir for postgres
+  file:
+    path: "{{ data_volume }}/postgres"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- name: start postgres container
+  docker_container:
+    name: postgres
+    state: started
+    restart: yes
+    restart_policy: always
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "{{ postgres_pass }}"
+    ports:
+      - 5432:5432
+    labels:
+      traefik.enable: "false"
+    image: postgres:alpine
+    volumes:
+      - "{{ data_volume }}/postgres:/var/lib/postgresql/data"
+
+- name: create persistent dir for pgadmin
+  file:
+    path: "{{ config_volume }}/pgadmin"
+    state: directory
+    owner: "{{ user }}"
+    group: "5050"
+    mode: '0775'
+  become: yes
+
+- name: start pgadmin4
+  docker_container:
+    name: pgadmin
+    state: started
+    restart: yes
+    restart_policy: always
+    env:
+      PGADMIN_DEFAULT_EMAIL: me@local
+      PGADMIN_DEFAULT_PASSWORD: none
+    ports:
+      - 8008:80
+    labels:
+      traefik.enable: "false"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "pgadmin"
+      launchpanel.port: "8008"
+    image: dpage/pgadmin4:latest
+    volumes:
+      - "{{ config_volume}}/pgadmin:/var/lib/pgadmin"

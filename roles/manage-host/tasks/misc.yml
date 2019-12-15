@@ -8,6 +8,7 @@
     - ubuntu-drivers-common
     - apache2-utils
     - unattended-upgrades
+    - postgresql-client
 
 - name: install required pip modules
   pip:

@@ -28,7 +28,9 @@ app.get('/', function (req, res) {
           status: ft.Status
         }));
       res.render('containers', {
-        containers: filtered
+        containers: filtered.sort(function(a, b) {
+          return parseInt(a.port) - parseInt(b.port);
+        })
       })
     })
     .catch(error => {

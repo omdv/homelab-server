@@ -39,6 +39,16 @@
     - jupyter
     - docker
 
+- import_tasks: postgres.yml
+  tags:
+    - postgres
+    - docker
+
+- import_tasks: huginn.yml
+  tags:
+    - huginn
+    - docker
+
 - import_tasks: stacks.yml
   tags:
     - stacks
