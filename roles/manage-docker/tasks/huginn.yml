@@ -1,24 +1,4 @@
 ---
-# - name: create database for huginn
-#   postgresql_db:
-#     name: huginn
-#     login_password: "{{ postgres_pass }}"
-
-# - name: add huginn user
-#   postgresql_user:
-#     db: huginn
-#     name: huginn
-#     priv: "ALL"
-
-# - name: create database for huginn
-#   shell: export PGPASSWORD="{{ postgres_pass }}" && \
-#     psql -h localhost -U postgres -c "drop database huginn;" && \
-#     psql -h localhost -U postgres -c "drop user huginn;" && \
-#     psql -h localhost -U postgres -c "create database huginn;" && \
-#     psql -h localhost -U postgres -c "create user huginn;" && \
-#     psql -h localhost -U postgres -c "alter user huginn with encrypted password 'huginn';" && \
-#     psql -h localhost -U postgres -c "grant all privileges on database huginn to huginn;"
-
 - name: create persistent dir for huginn
   file:
     path: "{{ config_volume }}/huginn"

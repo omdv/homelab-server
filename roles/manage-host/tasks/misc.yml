@@ -9,9 +9,11 @@
     - apache2-utils
     - unattended-upgrades
     - postgresql-client
+    - mongodb-clients
 
 - name: install required pip modules
   pip:
     name:
       - passlib
       - bcrypt
+      - pymongo

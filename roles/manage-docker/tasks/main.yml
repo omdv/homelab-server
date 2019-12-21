@@ -44,9 +44,24 @@
     - postgres
     - docker
 
+- import_tasks: mongo.yml
+  tags:
+    - mongo
+    - docker
+
+- import_tasks: redis.yml
+  tags:
+    - redis
+    - docker
+
 - import_tasks: huginn.yml
   tags:
     - huginn
+    - docker
+
+- import_tasks: mayan.yml
+  tags:
+    - mayan
     - docker
 
 - import_tasks: stacks.yml

@@ -1,0 +1,90 @@
+---
+- name: create postgres database and user for Mayan
+  shell: export PGPASSWORD="{{ postgres_pass }}" && \
+    psql -h localhost -U postgres -c "create database mayan;" && \
+    psql -h localhost -U postgres -c "create user mayan;" && \
+    psql -h localhost -U postgres -c "alter user mayan with encrypted password 'mayanuserpass';" && \
+    psql -h localhost -U postgres -c "grant all privileges on database mayan to mayan;"
+  ignore_errors: yes
+
+- name: create persistent dir for documents
+  file:
+    path: "{{ pool }}/documents"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: "0755"
+  become: yes
+
+- name: create persistent dir for scanned files
+  file:
+    path: "{{ pool }}/documents/scanned_files"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: "0755"
+  become: yes
+
+- name: create persistent dir for scanned files
+  file:
+    path: "{{ pool }}/documents/watched_files"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: "0755"
+  become: yes
+
+- name: start mayan edms
+  docker_container:
+    name: mayan
+    state: started
+    restart: yes
+    restart_policy: always
+    ports:
+      - 8010:8000
+    env:
+      MAYAN_DATABASE_ENGINE: django.db.backends.postgresql
+      MAYAN_DATABASE_HOST: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      MAYAN_DATABASE_NAME: mayan
+      MAYAN_DATABASE_PASSWORD: mayanuserpass
+      MAYAN_DATABASE_USER: mayan
+      MAYAN_DATABASE_CONN_MAX_AGE: "0"
+    labels:
+      traefik.enable: "false"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "mayan"
+      launchpanel.port: "8010"
+    image: mayanedms/mayanedms:latest
+    volumes:
+      - "{{ pool }}/documents:/var/lib/mayan"
+      - "{{ pool }}/scanned_files:/scanned_files"
+
+- name: start mayan edms
+  docker_container:
+    name: mayan
+    state: started
+    restart: yes
+    restart_policy: always
+    ports:
+      - 8010:8000
+    env:
+      MAYAN_DATABASE_ENGINE: django.db.backends.postgresql
+      MAYAN_DATABASE_HOST: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      MAYAN_DATABASE_NAME: mayan
+      MAYAN_DATABASE_PASSWORD: mayanuserpass
+      MAYAN_DATABASE_USER: mayan
+      MAYAN_DATABASE_CONN_MAX_AGE: "0"
+      MAYAN_CELERY_BROKER_URL: "redis://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:6379/0"
+      MAYAN_CELERY_RESULT_BACKEND: "redis://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:6379/1"
+    labels:
+      traefik.enable: "false"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "mayan"
+      launchpanel.port: "8010"
+    image: mayanedms/mayanedms:latest
+    volumes:
+      - "{{ pool }}/documents:/var/lib/mayan"
+      - "{{ pool }}/documents/scanned_files:/scanned_files"
+      - "{{ pool }}/documents/watched_files:/watched_files"

@@ -14,6 +14,14 @@
     group: "{{ user }}"
     mode: 0600
 
+- name: create empty access.log
+  file:
+    state: touch
+    path: "{{ config_volume }}/traefik/access.log"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0664
+
 - name: create persistent dir for nginx
   file:
     path: "{{ config_volume }}/nginx"

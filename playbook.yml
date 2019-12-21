@@ -32,13 +32,13 @@
   roles:
     - manage-docker
   vars:
+    - user: om
     - pool: /pool
     - config_volume: /pool/config
     - data_volume: /pool/databases
     - media_volume: /pool/media
     - book_volume: /pool/books
     - jupyter_volume: /pool/jupyter
-    - user: om
     - samba_user: "{{ lookup('env','HOMELAB_SAMBA_USER') }}"
     - samba_pass: "{{ lookup('env','HOMELAB_SAMBA_PASSWORD') }}"
     - notify_email: "{{ lookup('env','HOMELAB_NOTIFY_EMAIL') }}"
@@ -49,9 +49,8 @@
     - docker_pass: "{{ lookup('env','DOCKER_PASS') }}"
     - caldav_user: "{{ lookup('env','HOMELAB_CALDAV_USER') }}"
     - caldav_pass: "{{ lookup('env','HOMELAB_CALDAV_PASS') }}"
-    - postgres_user: "{{ lookup('env','HOMELAB_POSTGRES_USER') }}"
     - postgres_pass: "{{ lookup('env','HOMELAB_POSTGRES_PASS') }}"
-
+    - mongo_pass: "{{ lookup('env','HOMELAB_MONGO_PASS') }}"
 
 - name: -- LXD SETUP --
   hosts: server

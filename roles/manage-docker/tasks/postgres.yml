@@ -53,3 +53,14 @@
     image: dpage/pgadmin4:latest
     volumes:
       - "{{ config_volume}}/pgadmin:/var/lib/pgadmin"
+
+- name: create databases and users
+  shell: export PGPASSWORD="{{ postgres_pass }}" && \
+    psql -h localhost -U postgres -c "create database {{ item.db }};" && \
+    psql -h localhost -U postgres -c "create user {{ item.user }};" && \
+    psql -h localhost -U postgres -c "alter user {{ item.user }} with encrypted password '{{ item.pass }}';" && \
+    psql -h localhost -U postgres -c "grant all privileges on database {{ item.db }} to {{ item.user }};"
+  ignore_errors: yes
+  with_items:
+    - {db: nhl, user: nhl, pass: nhl}
+    - {db: mayan, user: mayan, pass: mayanuserpass}

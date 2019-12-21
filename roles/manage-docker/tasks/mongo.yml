@@ -1,0 +1,60 @@
+---
+- name: create persistent dir for mongo
+  file:
+    path: "{{ data_volume }}/mongo"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- name: start mongo container
+  docker_container:
+    name: mongo
+    state: started
+    restart: yes
+    restart_policy: always
+    env:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: "{{ mongo_pass }}"
+    ports:
+      - 27017:27017
+    labels:
+      traefik.enable: "false"
+    image: mongo:latest
+    volumes:
+      - "{{ data_volume }}/mongo:/data/db"
+
+- name: create dbs and users
+  mongodb_user:
+    login_host: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    login_port: "27017"
+    login_database: admin
+    login_user: admin
+    login_password: "{{ mongo_pass }}"
+    database: "{{ item.db }}"
+    user: "{{ item.user }}"
+    password: "{{ item.pass }}"
+    roles: "{{ item.roles }}"
+    state: present
+  with_items:
+    - {db: nhl, user: nhl, pass: nhl, roles: "readWrite,dbAdmin" }
+
+- name: start mongo express
+  docker_container:
+    name: mongo-express
+    state: started
+    restart: yes
+    restart_policy: always
+    env:
+      ME_CONFIG_MONGODB_SERVER: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: "{{ mongo_pass }}"
+    ports:
+      - 8011:8081
+    labels:
+      traefik.enable: "false"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "mongo"
+      launchpanel.port: "8011"
+    image: mongo-express:latest
