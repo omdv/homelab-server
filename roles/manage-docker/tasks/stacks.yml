@@ -6,21 +6,21 @@
     owner: "{{ user }}"
     group: "{{ user }}"
 
-- name: create empty acme.json
-  file:
-    state: touch
-    path: "{{ config_volume }}/traefik/acme.json"
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    mode: 0600
+# - name: create empty acme.json
+#   file:
+#     state: touch
+#     path: "{{ config_volume }}/traefik/acme.json"
+#     owner: "{{ user }}"
+#     group: "{{ user }}"
+#     mode: 0600
 
-- name: create empty access.log
-  file:
-    state: touch
-    path: "{{ config_volume }}/traefik/access.log"
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    mode: 0664
+# - name: create empty access.log
+#   file:
+#     state: touch
+#     path: "{{ config_volume }}/traefik/access.log"
+#     owner: "{{ user }}"
+#     group: "{{ user }}"
+#     mode: 0664
 
 - name: create persistent dir for nginx
   file:
@@ -37,6 +37,7 @@
     owner: "{{ user }}"
     group: "{{ user }}"
     force: yes
+    mode: 0666
 
 - name: create persistent dir for seafile
   file:

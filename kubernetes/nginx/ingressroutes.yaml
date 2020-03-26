@@ -1,0 +1,32 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nginx-http
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`e2.pe`)
+      kind: Rule
+      services:
+        - name: nginx
+          port: 80
+      middlewares:
+        - name: https-redirect
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nginx-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`e2.pe`)
+      kind: Rule
+      services:
+        - name: nginx
+          port: 80
+  tls:
+    certResolver: default

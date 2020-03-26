@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-traefik
+spec:
+  capacity:
+    storage: 1Gi
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  hostPath:
+    path: /pool/config/traefik
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-traefik
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-traefik

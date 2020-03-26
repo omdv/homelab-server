@@ -25,3 +25,10 @@
       - "{{ config_volume }}/plex/config:/config"
       - "{{ config_volume }}/plex/transcode:/transcode"
       - "{{ media_volume }}:/data"
+
+# - name: install webtools bundle
+#   unarchive:
+#     src: https://github.com/ukdtom/WebTools.bundle/releases/download/3.0.0/WebTools.bundle.zip
+#     dest: "{{ config_volume }}/plex/config/Library/Application Support/Plex Media Server/Plug-ins"
+#     remote_src: yes
+#   become: yes

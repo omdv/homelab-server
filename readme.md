@@ -1,3 +1,24 @@
+# Homelab configuration
+Ansible-based provisioning of host system (Ubuntu). Key features:
+- zfs and networking
+- backup
+- system monitoring
+- firewall
+- email for system notifications
+- k8s and docker
+
+Docker-based services:
+- plex
+- transmission
+- calibre
+- databases
+- jupyter
+
+Kubernetes (k3s) services:
+- Traefik ingress
+- nginx
+
+
 Expected environment variables on the host running ansible:
 - UBUNTU_CANONICAL_TOKEN
 - HOMELAB_ROOT_PASS

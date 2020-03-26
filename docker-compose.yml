@@ -36,6 +36,19 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     restart: always
 
+  whoami:
+    image: "containous/whoami"
+    container_name: "whoami"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoareyou.${TLD}`)"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.whoami.middlewares=https_redirect"
+      - "traefik.http.routers.whoami-secured.rule=Host(`whoareyou.${TLD}`)"
+      - "traefik.http.routers.whoami-secured.tls.certresolver=mytls"
+      - "traefik.http.routers.whoami-secured.tls"
+    restart: always
+
   traefik-forward-auth:
     image: omdv/traefik-forward-auth:2.0.1
     container_name: "traefik-forward-auth"

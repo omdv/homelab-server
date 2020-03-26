@@ -63,4 +63,3 @@
   ignore_errors: yes
   with_items:
     - {db: nhl, user: nhl, pass: nhl}
-    - {db: mayan, user: mayan, pass: mayanuserpass}

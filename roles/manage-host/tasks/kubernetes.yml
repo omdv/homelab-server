@@ -1,7 +1,6 @@
 ---
 - name: install k3s
-  shell: curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644
-  # shell: curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy traefik servicelb" sh -s - --write-kubeconfig-mode 644
+  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy traefik servicelb" sh -s - --write-kubeconfig-mode 644
   args:
     warn: false
 
@@ -19,3 +18,25 @@
     src: /etc/rancher/k3s/k3s.yaml
     dest: /Users/om/.kube/config
     flat: yes
+
+# - name: install microk8s
+#   shell: snap install microk8s --classic
+#   args:
+#     warn: false
+
+# - name: export config
+#   shell: "microk8s.kubectl config view --raw > /home/{{ user }}/.kube/config"
+#   args:
+#     warn: false
+
+# - name: Replace a localhost entry with our IP
+#   lineinfile:
+#     path: "/home/{{ user }}/.kube/config"
+#     regexp: 'https://127\.0\.0\.1'
+#     line: "    server: https://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:16443"
+
+# - name: fetch config file
+#   fetch:
+#     src: "/home/{{ user }}/.kube/config"
+#     dest: /Users/om/.kube/config
+#     flat: yes

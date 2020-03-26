@@ -10,6 +10,7 @@
     - unattended-upgrades
     - postgresql-client
     - mongodb-clients
+    - unzip
 
 - name: install required pip modules
   pip:

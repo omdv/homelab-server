@@ -17,6 +17,7 @@
     - {port: "2376", comment: docker}
     - {port: "5432", comment: postgres}
     - {port: "6379", comment: redis}
+    - {port: "6443", comment: k3s}
     - {port: "8086", comment: influxdb}
     - {port: "8009", comment: homelab}
     - {port: "27017", comment: mongo}

@@ -1,0 +1,8 @@
+---
+namespace: kube-system
+
+bases:
+  - generic
+  - traefik
+  - whoami
+  - nginx
