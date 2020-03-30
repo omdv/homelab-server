@@ -1,4 +1,7 @@
+---
 resources:
+  - policies.yaml
   - volumes.yaml
   - services.yaml
   - deployments.yaml
+  - middlewares.yaml

@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: traefik-forward-auth
+  name: traefik-forward-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik-forward-auth
+  template:
+    metadata:
+      labels:
+        app: traefik-forward-auth
+    spec:
+      containers:
+        - name: traefik-forward-auth
+          image: thomseddon/traefik-forward-auth:2
+          ports:
+            - containerPort: 4181
+              protocol: TCP
+          env:
+            - name: PROVIDERS_GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-auth
+                  key: CLIENT_ID
+            - name: PROVIDERS_GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-auth
+                  key: CLIENT_SECRET
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-auth
+                  key: SECRET
+            - name: AUTH_HOST
+              value: auth.e2.pe
+            - name: COOKIE_DOMAIN
+              value: e2.pe
+            - name: INSECURE_COOKIE
+              value: "false"
+            - name: WHITELIST
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-auth
+                  key: WHITELIST
+            - name: LIFETIME
+              value: "2592000"
+              # - name: LOG_LEVEL
+              #   value: debug

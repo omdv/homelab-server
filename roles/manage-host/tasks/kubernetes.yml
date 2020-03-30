@@ -1,6 +1,8 @@
 ---
 - name: install k3s
-  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy traefik servicelb" sh -s - --write-kubeconfig-mode 644
+  shell: curl -sfL https://get.k3s.io | \
+    INSTALL_K3S_EXEC="--disable traefik servicelb --disable local-storage --kube-apiserver-arg enable-admission-plugins=PodSecurityPolicy,NodeRestriction" \
+    sh -s - --write-kubeconfig-mode 644
   args:
     warn: false
 
@@ -17,7 +19,7 @@
   fetch:
     src: /etc/rancher/k3s/k3s.yaml
     dest: /Users/om/.kube/config
-    flat: yes
+    flat: true
 
 # - name: install microk8s
 #   shell: snap install microk8s --classic

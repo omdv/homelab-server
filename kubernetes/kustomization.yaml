@@ -2,7 +2,15 @@
 namespace: kube-system
 
 bases:
-  - generic
+  - general
   - traefik
   - whoami
   - nginx
+  - traefik-auth
+  - hidden
+  - panel
+
+secretGenerator:
+  - name: traefik-auth
+    env: traefik-auth.secret
+    type: Opaque

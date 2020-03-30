@@ -5,7 +5,7 @@ Ansible-based provisioning of host system (Ubuntu). Key features:
 - system monitoring
 - firewall
 - email for system notifications
-- k8s and docker
+- kubernetes and docker
 
 Docker-based services:
 - plex
@@ -15,21 +15,10 @@ Docker-based services:
 - jupyter
 
 Kubernetes (k3s) services:
+- Pod security policies and general hardening
 - Traefik ingress
-- nginx
-
-
-Expected environment variables on the host running ansible:
-- UBUNTU_CANONICAL_TOKEN
-- HOMELAB_ROOT_PASS
-- HOMELAB_SMTP_GMAIL_USER
-- HOMELAB_SMTP_GMAIL_PASS
-- HOMELAB_SMTP_FASTMAIL_USER
-- HOMELAB_SMTP_FASTMAIL_PASS
-- HOMELAB_NOTIFY_EMAIL
-- HOMELAB_BORG_PASSPHRASE
-- HOMELAB_SEAFILE_ADMIN
-- HOMELAB_SEAFILE_ADMIN_PASS
+- nginx (static website)
+- custom-built panel for local docker services
 
 Execution:
 ```
@@ -49,3 +38,6 @@ ansible-playbook playbook.yml  -i hosts --extra-vars "ansible_sudo_pass="$HOMELA
 1. Configure backup from laptop to homeserver
 2. Update No-IP to include sub hosts, done on a local router
 3. Prepare environment variables
+
+<!-- ### References: -->
+<!-- [SSO](https://itnext.io/how-to-implement-a-sso-middleware-for-traefik-v2-on-kubernetes-dcd9d45cc875) -->

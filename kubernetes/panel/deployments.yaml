@@ -1,0 +1,32 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: panel
+  labels:
+    app: panel
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panel
+  template:
+    metadata:
+      labels:
+        app: panel
+    spec:
+      containers:
+        - name: panel
+          image: omdv/docker-launch-panel:alpine
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          volumeMounts:
+            - name: dockersock
+              mountPath: "/var/run/docker.sock"
+              readOnly: true
+      volumes:
+        - name: dockersock
+          hostPath:
+            path: /var/run/docker.sock
