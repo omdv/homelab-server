@@ -1,0 +1,38 @@
+graph LR
+user[user] --> nginx
+user --> panel
+user --> books
+user --> seafile
+user --> jpt
+panel --> lo1
+panel --> lo2
+panel --> lo3
+panel --> lo4
+panel --> lo5
+subgraph k3s[Traefik.io / k3s.io]
+subgraph 1
+    subgraph sso[OAuth]
+    panel(panel.*:443)
+    books(books.*:443)
+    jpt(jpt.*:443)
+    seafile(seafile.*:443)
+    end
+nginx[*:443]
+end
+end
+subgraph dc[Ansible / Docker]
+subgraph 3
+    subgraph local[local]
+    subgraph 2
+        lo1(portainer :8001)
+        lo2(grafana :8003)
+        lo3(transmission :8004)
+        lo4(cloudcmd :8005)
+        lo5(pgadmin :8008)
+    end
+    end
+end
+end
+style local fill:#67a9cf,padding:10px
+style sso fill:#ef8a62,padding:50px
+style user fill:#f7f7f7

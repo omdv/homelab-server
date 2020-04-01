@@ -1,0 +1,43 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: books
+  labels:
+    app: books
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: books
+  template:
+    metadata:
+      labels:
+        app: books
+    spec:
+      containers:
+        - name: books
+          image: linuxserver/calibre-web:latest
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: America/Chicago
+          ports:
+            - containerPort: 8083
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /books
+              name: data-volume
+            - mountPath: /config
+              name: config-volume
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: pvc-books-data
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: pvc-books-config

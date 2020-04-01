@@ -9,6 +9,7 @@ bases:
   - traefik-auth
   - hidden
   - panel
+  - books
 
 secretGenerator:
   - name: traefik-auth
