@@ -5,13 +5,13 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
-  become: yes
+  become: true
 
 - name: start postgres container
   docker_container:
     name: postgres
     state: started
-    restart: yes
+    restart: true
     restart_policy: always
     env:
       POSTGRES_USER: postgres
@@ -31,13 +31,13 @@
     owner: "{{ user }}"
     group: "5050"
     mode: '0775'
-  become: yes
+  become: true
 
 - name: start pgadmin4
   docker_container:
     name: pgadmin
     state: started
-    restart: yes
+    restart: true
     restart_policy: always
     env:
       PGADMIN_DEFAULT_EMAIL: me@local
@@ -60,6 +60,6 @@
     psql -h localhost -U postgres -c "create user {{ item.user }};" && \
     psql -h localhost -U postgres -c "alter user {{ item.user }} with encrypted password '{{ item.pass }}';" && \
     psql -h localhost -U postgres -c "grant all privileges on database {{ item.db }} to {{ item.user }};"
-  ignore_errors: yes
+  ignore_errors: true
   with_items:
     - {db: nhl, user: nhl, pass: nhl}

@@ -101,9 +101,9 @@
   ## database already exists.
   # skip_database_creation = false
 
-  ## Name of existing retention policy to write to.  Empty string writes to
-  ## the default retention policy.  Only takes effect when using HTTP.
-  # retention_policy = ""
+  # Name of existing retention policy to write to.  Empty string writes to
+  # the default retention policy.  Only takes effect when using HTTP.
+  retention_policy = "ninety_days"
 
   ## Write consistency (clusters only), can be: "any", "one", "quorum", "all".
   ## Only takes effect when using HTTP.

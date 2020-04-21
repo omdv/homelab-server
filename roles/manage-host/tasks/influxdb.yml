@@ -1,5 +1,4 @@
 ---
-# --------------- INFLUXDB 
 - name: install and configure influxdb
   shell: curl -sL https://repos.influxdata.com/influxdb.key | apt-key add -
   args:
@@ -9,7 +8,7 @@
 
 - apt:
     name: influxdb
-    update_cache: yes
+    update_cache: true
 
 - name: create influxdb data directory
   file:
@@ -29,10 +28,10 @@
     owner: root
     group: root
     mode: 0644
-    force: yes
+    force: true
 
 - name: ensure the influxdb service is running
   systemd:
     state: restarted
-    enabled: yes
+    enabled: true
     name: influxdb

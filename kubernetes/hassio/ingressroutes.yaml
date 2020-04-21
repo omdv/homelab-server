@@ -1,0 +1,34 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hassio-http
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`hassio.e2.pe`)
+      kind: Rule
+      services:
+        - name: hassio
+          port: 8123
+      middlewares:
+        - name: https-redirect
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hassio-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`hassio.e2.pe`)
+      kind: Rule
+      services:
+        - name: hassio
+          port: 8123
+      # middlewares:
+      #   - name: forward-auth
+  tls:
+    certResolver: default

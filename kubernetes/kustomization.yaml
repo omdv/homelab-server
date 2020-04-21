@@ -10,6 +10,7 @@ bases:
   - hidden
   - panel
   - books
+  - jupyter
 
 secretGenerator:
   - name: traefik-auth

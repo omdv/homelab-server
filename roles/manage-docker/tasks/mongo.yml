@@ -5,13 +5,13 @@
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
-  become: yes
+  become: true
 
 - name: start mongo container
   docker_container:
     name: mongo
     state: started
-    restart: yes
+    restart: true
     restart_policy: always
     env:
       MONGO_INITDB_ROOT_USERNAME: admin
@@ -37,13 +37,13 @@
     roles: "{{ item.roles }}"
     state: present
   with_items:
-    - {db: nhl, user: nhl, pass: nhl, roles: "readWrite,dbAdmin" }
+    - {db: nhl, user: nhl, pass: nhl, roles: "readWrite,dbAdmin"}
 
 - name: start mongo express
   docker_container:
     name: mongo-express
     state: started
-    restart: yes
+    restart: true
     restart_policy: always
     env:
       ME_CONFIG_MONGODB_SERVER: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"

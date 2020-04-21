@@ -64,6 +64,11 @@
     - mayan
     - docker
 
+- import_tasks: hassio.yml
+  tags:
+    - hassio
+    - docker
+
 - import_tasks: stacks.yml
   tags:
     - stacks
