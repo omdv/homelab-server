@@ -17,11 +17,15 @@ Docker-based services:
 - jupyter
 
 Kubernetes (k3s) services:
+- nginx (static website)
+- jupyter
+- books (calibre-web)
+- summary page for local docker services (custom-built)
+also:
 - Pod security policies and general hardening
 - Traefik ingress with Let's Encrypt
 - Forward auth to protect private sites
-- nginx (static website)
-- custom-built panel for local docker services
+
 
 ![Services](topology.svg)
 
@@ -29,8 +33,8 @@ Kubernetes (k3s) services:
 ## Hardware
 [PCPartPicker Part List](https://pcpartpicker.com/list/RBVDTC)
 
-Type|Item|Price
-:----|:----|:----
+Type|Item
+:----|:----
 **CPU** | [Intel Pentium G4560 3.5 GHz Dual-Core Processor](https://pcpartpicker.com/product/8gKhP6/intel-pentium-g4560-35ghz-dual-core-processor-bx80677g4560)
 **CPU Cooler** | [Noctua NH-L9i 33.84 CFM CPU Cooler](https://pcpartpicker.com/product/xxphP6/noctua-nh-l9i-3384-cfm-cpu-cooler-nh-l9i)
 **CPU Cooler** | [Cooler Master Hyper 212 LED 66.3 CFM Rifle Bearing CPU Cooler](https://pcpartpicker.com/product/YdJkcf/cooler-master-hyper-212-led-663-cfm-rifle-bearing-cpu-cooler-rr-212l-16pr-r1)
