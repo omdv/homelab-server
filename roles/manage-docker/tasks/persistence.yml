@@ -1,0 +1,30 @@
+---
+- name: create persistent folders
+  file:
+    path: "{{ item.folder }}"
+    state: directory
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: "{{ item.mode }}"
+  become: true
+  with_items:
+    - {folder: "{{ pool }}/config/traefik", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/config/nginx", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/config/seafile", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/config/books", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/config/jupyter", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/config/hassio", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/books", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/jupyter", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/config/kanboard/data", user: "{{ user }}", mode: "0775"}
+    - {folder: "{{ pool }}/config/kanboard/plugins", user: "{{ user }}", mode: "0775"}
+
+
+- name: copy static web file
+  copy:
+    src: index.html
+    dest: "{{ pool }}/config/nginx/index.html"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    force: true
+    mode: 0666

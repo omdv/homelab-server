@@ -64,14 +64,19 @@
     - mayan
     - docker
 
-- import_tasks: hassio.yml
-  tags:
-    - hassio
-    - docker
+# - import_tasks: hassio.yml
+#   tags:
+#     - hassio
+#     - docker
 
-- import_tasks: stacks.yml
+# - import_tasks: kanboard.yml
+#   tags:
+#     - kanboard
+#     - docker
+
+- import_tasks: persistence.yml
   tags:
-    - stacks
+    - persistence
     - docker
 
 # - import_tasks: files.yml

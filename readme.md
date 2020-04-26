@@ -21,6 +21,7 @@ Kubernetes (k3s) services:
 - jupyter
 - books (calibre-web)
 - summary page for local docker services (custom-built)
+
 also:
 - Pod security policies and general hardening
 - Traefik ingress with Let's Encrypt

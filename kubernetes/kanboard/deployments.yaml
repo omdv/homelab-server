@@ -1,0 +1,36 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kanboard
+  labels:
+    app: kanboard
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kanboard
+  template:
+    metadata:
+      labels:
+        app: kanboard
+    spec:
+      containers:
+        - name: kanboard
+          image: kanboard/kanboard:latest
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/www/app/data
+              name: data-volume
+            - mountPath: /var/www/app/plugins
+              name: plugins-volume
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: pvc-kanboard-data
+        - name: plugins-volume
+          persistentVolumeClaim:
+            claimName: pvc-kanboard-plugins

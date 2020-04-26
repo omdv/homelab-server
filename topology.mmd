@@ -4,11 +4,15 @@ user --> panel
 user --> books
 user --> seafile
 user --> jpt
+user --> kanboard
 panel --> lo1
 panel --> lo2
 panel --> lo3
 panel --> lo4
 panel --> lo5
+panel --> lo6
+panel --> lo7
+panel --> lo8
 subgraph k3s[Traefik.io / k3s.io]
 subgraph 1
     subgraph sso[OAuth]
@@ -16,6 +20,7 @@ subgraph 1
     books(books.*:443)
     jpt(jpt.*:443)
     seafile(seafile.*:443)
+    kanboard(kb.*:443)
     end
 nginx[*:443]
 end
@@ -29,6 +34,9 @@ subgraph 3
         lo3(transmission :8004)
         lo4(cloudcmd :8005)
         lo5(pgadmin :8008)
+        lo6(huginn :8009)
+        lo7(mayan :8010)
+        lo8(mongo :8011)
     end
     end
 end

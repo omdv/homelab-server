@@ -27,6 +27,8 @@ spec:
             - --entrypoints.web.Address=:80
             - --entrypoints.websecure.Address=:443
             - --providers.kubernetescrd
+            # - --providers.docker
+            # - --providers.docker.endpoint=/var/run/docker.sock
             - --certificatesresolvers.default.acme.tlschallenge
             - --certificatesresolvers.default.acme.email=omdv.public@gmail.com
             - --certificatesresolvers.default.acme.storage=/data/acme.json
@@ -42,8 +44,14 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: storage-volume
+            # - name: dockersock
+            #   mountPath: "/var/run/docker.sock"
+            #   readOnly: true
       restartPolicy: Always
       volumes:
         - name: storage-volume
           persistentVolumeClaim:
             claimName: pvc-traefik
+        # - name: dockersock
+        #   hostPath:
+        #     path: /var/run/docker.sock
