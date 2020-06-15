@@ -8,7 +8,7 @@
 
 - apt:
     name: "{{ packages }}"
-    update_cache: yes 
+    update_cache: yes
   vars:
     packages:
     - smartmontools

@@ -1,0 +1,34 @@
+---
+- name: create ibgateway container
+  docker_container:
+    name: ibgateway
+    state: started
+    restart: true
+    image: omdv/ibgateway:latest
+    restart_policy: always
+    ports:
+      - 4003:4003
+      - 8012:80
+    labels:
+      traefik.enable: "false"
+      launchpanel.enabled: "yes"
+      launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      launchpanel.name: "ibgateway"
+      launchpanel.port: "8012"
+    env:
+      TWS_MAJOR_VRSN: "974"
+      TZ: America/Chicago
+      VNC_PASSWORD: ""
+      IBC_INI: /root/IBController/IBController.ini
+      JAVA_PATH: /opt/i4j_jres/1.8.0_152/bin
+      IBC_PATH: /opt/IBController
+      TWS_PATH: /root/Jts
+      TWS_CONFIG_PATH: /root/Jts
+      LOG_PATH: /opt/IBController/Logs
+      TRADING_MODE: paper
+      OPENBOX_ARGS: "--startup /opt/runscript.sh"
+      TWSUSERID: "{{ tws_user }}"
+      TWSPASSWORD: "{{ tws_pass }}"
+      FIXUSERID: ""
+      FIXPASSWORD: ""
+      APP: GATEWAY

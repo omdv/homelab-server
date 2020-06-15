@@ -12,6 +12,7 @@ bases:
   - books
   - jupyter
   - kanboard
+  # - metrics-server
 
 secretGenerator:
   - name: traefik-auth

@@ -1,0 +1,4 @@
+---
+resources:
+  - metrics-server-psp.yaml
+  - deployment-3.6.yaml

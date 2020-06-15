@@ -33,9 +33,14 @@
   tags:
     - conda
 
-- import_tasks: influxdb.yml
-  tags:
-    - influxdb
+# - import_tasks: influxdb.yml
+#   tags:
+#     - influxdb
+
+# - import_tasks: monitoring.yml
+#   tags:
+#     - monitoring
+#     - telegraf
 
 - import_tasks: docker.yml
   tags:
@@ -49,11 +54,6 @@
 - import_tasks: misc.yml
   tags:
     - misc
-
-- import_tasks: monitoring.yml
-  tags:
-    - monitoring
-    - telegraf
 
 - import_tasks: kubernetes.yml
   tags:

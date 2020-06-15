@@ -64,31 +64,25 @@
     - mayan
     - docker
 
+- import_tasks: netdata.yml
+  tags:
+    - netdata
+    - docker
+
+- import_tasks: ibgateway.yml
+  tags:
+    - ibgateway
+    - docker
+
 # - import_tasks: hassio.yml
 #   tags:
 #     - hassio
-#     - docker
-
-# - import_tasks: kanboard.yml
-#   tags:
-#     - kanboard
 #     - docker
 
 - import_tasks: persistence.yml
   tags:
     - persistence
     - docker
-
-# - import_tasks: files.yml
-#   tags:
-#     - files
-#     - docker
-
-
-# - import_tasks: calibre.yml
-#   tags:
-#     - calibre
-#     - docker
 
 # - import_tasks: seafile.yml
 #   tags:

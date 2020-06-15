@@ -16,6 +16,7 @@
     - {port: "443", comment: https}
     - {port: "2376", comment: docker}
     - {port: "5432", comment: postgres}
+    - {port: "5900", comment: vnc}
     - {port: "6379", comment: redis}
     - {port: "6443", comment: k3s}
     - {port: "8086", comment: influxdb}

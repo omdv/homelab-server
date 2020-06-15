@@ -3,7 +3,7 @@
   docker_container:
     name: torrent
     state: started
-    restart: yes
+    restart: true
     image: haugene/transmission-openvpn:latest
     restart_policy: always
     ports:
@@ -15,13 +15,13 @@
       launchpanel.name: "torrent"
       launchpanel.port: "8004"
     volumes:
-      - "{{ media_volume }}:/data"
+      - "{{ pool }}/media:/data"
       - /etc/localtime:/etc/localtime:ro
     capabilities: NET_ADMIN
     devices: /dev/net/tun
     env:
       OPENVPN_PROVIDER: PUREVPN
-      OPENVPN_CONFIG: Panama-tcp
+      OPENVPN_CONFIG: br2-ovpn-tcp
       OPENVPN_USERNAME: "{{ lookup('env', 'VPN_USER') }}"
       OPENVPN_PASSWORD: "{{ lookup('env', 'VPN_PASSWORD') }}"
       WEBPROXY_ENABLED: "false"

@@ -1,18 +1,14 @@
 ---
-- name: start files container
+- name: create netdata container
   docker_container:
-    name: files
+    name: netdata
     state: started
-    restart: yes
-    image: filebrowser/filebrowser:latest
+    image: httpd:alpine
+    restart: true
     restart_policy: always
-    ports:
-      - 8002:80
     labels:
       traefik.enable: "false"
       launchpanel.enabled: "yes"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
-      launchpanel.name: "files"
-      launchpanel.port: "8002"
-    volumes:
-      - "{{ pool }}:/srv"
+      launchpanel.name: "netdata"
+      launchpanel.port: "19999"
