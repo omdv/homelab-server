@@ -23,15 +23,15 @@
   tags:
     - email
 
-- import_tasks: gpu.yml
-  tags:
-    - gpu
+# - import_tasks: gpu.yml
+#   tags:
+#     - gpu
 
-- import_tasks: conda.yml
-  become: yes
-  become_user: "{{ user }}"
-  tags:
-    - conda
+# - import_tasks: conda.yml
+#   become: yes
+#   become_user: "{{ user }}"
+#   tags:
+#     - conda
 
 # - import_tasks: influxdb.yml
 #   tags:

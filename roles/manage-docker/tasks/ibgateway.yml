@@ -7,14 +7,14 @@
     image: omdv/ibgateway:latest
     restart_policy: always
     ports:
-      - 4003:4003
       - 8012:80
+      - 8013:8888
     labels:
       traefik.enable: "false"
       launchpanel.enabled: "yes"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "ibgateway"
-      launchpanel.port: "8012"
+      launchpanel.port: "8013"
     env:
       TWS_MAJOR_VRSN: "974"
       TZ: America/Chicago
@@ -32,3 +32,5 @@
       FIXUSERID: ""
       FIXPASSWORD: ""
       APP: GATEWAY
+    volumes:
+      - "{{ pool }}/jupyter:/root/jupyter"

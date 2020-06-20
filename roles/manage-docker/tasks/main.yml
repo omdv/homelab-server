@@ -34,11 +34,6 @@
     - watchtower
     - docker
 
-- import_tasks: jupyter.yml
-  tags:
-    - jupyter
-    - docker
-
 - import_tasks: postgres.yml
   tags:
     - postgres
