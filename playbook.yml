@@ -48,6 +48,7 @@
     - mongo_pass: "{{ lookup('env','HOMELAB_MONGO_PASS') }}"
     - tws_user: "{{ lookup('env','TWS_USER') }}"
     - tws_pass: "{{ lookup('env','TWS_PASS') }}"
+  become: false
 
 - name: -- LXD SETUP --
   hosts: server

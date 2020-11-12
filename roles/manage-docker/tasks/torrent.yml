@@ -21,7 +21,7 @@
     devices: /dev/net/tun
     env:
       OPENVPN_PROVIDER: PUREVPN
-      OPENVPN_CONFIG: br2-ovpn-tcp
+      OPENVPN_CONFIG: nl2-ovpn-tcp
       OPENVPN_USERNAME: "{{ lookup('env', 'VPN_USER') }}"
       OPENVPN_PASSWORD: "{{ lookup('env', 'VPN_PASSWORD') }}"
       WEBPROXY_ENABLED: "false"

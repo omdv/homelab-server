@@ -3,7 +3,7 @@
   docker_container:
     name: samba
     state: started
-    restart: yes
+    restart: true
     image: dperson/samba
     restart_policy: always
     ports:
@@ -17,5 +17,5 @@
       USER: "{{ samba_user }};{{ samba_pass }}"
       SHARE: "pool;/pool;yes;no;no;{{ samba_user }};{{ samba_user }};{{ samba_user }}"
       RECYCLE: "false"
-      USERID: "10101"
-      GROUPID: "10101"
+      USERID: "1000"
+      GROUPID: "1000"

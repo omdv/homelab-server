@@ -7,8 +7,8 @@
     image: omdv/ibgateway:latest
     restart_policy: always
     ports:
-      - 8012:80
-      - 8013:8888
+      - "8012:80"
+      - "8013:8888"
     labels:
       traefik.enable: "false"
       launchpanel.enabled: "yes"

@@ -45,6 +45,7 @@ RUN conda install -y                \
     cython=0.29.15                  \
     numpy=1.18.1                    \
     pandas=0.25.3                   \
+    matplotlib=3.2.1                \
     wrapt=1.12.1					\
     setuptools
 
@@ -58,9 +59,11 @@ RUN chmod +x /opt/runscript.sh
 # copy Jupyter config
 COPY ./jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
 
-# Install API
+# Install IB API
 RUN wget https://interactivebrokers.github.io/downloads/twsapi_macunix.976.01.zip && \
 	unzip ./twsapi_macunix.976.01.zip && \
 	cd ./IBJts/source/pythonclient && \
 	/opt/miniconda3/bin/python setup.py sdist && \
-	/opt/miniconda3/bin/python -m pip install --upgrade dist/ibapi-9.76.1.tar.gz 
+	/opt/miniconda3/bin/python -m pip install --upgrade dist/ibapi-9.76.1.tar.gz
+
+RUN pip install ib_insync

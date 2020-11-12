@@ -1,7 +1,7 @@
 ---
-- import_tasks: grafana.yml
+- import_tasks: persistence.yml
   tags:
-    - grafana
+    - persistence
     - docker
 
 - import_tasks: plex.yml
@@ -29,10 +29,10 @@
     - samba
     - docker
 
-- import_tasks: watchtower.yml
-  tags:
-    - watchtower
-    - docker
+# - import_tasks: watchtower.yml
+#   tags:
+#     - watchtower
+#     - docker
 
 - import_tasks: postgres.yml
   tags:
@@ -54,30 +54,25 @@
     - huginn
     - docker
 
-- import_tasks: mayan.yml
-  tags:
-    - mayan
-    - docker
-
 - import_tasks: netdata.yml
   tags:
     - netdata
     - docker
 
-- import_tasks: ibgateway.yml
-  tags:
-    - ibgateway
-    - docker
+# - import_tasks: mayan.yml
+#   tags:
+#     - mayan
+#     - docker
+
+# - import_tasks: ibgateway.yml
+#   tags:
+#     - ibgateway
+#     - docker
 
 # - import_tasks: hassio.yml
 #   tags:
 #     - hassio
 #     - docker
-
-- import_tasks: persistence.yml
-  tags:
-    - persistence
-    - docker
 
 # - import_tasks: seafile.yml
 #   tags:

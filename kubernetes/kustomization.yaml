@@ -7,11 +7,11 @@ bases:
   - whoami
   - nginx
   - traefik-auth
-  - hidden
   - panel
   - books
   - jupyter
-  - kanboard
+  - hidden
+  # - kanboard
   # - metrics-server
 
 secretGenerator:
