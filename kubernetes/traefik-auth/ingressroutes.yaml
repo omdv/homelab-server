@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`auth.e2.pe`)
+    - match: Host(`auth.zzd.ai`)
       kind: Rule
       services:
         - name: traefik-forward-auth
@@ -23,7 +23,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`auth.e2.pe`)
+    - match: Host(`auth.zzd.ai`)
       kind: Rule
       services:
         - name: traefik-forward-auth

@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`jpt.e2.pe`)
+    - match: Host(`jpt.zzd.ai`)
       kind: Rule
       services:
         - name: jupyter
@@ -23,7 +23,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`jpt.e2.pe`)
+    - match: Host(`jpt.zzd.ai`)
       kind: Rule
       services:
         - name: jupyter

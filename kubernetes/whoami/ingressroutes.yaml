@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`whoami.e2.pe`)
+    - match: Host(`whoami.zzd.ai`)
       kind: Rule
       services:
         - name: whoami
@@ -24,7 +24,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`whoami.e2.pe`)
+    - match: Host(`whoami.zzd.ai`)
       kind: Rule
       services:
         - name: whoami

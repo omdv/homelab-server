@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`panel.e2.pe`)
+    - match: Host(`panel.zzd.ai`)
       kind: Rule
       services:
         - name: panel
@@ -23,7 +23,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`panel.e2.pe`)
+    - match: Host(`panel.zzd.ai`)
       kind: Rule
       services:
         - name: panel
