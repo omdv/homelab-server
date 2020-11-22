@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`hidden.e2.pe`)
+    - match: Host(`hidden.${HOMELAB_DOMAIN}`)
       kind: Rule
       services:
         - name: hidden
@@ -23,7 +23,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`hidden.e2.pe`)
+    - match: Host(`hidden.${HOMELAB_DOMAIN}`)
       kind: Rule
       services:
         - name: hidden

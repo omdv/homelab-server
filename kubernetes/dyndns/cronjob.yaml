@@ -1,0 +1,28 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: dyndns
+spec:
+  schedule: "*/3 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: namecheap
+            image: busybox
+            command: ["/bin/sh", "-c"]
+            args:
+                - IP_ADDR=$(wget -qO- ipaddr.pub/cli) &&
+                  wget -S "${BASE_URL}?host=@&domain=${HOMELAB_DOMAIN}&password=${PASS}&ip=${IP_ADDR}" -O /dev/null;
+                  wget -S "${BASE_URL}?host=*&domain=${HOMELAB_DOMAIN}&password=${PASS}&ip=${IP_ADDR}" -O /dev/null
+            env:
+                - name: PASS
+                  valueFrom:
+                    secretKeyRef:
+                      name: traefik-auth
+                      key: NAMECHEAP_DNS_PASS
+                - name: BASE_URL
+                  value: "https://dynamicdns.park-your-domain.com/update"
+          restartPolicy: OnFailure
