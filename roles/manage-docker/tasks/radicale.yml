@@ -58,7 +58,7 @@
     labels:
       traefik.enable: "true"
       traefik.port: "5232"
-      traefik.frontend.rule: "Host:cal.e2.pe"
+      traefik.frontend.rule: "Host:cal.${HOMELAB_DOMAIN_NAME}"
     pids_limit: 20
     init: yes
     security_opts: "no-new-privileges:true"

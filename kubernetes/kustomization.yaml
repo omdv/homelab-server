@@ -11,6 +11,7 @@ bases:
   - books
   - jupyter
   - hidden
+  - dyndns
   # - kanboard
   # - metrics-server
 

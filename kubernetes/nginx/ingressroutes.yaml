@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`e2.pe`)
+    - match: Host(`${HOMELAB_DOMAIN_NAME}`)
       kind: Rule
       services:
         - name: nginx
@@ -23,7 +23,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`e2.pe`)
+    - match: Host(`${HOMELAB_DOMAIN_NAME}`)
       kind: Rule
       services:
         - name: nginx

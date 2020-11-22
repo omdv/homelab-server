@@ -38,9 +38,9 @@ spec:
                   name: traefik-auth
                   key: SECRET
             - name: AUTH_HOST
-              value: auth.e2.pe
+              value: auth.${HOMELAB_DOMAIN_NAME}
             - name: COOKIE_DOMAIN
-              value: e2.pe
+              value: ${HOMELAB_DOMAIN_NAME}
             - name: INSECURE_COOKIE
               value: "false"
             - name: WHITELIST

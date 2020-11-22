@@ -29,10 +29,10 @@
     - samba
     - docker
 
-# - import_tasks: watchtower.yml
-#   tags:
-#     - watchtower
-#     - docker
+- import_tasks: watchtower.yml
+  tags:
+    - watchtower
+    - docker
 
 - import_tasks: postgres.yml
   tags:
@@ -59,14 +59,14 @@
     - netdata
     - docker
 
+- import_tasks: ibgateway.yml
+  tags:
+    - ibgateway
+    - docker
+
 # - import_tasks: mayan.yml
 #   tags:
 #     - mayan
-#     - docker
-
-# - import_tasks: ibgateway.yml
-#   tags:
-#     - ibgateway
 #     - docker
 
 # - import_tasks: hassio.yml

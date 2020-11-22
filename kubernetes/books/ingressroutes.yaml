@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`books.e2.pe`)
+    - match: Host(`books.${HOMELAB_DOMAIN_NAME}`)
       kind: Rule
       services:
         - name: books
@@ -23,7 +23,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`books.e2.pe`)
+    - match: Host(`books.${HOMELAB_DOMAIN_NAME}`)
       kind: Rule
       services:
         - name: books

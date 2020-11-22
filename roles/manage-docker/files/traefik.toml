@@ -14,7 +14,7 @@ defaultEntryPoints = ["http", "https"]
 
 [docker]
 endpoint = "unix:///var/run/docker.sock"
-domain = "e2.pe"
+domain = "${HOMELAB_DOMAIN_NAME}"
 watch = true
 exposedByDefault = false
 
