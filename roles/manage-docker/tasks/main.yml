@@ -59,6 +59,11 @@
     - netdata
     - docker
 
+- import_tasks: paperless.yml
+  tags:
+    - paperless
+    - docker
+
 - import_tasks: ibgateway.yml
   tags:
     - ibgateway
