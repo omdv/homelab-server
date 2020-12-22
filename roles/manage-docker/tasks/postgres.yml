@@ -15,6 +15,7 @@
     image: postgres:13-alpine
     volumes:
       - "{{ pool }}/databases/postgres:/var/lib/postgresql/data"
+    container_default_behavior: compatibility
 
 - name: start pgadmin4
   docker_container:
@@ -36,6 +37,7 @@
     image: dpage/pgadmin4:4
     volumes:
       - "{{ pool }}/config/pgadmin:/var/lib/pgadmin"
+    container_default_behavior: compatibility
 
 - name: create databases and users
   shell: export PGPASSWORD="{{ postgres_pass }}" && \
@@ -46,3 +48,24 @@
   ignore_errors: true
   with_items:
     - {db: nhl, user: nhl, pass: nhl}
+    - {db: paperless, user: paperless, pass: paperless}
+
+- name: create backup container
+  docker_container:
+    name: pgbackup
+    image: prodrigestivill/postgres-backup-local
+    restart: true
+    volumes:
+      - "{{ pool }}/databases/backup:/backups"
+    env:
+      POSTGRES_HOST: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      POSTGRES_DB: "nhl,paperless"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "{{ postgres_pass }}"
+      POSTGRES_EXTRA_OPTS: "-Z9 --schema=public --blobs"
+      SCHEDULE: "@every 0h30m00s"
+      BACKUP_KEEP_DAYS: "7"
+      BACKUP_KEEP_WEEKS: "4"
+      BACKUP_KEEP_MONTHS: "6"
+      HEALTHCHECK_PORT: "81"
+    container_default_behavior: compatibility
