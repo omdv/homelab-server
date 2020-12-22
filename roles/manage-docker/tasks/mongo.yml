@@ -25,6 +25,21 @@
       - "{{ pool }}/databases/mongo:/data/db"
     container_default_behavior: compatibility
 
+- name: backup container
+  docker_container:
+    name: mongo-backup
+    image: tiredofit/mongodb-backup:latest
+    restart: true
+    volumes:
+      - "{{ pool }}/databases/backup:/backups"
+    env:
+      DB_HOST: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      DB_DUMP_FREQ: "1440"
+      DB_DUMP_BEGIN: "0000"
+      DB_CLEANUP_TIME: "8640"
+      MD5: "TRUE"
+      COMPRESSION: "XZ"
+    container_default_behavior: compatibility
 
 - name: create dbs and users
   mongodb_user:
