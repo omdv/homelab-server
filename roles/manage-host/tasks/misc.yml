@@ -8,6 +8,7 @@
     - ubuntu-drivers-common
     - apache2-utils
     - unattended-upgrades
+    - apt-listchanges
     - postgresql-client
     - mongodb-clients
     - unzip

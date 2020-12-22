@@ -49,10 +49,10 @@
     - redis
     - docker
 
-- import_tasks: huginn.yml
-  tags:
-    - huginn
-    - docker
+# - import_tasks: huginn.yml
+#   tags:
+#     - huginn
+#     - docker
 
 - import_tasks: netdata.yml
   tags:

@@ -1,7 +1,7 @@
 ---
 - name: create directory for elastic search db
   file:
-    path: "{{ config_volume }}/elasticsearch"
+    path: "{{ pool }}/config/elasticsearch"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
@@ -21,7 +21,7 @@
     env:
       discovery.type: single-node
     volumes:
-      - "{{ config_volume }}/elasticsearch:/usr/share/elasticsearch/data"
+      - "{{ pool }}/config/elasticsearch:/usr/share/elasticsearch/data"
 
 
 # https://stackoverflow.com/questions/37861279/how-to-index-a-pdf-file-in-elasticsearch-5-0-0-with-ingest-attachment-plugin?rq=1
