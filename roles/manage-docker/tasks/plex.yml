@@ -1,7 +1,7 @@
 ---
 - name: create persistent dir for plex
   file:
-    path: "{{ config_volume }}/plex"
+    path: "{{ pool }}/config/plex"
     state: directory
     owner: "{{ user }}"
     group: docker
@@ -22,13 +22,13 @@
       PLEX_UID: "1000"
       PLEX_GID: "998"
     volumes:
-      - "{{ config_volume }}/plex/config:/config"
-      - "{{ config_volume }}/plex/transcode:/transcode"
-      - "{{ media_volume }}:/data"
+      - "{{ pool }}/config/plex/config:/config"
+      - "{{ pool }}/config/plex/transcode:/transcode"
+      - "{{ pool }}/media:/data"
 
 # - name: install webtools bundle
 #   unarchive:
 #     src: https://github.com/ukdtom/WebTools.bundle/releases/download/3.0.0/WebTools.bundle.zip
-#     dest: "{{ config_volume }}/plex/config/Library/Application Support/Plex Media Server/Plug-ins"
+#     dest: "{{ pool }}/config/plex/config/Library/Application Support/Plex Media Server/Plug-ins"
 #     remote_src: yes
 #   become: yes

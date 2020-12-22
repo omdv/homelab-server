@@ -1,14 +1,14 @@
 ---
 - name: create persistent dir for grafana
   file:
-    path: "{{ config_volume }}/grafana"
+    path: "{{ pool }}/config/grafana"
     state: directory
     owner: 472
     group: 472
   become: yes
 
 - file:
-    path: "{{ config_volume }}/grafana/plugins"
+    path: "{{ pool }}/config/grafana/plugins"
     state: directory
     mode: 0755
     owner: 472
@@ -30,6 +30,6 @@
       launchpanel.port: "8003"
     image: grafana/grafana:latest
     volumes:
-      - "{{ config_volume }}/grafana:/var/lib/grafana"
+      - "{{ pool }}/config/grafana:/var/lib/grafana"
     env:
       GF_SECURITY_ADMIN_PASSWORD: password

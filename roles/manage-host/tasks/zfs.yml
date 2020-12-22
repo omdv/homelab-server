@@ -6,20 +6,21 @@
 
 - shell: zpool status {{ zfs_pool }}
   register: ifexists
-
-- shell: /sbin/zpool import -fm {{ zfs_pool }}
-  when: ifexists.stdout is search("/cannot/")
-
-- shell: zpool add -f {{ zfs_pool }} cache {{ zfs_cache }}
   ignore_errors: True
 
-- shell: zpool add -f {{ zfs_pool }} log {{ zfs_log }}
-  ignore_errors: True
+# - shell: /sbin/zpool import -fm {{ zfs_pool }}
+#   when: ifexists.stdout is search("/cannot/")
 
-- shell: echo 'zpool remove pool <failed_device>'
-  register: myecho
+# - shell: zpool add -f {{ zfs_pool }} cache {{ zfs_cache }}
+#   ignore_errors: True
 
-- debug: msg="{{ myecho.stdout }}"
+# - shell: zpool add -f {{ zfs_pool }} log {{ zfs_log }}
+#   ignore_errors: True
+
+# - shell: echo 'zpool remove pool <failed_device>'
+#   register: myecho
+
+# - debug: msg="{{ myecho.stdout }}"
 
 - name: configure zed and weekly scrub
   template:

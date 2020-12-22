@@ -10,7 +10,7 @@
     - software-properties-common
     - python3-pip
 
-- name: install docker pip
+- name: install pip docker for ansible
   shell: /usr/bin/pip3 install docker
 
 - name: add docker group
@@ -29,7 +29,7 @@
     warn: false
 
 - name: add repository
-  shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+  shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 
 - name: install docker package
   apt:
@@ -76,13 +76,13 @@
     line: 'om ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
 
-# ----------- install nvidia-container-toolkit
-- name: install nvidia-container-toolkit
-  shell: distribution=$(. /etc/os-release;echo $ID$VERSION_ID) &&
-    curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - &&
-    curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list &&
-    apt-get update && 
-    apt-get install -y nvidia-container-toolkit
+# # ----------- install nvidia-container-toolkit
+# - name: install nvidia-container-toolkit
+#   shell: distribution=$(. /etc/os-release;echo $ID$VERSION_ID) &&
+#     curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - &&
+#     curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list &&
+#     apt-get update && 
+#     apt-get install -y nvidia-container-toolkit
 
 - name: restart docker
   shell: systemctl restart docker
