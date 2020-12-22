@@ -1,7 +1,7 @@
 ---
 - name: create persistent dir for huginn
   file:
-    path: "{{ config_volume }}/huginn"
+    path: "{{ pool }}/config/huginn"
     state: directory
     owner: "1001"
     group: "1001"
@@ -33,4 +33,4 @@
       launchpanel.port: "8009"
     image: huginn/huginn:latest
     volumes:
-      - "{{ config_volume}}/huginn:/var/lib/mysql"
+      - "{{ pool}}//confighuginn:/var/lib/mysql"

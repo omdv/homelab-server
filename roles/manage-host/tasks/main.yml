@@ -11,17 +11,40 @@
   tags:
     - zfs
 
-- import_tasks: lxd.yml
-  tags:
-    - lxd
-
-- import_tasks: canonical.yml
-  tags:
-    - canonical
-
 - import_tasks: email.yml
   tags:
     - email
+
+- import_tasks: backup.yml
+  tags:
+    - backup
+  
+- import_tasks: calibre.yml
+  tags:
+    - calibre
+
+- import_tasks: docker.yml
+  tags:
+    - docker
+    - docker-core
+  
+- import_tasks: kubernetes.yml
+  tags:
+    - kubernetes
+  
+- import_tasks: monitoring.yml
+  tags:
+    - monitoring
+
+- import_tasks: misc.yml
+  tags:
+    - misc
+
+
+# - import_tasks: canonical.yml
+#   tags:
+#     - canonical
+
 
 # - import_tasks: gpu.yml
 #   tags:
@@ -32,33 +55,3 @@
 #   become_user: "{{ user }}"
 #   tags:
 #     - conda
-
-# - import_tasks: influxdb.yml
-#   tags:
-#     - influxdb
-
-# - import_tasks: monitoring.yml
-#   tags:
-#     - monitoring
-#     - telegraf
-
-- import_tasks: docker.yml
-  tags:
-    - docker
-    - docker-core
-
-- import_tasks: backup.yml
-  tags:
-    - backup
-
-- import_tasks: misc.yml
-  tags:
-    - misc
-
-- import_tasks: kubernetes.yml
-  tags:
-    - kubernetes
-
-- import_tasks: calibre.yml
-  tags:
-    - calibre

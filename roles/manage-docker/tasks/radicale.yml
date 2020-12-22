@@ -2,7 +2,7 @@
 - name: create persistent dir for radicale
   become: yes
   file:
-    path: "{{ config_volume }}/radicale"
+    path: "{{ pool }}/config/radicale"
     state: directory
     owner: '2999'
     group: '2999'
@@ -11,7 +11,7 @@
 - name: create persistent data dir for radicale
   become: yes
   file:
-    path: "{{ config_volume }}/radicale/data"
+    path: "{{ pool }}/config/radicale/data"
     state: directory
     owner: '2999'
     group: '2999'
@@ -27,7 +27,7 @@
 - name: create passwd user file
   become: yes
   htpasswd:
-    path: "{{ config_volume }}/radicale/users"
+    path: "{{ pool }}/config/radicale/users"
     name: "{{ caldav_user }}"
     password: "{{ caldav_pass }}"
     crypt_scheme: bcrypt
@@ -40,7 +40,7 @@
   become: yes
   copy:
     src: radicale.conf
-    dest: "{{ config_volume }}/radicale/config"
+    dest: "{{ pool }}/config/radicale/config"
     owner: '2999'
     group: '2999'
     mode: 0644
@@ -53,8 +53,8 @@
     restart_policy: always
     image: tomsquest/docker-radicale:latest
     volumes:
-      - "{{ config_volume }}/radicale/data:/data"
-      - "{{ config_volume }}/radicale:/config:ro"
+      - "{{ pool }}/config/radicale/data:/data"
+      - "{{ pool }}/config/radicale:/config:ro"
     labels:
       traefik.enable: "true"
       traefik.port: "5232"
