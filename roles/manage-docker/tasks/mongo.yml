@@ -1,7 +1,7 @@
 ---
 - name: create persistent dir for mongo
   file:
-    path: "{{ data_volume }}/mongo"
+    path: "{{ pool }}/databases/mongo"
     state: directory
     owner: "{{ user }}"
     group: "{{ user }}"
@@ -20,9 +20,11 @@
       - 27017:27017
     labels:
       traefik.enable: "false"
-    image: mongo:latest
+    image: mongo:4.4.2-bionic
     volumes:
-      - "{{ data_volume }}/mongo:/data/db"
+      - "{{ pool }}/databases/mongo:/data/db"
+    container_default_behavior: compatibility
+
 
 - name: create dbs and users
   mongodb_user:
@@ -58,3 +60,4 @@
       launchpanel.name: "mongo"
       launchpanel.port: "8011"
     image: mongo-express:latest
+    container_default_behavior: compatibility
