@@ -1,4 +1,4 @@
 # Home page is http://www.smartmontools.org
 # One liner from https://wiki.archlinux.org/index.php/S.M.A.R.T.
 
-DEVICESCAN -a -o on -S on -n standby,q -s (S/../.././02|L/../../6/03) -W 4,35,40 -m {{ lookup('env','HOMELAB_NOTIFY_EMAIL') }}
+DEVICESCAN -a -o on -S on -n standby,q -s (S/../.././02|L/../../6/03) -W 4,35,40 -m {{ lookup('env','HOMELAB_NOTIFY_EMAIL') }} -M test

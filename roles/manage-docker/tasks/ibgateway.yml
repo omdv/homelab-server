@@ -4,7 +4,7 @@
     name: ibgateway
     state: started
     restart: true
-    image: omdv/ibgateway:latest
+    image: omdv/ibgateway:9.74
     restart_policy: always
     ports:
       - "8013:80"

@@ -12,6 +12,7 @@ bases:
   - jupyter
   - hidden
   - dyndns
+  - heimdall
   # - kanboard
   # - metrics-server
 
