@@ -69,6 +69,16 @@
     - ibgateway
     - docker
 
+- import_tasks: ibkr.yml
+  tags:
+    - ibkr
+    - docker
+
+# - import_tasks: registry.yml
+#   tags:
+#     - registry
+#     - docker
+
 # - import_tasks: mayan.yml
 #   tags:
 #     - mayan

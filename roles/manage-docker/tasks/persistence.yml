@@ -14,6 +14,7 @@
     - {folder: "{{ pool }}/config/books", user: "{{ user }}", mode: "0755"}
     - {folder: "{{ pool }}/config/jupyter", user: "{{ user }}", mode: "0755"}
     - {folder: "{{ pool }}/config/hassio", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/config/heimdall", user: "{{ user }}", mode: "0755"}
     - {folder: "{{ pool }}/books", user: "{{ user }}", mode: "0755"}
     - {folder: "{{ pool }}/jupyter", user: "{{ user }}", group: "{{ user }}", mode: "0755"}
     - {folder: "{{ pool }}/ibgateway", user: "{{ user }}", mode: "0755"}
@@ -25,6 +26,7 @@
     - {folder: "{{ pool }}/documents/mayan", user: "{{ user }}", mode: "0755"}
     - {folder: "{{ pool }}/documents/paperless", user: "{{ user }}", group: "{{ user }}", mode: "0755"}
     - {folder: "{{ pool }}/documents/scanned_files", user: "{{ user }}", mode: "0755"}
+    - {folder: "{{ pool }}/docker/registry", user: "{{ user }}", mode: "0755"}
 
 - name: copy static web file
   copy:

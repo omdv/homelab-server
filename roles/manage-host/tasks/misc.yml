@@ -12,6 +12,7 @@
     - postgresql-client
     - mongodb-clients
     - unzip
+    - smartmontools
 
 - name: install required pip modules
   pip:
