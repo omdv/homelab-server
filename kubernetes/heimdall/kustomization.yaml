@@ -1,0 +1,6 @@
+---
+resources:
+  - services.yaml
+  - deployments.yaml
+  - ingressroutes.yaml
+  - volumes.yaml

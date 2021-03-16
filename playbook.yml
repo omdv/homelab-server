@@ -46,8 +46,8 @@
     - caldav_pass: "{{ lookup('env','HOMELAB_CALDAV_PASS') }}"
     - postgres_pass: "{{ lookup('env','HOMELAB_POSTGRES_PASS') }}"
     - mongo_pass: "{{ lookup('env','HOMELAB_MONGO_PASS') }}"
-    - tws_user: "{{ lookup('env','TWS_USER') }}"
-    - tws_pass: "{{ lookup('env','TWS_PASS') }}"
+    - tws_user: "{{ lookup('env','TWS_USER_PAPER') }}"
+    - tws_pass: "{{ lookup('env','TWS_PASS_PAPER') }}"
   become: false
 
 - name: -- LXD SETUP --

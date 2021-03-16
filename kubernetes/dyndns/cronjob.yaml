@@ -14,7 +14,7 @@ spec:
             image: busybox
             command: ["/bin/sh", "-c"]
             args:
-                - IP_ADDR=$(wget -qO- ipaddr.pub/cli) &&
+                - IP_ADDR=$(dig @resolver4.opendns.com myip.opendns.com +short) &&
                   wget -S "${BASE_URL}?host=@&domain=zzd.ai&password=${PASS}&ip=${IP_ADDR}" -O /dev/null;
                   wget -S "${BASE_URL}?host=*&domain=zzd.ai&password=${PASS}&ip=${IP_ADDR}" -O /dev/null
             env:
