@@ -21,33 +21,40 @@ spec:
           ports:
             - containerPort: 4181
               protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
           env:
             - name: PROVIDERS_GOOGLE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: traefik-auth
-                  key: CLIENT_ID
+                  key: OAUTH_CLIENT_ID
             - name: PROVIDERS_GOOGLE_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: traefik-auth
-                  key: CLIENT_SECRET
+                  key: OAUTH_CLIENT_SECRET
             - name: SECRET
               valueFrom:
                 secretKeyRef:
                   name: traefik-auth
-                  key: SECRET
+                  key: OAUTH_SECRET
+            - name: WHITELIST
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-auth
+                  key: OAUTH_WHITELIST
             - name: AUTH_HOST
               value: auth.zzd.ai
             - name: COOKIE_DOMAIN
               value: zzd.ai
             - name: INSECURE_COOKIE
               value: "false"
-            - name: WHITELIST
-              valueFrom:
-                secretKeyRef:
-                  name: traefik-auth
-                  key: WHITELIST
             - name: LIFETIME
               value: "2592000"
               # - name: LOG_LEVEL

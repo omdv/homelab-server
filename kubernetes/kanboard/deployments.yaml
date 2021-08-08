@@ -27,6 +27,13 @@ spec:
               name: data-volume
             - mountPath: /var/www/app/plugins
               name: plugins-volume
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
       volumes:
         - name: data-volume
           persistentVolumeClaim:
