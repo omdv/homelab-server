@@ -18,5 +18,5 @@ bases:
 
 secretGenerator:
   - name: traefik-auth
-    env: traefik-auth.secret
+    env: traefik-auth.env
     type: Opaque

@@ -9,10 +9,10 @@
     - plex
     - docker
 
-- import_tasks: torrent.yml
-  tags:
-    - torrent
-    - docker
+# - import_tasks: torrent.yml
+#   tags:
+#     - torrent
+#     - docker
 
 - import_tasks: cloudcmd.yml
   tags:

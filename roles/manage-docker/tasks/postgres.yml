@@ -47,8 +47,8 @@
     psql -h localhost -U postgres -c "grant all privileges on database {{ item.db }} to {{ item.user }};"
   ignore_errors: true
   with_items:
-    - {db: nhl, user: nhl, pass: nhl}
     - {db: paperless, user: paperless, pass: paperless}
+    - {db: nocodb, user: nocodb, pass: nocodb}
 
 - name: create backup container
   docker_container:

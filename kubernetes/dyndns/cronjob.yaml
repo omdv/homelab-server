@@ -4,7 +4,8 @@ kind: CronJob
 metadata:
   name: dyndns
 spec:
-  schedule: "*/3 * * * *"
+  schedule: "* 0 * * *"
+  startingDeadlineSeconds: 200
   jobTemplate:
     spec:
       template:
