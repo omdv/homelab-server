@@ -2,24 +2,10 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: whoami-http
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Host(`whoami.zzd.ai`)
-      kind: Rule
-      services:
-        - name: whoami
-          port: 80
-      middlewares:
-        - name: https-redirect
+  name: whoami
+  labels:
+    app: whoami
 
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: whoami-https
 spec:
   entryPoints:
     - websecure
@@ -29,5 +15,27 @@ spec:
       services:
         - name: whoami
           port: 80
+  tls:
+    certResolver: default
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hidden
+  labels:
+    app: hidden
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`hidden.zzd.ai`)
+      kind: Rule
+      services:
+        - name: whoami
+          port: 80
+      middlewares:
+        - name: forward-auth
   tls:
     certResolver: default

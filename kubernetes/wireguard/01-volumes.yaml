@@ -1,0 +1,70 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-wireguard-modules
+  labels:
+    app: wireguard
+
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-wireguard-modules
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-wireguard-modules
+  labels:
+    app: wireguard
+
+spec:
+  capacity:
+    storage: 1Gi
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /lib/modules
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-wireguard-config
+  labels:
+    app: wireguard
+
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  volumeName: pv-wireguard-config
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-wireguard-config
+  labels:
+    app: wireguard
+
+spec:
+  capacity:
+    storage: 1Gi
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /pool/wireguard
+status: {}

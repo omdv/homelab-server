@@ -1,4 +1,10 @@
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik-ingress-controller
+
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -24,16 +30,22 @@ spec:
             - --accesslog
             - --accesslog.filepath=/data/access.log
             - --accesslog.bufferingsize=100
-            - --entrypoints.web.Address=:80
-            - --entrypoints.websecure.Address=:443
+            - --entrypoints.web.address=:80
+            - --entrypoints.websecure.address=:443
+            - --entrypoints.wireguard.address=:51280/udp
+            - --entrypoints.wireguard.udp.timeout=10s
             - --providers.kubernetescrd
-            # - --providers.docker
-            # - --providers.docker.endpoint=/var/run/docker.sock
             - --certificatesresolvers.default.acme.tlschallenge
             - --certificatesresolvers.default.acme.email=omdv.public@gmail.com
             - --certificatesresolvers.default.acme.storage=/data/acme.json
-            # - --certificatesresolvers.default.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-          image: traefik:v2.1.9
+          image: traefik:v2.5
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
           ports:
             - name: web
               containerPort: 80
@@ -41,17 +53,14 @@ spec:
               containerPort: 443
             - name: admin
               containerPort: 8080
+            # - name: wireguard
+            #   containerPort: 51820
+            #   protocol: UDP
           volumeMounts:
             - mountPath: /data
               name: storage-volume
-            # - name: dockersock
-            #   mountPath: "/var/run/docker.sock"
-            #   readOnly: true
       restartPolicy: Always
       volumes:
         - name: storage-volume
           persistentVolumeClaim:
             claimName: pvc-traefik
-        # - name: dockersock
-        #   hostPath:
-        #     path: /var/run/docker.sock

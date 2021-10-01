@@ -1,22 +1,18 @@
 ---
-namespace: kube-system
-
 bases:
   - general
   - traefik
-  - whoami
-  - nginx
   - traefik-auth
-  - panel
-  - books
-  - jupyter
-  - hidden
+  - nginx
+  - whoami
   - dyndns
+  - wireguard
+  - jupyter
   - heimdall
-  # - kanboard
-  # - metrics-server
+  # - panel
+  # - books
 
-secretGenerator:
-  - name: traefik-auth
-    env: traefik-auth.env
-    type: Opaque
+#TODO: ro on /lib/modules
+#TODO: pihole on traefik
+#TODO: domain in secrets
+#TODO: merge hidden and whoami on path

@@ -14,7 +14,7 @@
 #     warn: false
 
 - name: Create context for kube-system namespace
-  shell: kubectl config set-context dev --namespace=kube-system --cluster=default --user=default
+  shell: kubectl config set-context homelab --namespace=kube-system --cluster=default --user=default
 
 - name: Replace a localhost entry with our IP
   lineinfile:
@@ -25,5 +25,5 @@
 - name: fetch k3s config file
   fetch:
     src: /etc/rancher/k3s/k3s.yaml
-    dest: /Users/om/.kube/config
+    dest: /home/om/.kube/config
     flat: true

@@ -1,7 +1,7 @@
 ---
+namespace: apps
+
 resources:
-  - policies.yaml
-  - volumes.yaml
-  - services.yaml
-  - deployments.yaml
-  - middlewares.yaml
+  - 01-volumes.yaml
+  - 02-middlewares.yaml
+  - 03-ingressroutes.yaml

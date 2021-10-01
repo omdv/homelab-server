@@ -1,0 +1,28 @@
+globalArguments:
+  - --global.checknewversion
+additionalArguments:
+  - --certificatesresolvers.default.acme.tlschallenge
+  - --certificatesresolvers.default.acme.email=omdv.public@gmail.com
+  - --certificatesresolvers.default.acme.storage=/data/acme.json
+logs:
+  access:
+    enabled: true
+ports:
+  web:
+    redirectTo: websecure
+  wireguard:
+    port: 51280
+    containerPort: 51280
+    expose: true
+    protocol: UDP
+persistence:
+  enabled: true
+  existingClaim: pvc-traefik
+  path: /data
+resources:
+  requests:
+    cpu: "100m"
+    memory: "50Mi"
+  limits:
+    cpu: "300m"
+    memory: "150Mi"

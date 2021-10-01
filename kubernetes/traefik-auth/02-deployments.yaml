@@ -2,21 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: traefik-auth
   labels:
-    app: traefik-forward-auth
-  name: traefik-forward-auth
+    app: traefik-auth
+
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: traefik-forward-auth
+      app: traefik-auth
   template:
     metadata:
       labels:
-        app: traefik-forward-auth
+        app: traefik-auth
     spec:
       containers:
-        - name: traefik-forward-auth
+        - name: traefik-auth
           image: thomseddon/traefik-forward-auth:2
           ports:
             - containerPort: 4181
@@ -24,30 +25,30 @@ spec:
           resources:
             limits:
               memory: 512Mi
-              cpu: "1"
+              cpu: 500m
             requests:
               memory: 256Mi
-              cpu: "0.2"
+              cpu: 100m
           env:
             - name: PROVIDERS_GOOGLE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: traefik-auth
+                  name: traefik-secrets
                   key: OAUTH_CLIENT_ID
             - name: PROVIDERS_GOOGLE_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: traefik-auth
+                  name: traefik-secrets
                   key: OAUTH_CLIENT_SECRET
             - name: SECRET
               valueFrom:
                 secretKeyRef:
-                  name: traefik-auth
+                  name: traefik-secrets
                   key: OAUTH_SECRET
             - name: WHITELIST
               valueFrom:
                 secretKeyRef:
-                  name: traefik-auth
+                  name: traefik-secrets
                   key: OAUTH_WHITELIST
             - name: AUTH_HOST
               value: auth.zzd.ai

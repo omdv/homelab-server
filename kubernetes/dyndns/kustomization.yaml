@@ -1,3 +1,10 @@
 ---
-    resources:
-      - cronjob.yaml
+namespace: kube-system
+
+resources:
+  - 01-cronjob.yaml
+
+secretGenerator:
+  - name: dyndns-secrets
+    env: dyndns-secrets.env
+    type: Opaque
