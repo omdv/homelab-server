@@ -2,19 +2,13 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: https-redirect
-spec:
-  redirectScheme:
-    scheme: https
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
   name: forward-auth
+  labels:
+    app: traefik
+
 spec:
   forwardAuth:
-    address: http://traefik-forward-auth:4181
+    address: http://traefik-auth:4181
     authResponseHeaders:
       - "X-Forwarded-User"
     trustForwardHeader: true

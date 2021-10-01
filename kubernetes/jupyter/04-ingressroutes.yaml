@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jupyter
+  labels:
+    app: jupyter
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`jpt.${HOMELAB_DOMAIN_NAME}`)
+      kind: Rule
+      services:
+        - name: jupyter
+          port: 8888
+      middlewares:
+        - name: forward-auth
+  tls:
+    certResolver: default

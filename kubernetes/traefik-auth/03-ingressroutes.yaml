@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-auth
+  labels:
+    app: traefik-auth
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`auth.${HOMELAB_DOMAIN_NAME}`)
+      kind: Rule
+      services:
+        - name: traefik-auth
+          port: 4181
+      middlewares:
+        - name: forward-auth
+  tls:
+    certResolver: default

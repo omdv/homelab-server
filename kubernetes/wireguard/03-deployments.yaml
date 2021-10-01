@@ -1,0 +1,69 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: wireguard
+  labels:
+    app: wireguard
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wireguard
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wireguard
+    spec:
+      containers:
+        - env:
+            - name: ALLOWEDIPS
+              value: 0.0.0.0/0
+            - name: INTERNAL_SUBNET
+              value: 10.13.13.0
+            - name: PEERDNS
+              value: auto
+            - name: PEERS
+              value: "1"
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: SERVERURL
+              value: ${HOMELAB_DOMAIN_NAME}
+            - name: TZ
+              value: America/Chicago
+          image: ghcr.io/linuxserver/wireguard
+          name: wireguard
+          ports:
+            - containerPort: 51820
+              protocol: UDP
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+          volumeMounts:
+            - mountPath: /config
+              name: wireguard-config
+            - mountPath: /lib/modules
+              name: wireguard-modules
+      restartPolicy: Always
+      volumes:
+        - name: wireguard-modules
+          persistentVolumeClaim:
+            claimName: pvc-wireguard-modules
+        - name: wireguard-config
+          persistentVolumeClaim:
+            claimName: pvc-wireguard-config
+status: {}

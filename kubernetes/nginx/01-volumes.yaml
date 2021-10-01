@@ -2,26 +2,32 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-jupyter
+  name: pv-nginx
+  labels:
+    app: nginx
+
 spec:
   capacity:
-    storage: 1Gi
+    storage: 10Mi
   storageClassName: local-storage
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /pool/jupyter
+    path: /pool/config/nginx
 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-jupyter
+  name: pvc-nginx
+  labels:
+    app: nginx
+
 spec:
   storageClassName: local-storage
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
-  volumeName: pv-jupyter
+      storage: 10Mi
+  volumeName: pv-nginx

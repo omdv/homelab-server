@@ -1,0 +1,14 @@
+alertmanager:
+  enabled: false
+coreDns:
+  enabled: false
+exporters:
+  kube-state-metrics:
+    enabled: true
+  node-exporter:
+    enabled: true
+fullnameOverride: "metrics"
+kubeControllerManager:
+  enabled: false
+kubeProxy:
+  enabled: false

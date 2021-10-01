@@ -1,0 +1,19 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${HOMELAB_DOMAIN_NAME}`)
+      kind: Rule
+      services:
+        - name: nginx
+          port: 80
+  tls:
+    certResolver: default
