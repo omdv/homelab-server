@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: heimdall
+  labels:
+    app: heimdall
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`hm.${HOMELAB_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: heimdall
+          port: 80
+      middlewares:
+        - name: forward-auth
+  tls:
+    certResolver: default

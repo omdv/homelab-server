@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dashboard
+  labels:
+    app: traefik
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`traefik.${HOMELAB_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: api@internal
+          kind: TraefikService
+      middlewares:
+        - name: forward-auth
+  tls:
+    certResolver: default

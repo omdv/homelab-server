@@ -1,10 +1,13 @@
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: dyndns
+  labels:
+    app: dyndns
+
 spec:
-  schedule: "* 0 * * *"
+  schedule: "*/15 * * * *"
   startingDeadlineSeconds: 200
   jobTemplate:
     spec:
@@ -22,7 +25,7 @@ spec:
                 - name: PASS
                   valueFrom:
                     secretKeyRef:
-                      name: traefik-auth
+                      name: dyndns-secrets
                       key: NAMECHEAP_DNS_PASS
                 - name: BASE_URL
                   value: "https://dynamicdns.park-your-domain.com/update"

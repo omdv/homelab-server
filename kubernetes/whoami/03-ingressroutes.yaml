@@ -2,32 +2,39 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: traefik-auth-http
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Host(`auth.${HOMELAB_DOMAIN}`)
-      kind: Rule
-      services:
-        - name: traefik-forward-auth
-          port: 4181
-      middlewares:
-        - name: https-redirect
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: traefik-auth-https
+  name: whoami
+  labels:
+    app: whoami
+
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`auth.${HOMELAB_DOMAIN}`)
+    - match: Host(`whoami.${HOMELAB_DOMAIN}`)
       kind: Rule
       services:
-        - name: traefik-forward-auth
-          port: 4181
+        - name: whoami
+          port: 80
+  tls:
+    certResolver: default
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hidden
+  labels:
+    app: hidden
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`hidden.${HOMELAB_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: whoami
+          port: 80
       middlewares:
         - name: forward-auth
   tls:
