@@ -66,5 +66,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /pool/wireguard
+    path: /pool/config/wireguard
 status: {}

@@ -10,8 +10,8 @@
     - software-properties-common
     - python3-pip
 
-- name: install pip docker for ansible
-  shell: /usr/bin/pip3 install docker
+# - name: install pip docker for ansible
+#   shell: /usr/bin/pip3 install docker
 
 - name: add docker group
   group:
@@ -19,9 +19,10 @@
     state: present
 
 - name: add user to docker group
-  user: name={{ user }}
-        groups=docker
-        append=yes
+  ansible.builtin.user:
+    name: "{{ user }}"
+    groups: docker
+    append: yes
 
 - name: get certificate
   shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
@@ -36,53 +37,44 @@
     name: docker-ce
     update_cache: yes
 
+- name: get latest docker-compose
+  shell: > 
+    curl -s https://api.github.com/repos/docker/compose/releases/latest \
+    | grep "tag_name" \
+    | cut -d \" -f 4
+  register: docker_compose_version
+
 - name: install docker-compose
   get_url:
-    url: https://github.com/docker/compose/releases/download/{{ version }}/docker-compose-Linux-x86_64
+    url: https://github.com/docker/compose/releases/download/{{ version }}/docker-compose-linux-x86_64
     dest: /usr/local/bin/docker-compose
     owner: root
     group: root
     mode: 0755
     force: yes
   vars:
-    version: 1.24.1
+    # version: docker_compose_version.stdout_lines[0]
+    version: 1.29.2
 
-- name: enable passwordless sudo while deploying
-  lineinfile:
-    dest: /etc/sudoers
-    state: present
-    regexp: '^om'
-    line: 'om ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
-
-- name: delete old docker machine
-  command: /usr/local/bin/docker-machine rm -f {{ docker_machine_name }}
+- name: install docker-compose locally
+  get_url:
+    url: https://github.com/docker/compose/releases/download/{{ version }}/docker-compose-linux-x86_64
+    dest: /home/om/.local/bin/docker-compose
+    owner: om
+    group: om
+    mode: 0755
+    force: yes
   delegate_to: 127.0.0.1
-  become: no
+  become: false
+  vars:
+    # version: docker_compose_version.stdout_lines[0]
+    version: 1.29.2
 
-- name: create new docker machine
-  command: /usr/local/bin/docker-machine create --driver generic \
-    --generic-ip-address={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }} \
-    --generic-ssh-key ~/.ssh/id_rsa \
-    --generic-ssh-user={{ user }} {{ docker_machine_name }}
+- name: create remote context on local machine
+  command: docker context create remote --docker "host=ssh://{{ user }}@{{ ip4 }}"
   delegate_to: 127.0.0.1
-  become: no
-
-- name: disable passwordless sudo
-  lineinfile:
-    dest: /etc/sudoers
-    state: absent
-    regexp: '^om'
-    line: 'om ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
-
-# # ----------- install nvidia-container-toolkit
-# - name: install nvidia-container-toolkit
-#   shell: distribution=$(. /etc/os-release;echo $ID$VERSION_ID) &&
-#     curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - &&
-#     curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list &&
-#     apt-get update && 
-#     apt-get install -y nvidia-container-toolkit
+  become: false
+  ignore_errors: true
 
 - name: restart docker
-  shell: systemctl restart docker
+  shell: systemctl enable docker && systemctl start docker
