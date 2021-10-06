@@ -7,7 +7,7 @@ metadata:
     app: wireguard
 
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: wireguard
@@ -20,14 +20,6 @@ spec:
     spec:
       containers:
         - env:
-            - name: ALLOWEDIPS
-              value: 0.0.0.0/0
-            - name: INTERNAL_SUBNET
-              value: 10.13.13.0
-            - name: PEERDNS
-              value: auto
-            - name: PEERS
-              value: "1"
             - name: PGID
               value: "1000"
             - name: PUID
@@ -36,6 +28,10 @@ spec:
               value: ${HOMELAB_DOMAIN}
             - name: TZ
               value: America/Chicago
+            - name: PEERS
+              value: "1"
+            - name: PEERDNS
+              value: "8.8.8.8"
           image: ghcr.io/linuxserver/wireguard
           name: wireguard
           ports:

@@ -6,21 +6,22 @@
 - name: UFW access ports
   ufw:
     rule: allow
-    proto: tcp
     dest: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     to_port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
     comment: "{{ item.comment }}"
   with_items:
-    - {port: "22", comment: ssh}
-    - {port: "80", comment: http}
-    - {port: "443", comment: https}
-    - {port: "2376", comment: docker}
-    - {port: "5432", comment: postgres}
-    - {port: "6379", comment: redis}
-    - {port: "6443", comment: k3s}
-    - {port: "19999", comment: netdata}
-    - {port: "27017", comment: mongo}
-    - {port: "32400", comment: plex}
+    - {port: "22", comment: ssh, proto: tcp}
+    - {port: "80", comment: http, proto: tcp}
+    - {port: "443", comment: https, proto: tcp}
+    - {port: "2376", comment: docker, proto: tcp}
+    # - {port: "5432", comment: postgres, proto: tcp}
+    # - {port: "6379", comment: redis, proto: tcp}
+    - {port: "6443", comment: k3s, proto: tcp}
+    - {port: "19999", comment: netdata, proto: tcp}
+    # - {port: "27017", comment: mongo, proto: tcp}
+    - {port: "32400", comment: plex, proto: tcp}
+    - {port: "51820", comment: wireguard, proto: udp}
 
 - name: UFW enable
   ufw:
