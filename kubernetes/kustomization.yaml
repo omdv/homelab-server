@@ -9,10 +9,10 @@ bases:
   - wireguard
   - jupyter
   - heimdall
-  # - panel
   # - books
 
 #TODO: ro on /lib/modules
 #TODO: pihole on traefik
 #TODO: domain in secrets
-#TODO: merge hidden and whoami on path
+#TODO: remove externalIP 9100
+#TODO: install DIUN for docker image update

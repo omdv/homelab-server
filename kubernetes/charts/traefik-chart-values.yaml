@@ -1,3 +1,8 @@
+deployment:
+  annotations:
+    prometheus.io/scrape: "true"
+  labels:
+    app: traefik
 globalArguments:
   - --global.checknewversion
 additionalArguments:
@@ -10,6 +15,11 @@ logs:
 ports:
   web:
     redirectTo: websecure
+  metrics:
+    expose: true
+    exposedPort: 9119
+    port: 9100
+    protocol: TCP
   wireguard:
     port: 51280
     containerPort: 51280

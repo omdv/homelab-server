@@ -1,14 +1,27 @@
+fullnameOverride: "metrics"
+# exporters:
+#   kube-state-metrics:
+#     enabled: true
+#   node-exporter:
+#     enabled: true
+# kubeControllerManager:
+#   enabled: false
+# kubeProxy:
+#   enabled: false
+# kubeScheduler:
+#   enabled: false
 alertmanager:
   enabled: false
-coreDns:
-  enabled: false
-exporters:
-  kube-state-metrics:
-    enabled: true
-  node-exporter:
-    enabled: true
-fullnameOverride: "metrics"
-kubeControllerManager:
-  enabled: false
-kubeProxy:
-  enabled: false
+# coreDns:
+#   enabled: false
+# kubeApiServer:
+#   enabled: false
+prometheus:
+  additionalScrapeConfigs:
+    enabled: "true"
+    type: internal
+    internal:
+      jobList:
+        - job_name: 'traefik-collector'
+          static_configs:
+            - targets: ['traefik.apps.svc.cluster.local:9119']
