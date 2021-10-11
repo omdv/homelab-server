@@ -55,8 +55,23 @@ Type|Item
 ansible-playbook playbook.yml  -i hosts --extra-vars "ansible_sudo_pass="$HOMELAB_ROOT_PASS
 ```
 
+## Setup
+
+### Setup environment variables
+...list tbd
+
+### Configure git hooks
+```
+# make the hooks runnable
+chmod +x git_hooks/
+
+# configure git to use the new hooks
+git config core.hooksPath "./git_hooks"
+```
+
+
 ## TODO
-- automatic updates of k8s pod images
+- automatic updates of docker images - use [duin]?(https://crazymax.dev/diun/providers/kubernetes/)
 - microservices (go.micro?) with additional traefik providers
 - protect docker.sock for traefik consumption
 - local docker registry
@@ -65,8 +80,7 @@ ansible-playbook playbook.yml  -i hosts --extra-vars "ansible_sudo_pass="$HOMELA
 - docker remote api certs
 - automate removal of failed zpool devices
 - automatically add endpoint to portainer during provisioning
-
-## Manual Steps
-1. Configure backup from laptop to homeserver
-2. Update No-IP to include sub hosts, done on a local router
-3. Prepare environment variables
+- ro on /lib/modules
+- wireguard and pihole on k3s/traefik
+- better way to template domain name - now done with git_hooks
+- proper resource specs for every resource

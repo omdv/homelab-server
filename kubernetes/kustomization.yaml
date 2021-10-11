@@ -10,9 +10,3 @@ bases:
   - jupyter
   - heimdall
   - paperless
-
-#TODO: ro on /lib/modules
-#TODO: pihole on traefik
-#TODO: templating domain name
-#TODO: resource specs for paperless
-#TODO: install DIUN - https://crazymax.dev/diun/providers/kubernetes/
