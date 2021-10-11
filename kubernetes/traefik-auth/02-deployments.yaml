@@ -59,7 +59,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: traefik-secrets
-                  key: HOMELAB_OAUTH_COOKIE_DOMAIN
+                  key: HOMELAB_COOKIE_DOMAIN
           envFrom:
             - configMapRef:
                 name: traefik-auth-config
