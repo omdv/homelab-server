@@ -9,10 +9,10 @@ bases:
   - wireguard
   - jupyter
   - heimdall
-  # - books
+  - paperless
 
 #TODO: ro on /lib/modules
 #TODO: pihole on traefik
-#TODO: domain in secrets
-#TODO: remove externalIP 9100
-#TODO: install DIUN for docker image update
+#TODO: templating domain name
+#TODO: resource specs for paperless
+#TODO: install DIUN - https://crazymax.dev/diun/providers/kubernetes/

@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-auth-config
+  labels:
+    app: traefik-auth
+
+data:
+  INSECURE_COOKIE: "false"
+  LIFETIME: "2592000"

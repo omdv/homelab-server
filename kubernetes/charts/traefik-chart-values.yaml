@@ -12,6 +12,7 @@ additionalArguments:
 logs:
   access:
     enabled: true
+    format: json
 ports:
   web:
     redirectTo: websecure
@@ -20,11 +21,11 @@ ports:
     exposedPort: 9119
     port: 9100
     protocol: TCP
-  wireguard:
-    port: 51280
-    containerPort: 51280
-    expose: true
-    protocol: UDP
+  # wireguard:
+  #   port: 51280
+  #   containerPort: 51280
+  #   expose: true
+  #   protocol: UDP
 persistence:
   enabled: true
   existingClaim: pvc-traefik
