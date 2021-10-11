@@ -39,19 +39,3 @@
 - import_tasks: misc.yml
   tags:
     - misc
-
-
-# - import_tasks: canonical.yml
-#   tags:
-#     - canonical
-
-
-# - import_tasks: gpu.yml
-#   tags:
-#     - gpu
-
-# - import_tasks: conda.yml
-#   become: yes
-#   become_user: "{{ user }}"
-#   tags:
-#     - conda
