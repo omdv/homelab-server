@@ -56,18 +56,12 @@ ansible-playbook playbook.yml  -i hosts --extra-vars "ansible_sudo_pass="$HOMELA
 ```
 
 ## Setup
+1. Define env variables (list TBD)
+2. Setup git `make setup`
 
-### Setup environment variables
-...list tbd
 
-### Configure git hooks
-```
-# make the hooks runnable
-chmod +x git_hooks/
-
-# configure git to use the new hooks
-git config core.hooksPath "./git_hooks"
-```
+## Cleaning domain name prior to commit
+Commit will be rejected if it detects domain name. Remove it with `make rm_domain`. Add back with `make add_domain`
 
 
 ## TODO
