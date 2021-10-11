@@ -48,7 +48,6 @@
   ignore_errors: true
   with_items:
     - {db: paperless, user: paperless, pass: paperless}
-    - {db: nocodb, user: nocodb, pass: nocodb}
 
 - name: create backup container
   docker_container:
@@ -59,7 +58,7 @@
       - "{{ pool }}/databases/backup:/backups"
     env:
       POSTGRES_HOST: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
-      POSTGRES_DB: "nhl,paperless"
+      POSTGRES_DB: "paperless"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "{{ postgres_pass }}"
       POSTGRES_EXTRA_OPTS: "-Z9 --schema=public --blobs"
@@ -67,5 +66,4 @@
       BACKUP_KEEP_DAYS: "7"
       BACKUP_KEEP_WEEKS: "4"
       BACKUP_KEEP_MONTHS: "6"
-      HEALTHCHECK_PORT: "81"
     container_default_behavior: compatibility
