@@ -25,7 +25,7 @@ spec:
             - name: PUID
               value: "1000"
             - name: SERVERURL
-              value: ${HOMELAB_DOMAIN}
+              value: #HOMELAB_DOMAIN#
             - name: TZ
               value: America/Chicago
             - name: PEERS

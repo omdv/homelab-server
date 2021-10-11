@@ -22,13 +22,9 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
-          env:
-            - name: PUID
-              value: "1000"
-            - name: PGID
-              value: "1000"
-            - name: TZ
-              value: "America/Chicago"
+          envFrom:
+            - configMapRef:
+                name: heimdall-config
           volumeMounts:
             - mountPath: /config
               name: volume

@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`paperless.${HOMELAB_DOMAIN}`)
+    - match: Host(`paperless.#HOMELAB_DOMAIN#`)
       kind: Rule
       services:
         - name: paperless

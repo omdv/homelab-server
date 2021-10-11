@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`${HOMELAB_DOMAIN}`)
+    - match: Host(`#HOMELAB_DOMAIN#`)
       kind: Rule
       services:
         - name: nginx
