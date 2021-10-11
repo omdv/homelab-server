@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`kb.zzd.ai`)
+    - match: Host(`kb.${HOMELAB_DOMAIN}`)
       kind: Rule
       services:
         - name: kanboard
@@ -23,7 +23,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`kb.zzd.ai`)
+    - match: Host(`kb.${HOMELAB_DOMAIN}`)
       kind: Rule
       services:
         - name: kanboard
