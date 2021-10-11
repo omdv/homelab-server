@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`whoami.${HOMELAB_DOMAIN_NAME}`)
+    - match: Host(`whoami.zzd.ai`)
       kind: Rule
       services:
         - name: whoami
@@ -30,7 +30,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`hidden.${HOMELAB_DOMAIN_NAME}`)
+    - match: Host(`hidden.zzd.ai`)
       kind: Rule
       services:
         - name: whoami

@@ -14,7 +14,7 @@ defaultEntryPoints = ["http", "https"]
 
 [docker]
 endpoint = "unix:///var/run/docker.sock"
-domain = "${HOMELAB_DOMAIN_NAME}"
+domain = "zzd.ai"
 watch = true
 exposedByDefault = false
 
