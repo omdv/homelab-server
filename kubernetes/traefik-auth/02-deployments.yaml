@@ -51,9 +51,9 @@ spec:
                   name: traefik-secrets
                   key: OAUTH_WHITELIST
             - name: AUTH_HOST
-              value: auth.${HOMELAB_DOMAIN_NAME}
+              value: auth.${HOMELAB_DOMAIN}
             - name: COOKIE_DOMAIN
-              value: ${HOMELAB_DOMAIN_NAME}
+              value: ${HOMELAB_DOMAIN}
             - name: INSECURE_COOKIE
               value: "false"
             - name: LIFETIME

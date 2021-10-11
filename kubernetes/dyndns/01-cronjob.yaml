@@ -19,8 +19,8 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
                 - IP_ADDR=$(wget -qO- ifconfig.me | xargs echo) &&
-                  wget -S "${BASE_URL}?host=@&domain=${HOMELAB_DOMAIN_NAME}&password=${PASS}&ip=${IP_ADDR}" -O /dev/null &&
-                  wget -S "${BASE_URL}?host=*&domain=${HOMELAB_DOMAIN_NAME}&password=${PASS}&ip=${IP_ADDR}" -O /dev/null
+                  wget -S "${BASE_URL}?host=@&domain=${HOMELAB_DOMAIN}&password=${PASS}&ip=${IP_ADDR}" -O /dev/null &&
+                  wget -S "${BASE_URL}?host=*&domain=${HOMELAB_DOMAIN}&password=${PASS}&ip=${IP_ADDR}" -O /dev/null
             env:
                 - name: PASS
                   valueFrom:
