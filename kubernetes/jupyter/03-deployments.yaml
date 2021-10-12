@@ -24,6 +24,13 @@ spec:
               protocol: TCP
           command: ["start.sh"]
           args: ["jupyter", "lab"]
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "500Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1000Mi"
           volumeMounts:
             - mountPath: /home/jovyan
               name: volume
