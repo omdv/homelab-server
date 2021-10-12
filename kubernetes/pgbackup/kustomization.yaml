@@ -1,0 +1,12 @@
+---
+namespace: kube-system
+
+resources:
+  - 00-configmap.yaml
+  - 01-volumes.yaml
+  - 02-deployments.yaml
+
+secretGenerator:
+  - name: pgbackup-secrets
+    env: pgbackup-secrets.env
+    type: Opaque
