@@ -29,11 +29,6 @@
     - samba
     - docker
 
-- import_tasks: watchtower.yml
-  tags:
-    - watchtower
-    - docker
-
 - import_tasks: postgres.yml
   tags:
     - postgres
@@ -49,19 +44,9 @@
     - redis
     - docker
 
-# - import_tasks: huginn.yml
-#   tags:
-#     - huginn
-#     - docker
-
 - import_tasks: netdata.yml
   tags:
     - netdata
-    - docker
-
-- import_tasks: paperless.yml
-  tags:
-    - paperless
     - docker
 
 - import_tasks: ibgateway.yml

@@ -65,16 +65,11 @@ Commit will be rejected if it detects domain name. Remove it with `make rm_domai
 
 
 ## TODO
-- automatic updates of docker images - use [duin]?(https://crazymax.dev/diun/providers/kubernetes/)
 - microservices (go.micro?) with additional traefik providers
-- protect docker.sock for traefik consumption
 - local docker registry
 - unattended upgrades
-- telegraf smartctl
 - docker remote api certs
-- automate removal of failed zpool devices
-- automatically add endpoint to portainer during provisioning
 - ro on /lib/modules
 - wireguard and pihole on k3s/traefik
-- better way to template domain name - now done with git_hooks
-- proper resource specs for every resource
+- better way to template domain name
+- proper resource specs for every deployment

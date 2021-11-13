@@ -48,3 +48,4 @@
   ignore_errors: true
   with_items:
     - {db: paperless, user: paperless, pass: paperless}
+    - {db: huginn, user: huginn, pass: huginn}

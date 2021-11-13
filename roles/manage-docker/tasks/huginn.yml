@@ -33,4 +33,4 @@
       launchpanel.port: "8009"
     image: huginn/huginn:latest
     volumes:
-      - "{{ pool}}//confighuginn:/var/lib/mysql"
+      - "{{ pool}}//config/huginn:/var/lib/mysql"

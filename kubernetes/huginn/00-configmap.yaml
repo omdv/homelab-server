@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: huginn-config
+  labels:
+    app: huginn
+
+data:
+  TZ: America/Chicago
+  SKIP_INVITATION_CODE: "true"
+  PORT: "3000"
+  DO_NOT_CREATE_DATABASE: "true"
+  DATABASE_ADAPTER: postgresql
+  DATABASE_ENCODING: utf8
+  DATABASE_RECONNECT: "true"
+  DATABASE_NAME: huginn
+  DATABASE_POOL: "20"
+  DATABASE_USERNAME: huginn
+  DATABASE_PASSWORD: huginn
+  DATABASE_HOST: 192.168.0.24
+  SMTP_DOMAIN: "fastmail.com"
+  SMTP_SERVER: "smtp.fastmail.com"
+  SMTP_PORT: "587"
+  SMTP_AUTHENTICATION: plain
+  SMTP_ENABLE_STARTTLS_AUTO: "true"

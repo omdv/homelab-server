@@ -2,6 +2,7 @@
 namespace: apps
 
 resources:
+  - 00-configmap.yaml
   - 01-volumes.yaml
   - 02-services.yaml
   - 03-deployments.yaml
