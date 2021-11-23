@@ -30,8 +30,8 @@ spec:
               cpu: "10m"
               memory: "10Mi"
             limits:
-              cpu: "30m"
-              memory: "30Mi"
+              cpu: "20m"
+              memory: "20Mi"
       volumes:
         - name: storage-volume
           persistentVolumeClaim:

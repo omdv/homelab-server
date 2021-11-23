@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-mealie
+  labels:
+    app: mealie
+
+spec:
+  capacity:
+    storage: 1Gi
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /pool/config/mealie
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-mealie
+  labels:
+    app: mealie
+
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-mealie

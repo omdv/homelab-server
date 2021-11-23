@@ -24,11 +24,11 @@ spec:
               protocol: TCP
           resources:
             limits:
-              memory: 512Mi
-              cpu: 500m
+              cpu: 40m
+              memory: 20Mi
             requests:
-              memory: 256Mi
-              cpu: 100m
+              cpu: 10m
+              memory: 5Mi
           env:
             - name: PROVIDERS_GOOGLE_CLIENT_ID
               valueFrom:
@@ -59,7 +59,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: traefik-secrets
-                  key: HOMELAB_COOKIE_DOMAIN
+                  key: HOMELAB_OAUTH_COOKIE_DOMAIN
           envFrom:
             - configMapRef:
                 name: traefik-auth-config

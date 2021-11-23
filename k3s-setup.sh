@@ -1,8 +1,8 @@
 #!/bin/bash
 kubectl apply -k kubernetes/general
 
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install metrics bitnami/kube-prometheus --values=kubernetes/charts/prometheus-chart-values.yaml -n kube-system
+# helm repo add bitnami https://charts.bitnami.com/bitnami
+# helm install metrics bitnami/kube-prometheus --values=kubernetes/charts/prometheus-chart-values.yaml -n metrics
 
 kubectl apply -k kubernetest/traefik
 

@@ -3,3 +3,9 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: apps
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: metrics

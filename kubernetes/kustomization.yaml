@@ -10,3 +10,4 @@ bases:
   - jupyter
   - heimdall
   - paperless
+  - pgbackup

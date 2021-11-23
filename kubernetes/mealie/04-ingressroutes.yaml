@@ -1,0 +1,19 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: mealie
+  labels:
+    app: mealie
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`recipe.#HOMELAB_DOMAIN#`)
+      kind: Rule
+      services:
+        - name: mealie
+          port: 80
+  tls:
+    certResolver: default

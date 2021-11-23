@@ -1,0 +1,37 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mealie
+  labels:
+    app: mealie
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mealie
+  template:
+    metadata:
+      labels:
+        app: mealie
+    spec:
+      containers:
+        - name: mealie
+          image: hkotel/mealie:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /app/data
+              name: data-volume
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+            limits:
+              cpu: "500m"
+              memory: "300Mi"
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: pvc-mealie
