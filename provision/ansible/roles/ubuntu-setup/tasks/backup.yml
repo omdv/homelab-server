@@ -1,0 +1,110 @@
+---
+- name: ensure backup folder exists
+  file:
+    path: "{{ pool }}/backup"
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+
+- name: install borg
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - borgbackup
+
+- name: create repositories
+  shell: borg init --encryption=repokey-blake2 {{ pool }}/backup/{{ item.dir }}
+  environment:
+    BORG_PASSPHRASE: "{{ item.pass }}"
+  become: true
+  become_user: "{{ item.user }}"
+  ignore_errors: true
+  with_items: "{{ backup_repos }}"
+
+- name: transfer local backup script
+  template:
+    src: borg-self-backup.sh.j2
+    dest: "{{ pool }}/backup/borg-self-backup.sh"
+    owner: root
+    group: root
+    mode: 700
+
+- name: push service definition
+  template:
+    src: borg.backup.service.j2
+    dest: /etc/systemd/system/borg-backup.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: push timer definition
+  template:
+    src: borg.backup.timer.j2
+    dest: /etc/systemd/system/borg-backup.timer
+    owner: root
+    group: root
+    mode: 0644
+
+- name: start service
+  systemd:
+    name: borg-backup.timer
+    daemon_reload: true
+    enabled: true
+    state: started
+
+- name: install rclone
+  shell: curl https://rclone.org/install.sh | bash
+  args:
+    warn: false
+  ignore_errors: true
+
+- name: configure rclone
+  file:
+    path: /home/{{ user }}/.config/rclone
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0775
+
+- name: configure rclone
+  file:
+    path: "{{item}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  with_items:
+    - ["/root/.config", "/root/.config/rclone"]
+
+- name: push config file
+  template:
+    src: rclone.conf.j2
+    dest: /root/.config/rclone/rclone.conf
+    owner: root
+    group: root
+    mode: 0600
+
+- name: push service file
+  template:
+    src: rclone.b2.service.j2
+    dest: /etc/systemd/system/rclone-b2.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: push timer file
+  template:
+    src: rclone.b2.timer.j2
+    dest: /etc/systemd/system/rclone-b2.timer
+    owner: root
+    group: root
+    mode: 0644
+
+- name: start service
+  systemd:
+    name: rclone-b2.timer
+    daemon_reload: true
+    enabled: true
+    state: started

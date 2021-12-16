@@ -30,7 +30,7 @@
       - 8008:80
     labels:
       traefik.enable: "false"
-      launchpanel.enabled: "yes"
+      launchpanel.enabled: "true"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "pgadmin"
       launchpanel.port: "8008"
@@ -47,5 +47,5 @@
     psql -h localhost -U postgres -c "grant all privileges on database {{ item.db }} to {{ item.user }};"
   ignore_errors: true
   with_items:
-    - {db: paperless, user: paperless, pass: paperless}
-    - {db: huginn, user: huginn, pass: huginn}
+    - { db: paperless, user: paperless, pass: paperless }
+    - { db: huginn, user: huginn, pass: huginn }

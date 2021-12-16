@@ -11,14 +11,14 @@
   docker_container:
     name: portainer
     state: started
-    restart: yes
+    restart: true
     restart_policy: always
     command: --no-auth
     ports:
       - 8001:9000
     labels:
       traefik.enable: "false"
-      launchpanel.enabled: "yes"
+      launchpanel.enabled: "true"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "portainer"
       launchpanel.port: "8001"

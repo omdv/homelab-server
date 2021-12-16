@@ -11,7 +11,7 @@
   docker_container:
     name: elasticsearch
     state: started
-    restart: yes
+    restart: true
     restart_policy: always
     labels:
       traefik.enable: "false"
@@ -22,34 +22,4 @@
       discovery.type: single-node
     volumes:
       - "{{ pool }}/config/elasticsearch:/usr/share/elasticsearch/data"
-
-
 # https://stackoverflow.com/questions/37861279/how-to-index-a-pdf-file-in-elasticsearch-5-0-0-with-ingest-attachment-plugin?rq=1
-
-# PUT _ingest/pipeline/attachment
-# {
-#   "description" : "Extract attachment information",
-#   "processors" : [
-#     {
-#       "attachment" : {
-#         "field" : "data",
-#         "indexed_chars" : -1
-#       }
-#     }
-#   ]
-# }
-
-# PUT edms
-# { 
-#     "mappings" : { 
-#         "properties" : { 
-#                 "attachment.data" : {"type": "text"} 
-#         } 
-#     } 
-# }
-
-# base64 encoded document in body as json
-# POST edms/_doc?pipeline=attachment
-# {
-#   "data": "e1xydGYxXGFuc2kNCkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0DQpccGFyIH0="
-# }

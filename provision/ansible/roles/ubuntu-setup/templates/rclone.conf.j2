@@ -1,0 +1,12 @@
+[b2]
+type = b2
+account = {{ lookup('env','B2_APPLICATION_KEY_ID') }}
+key = {{ lookup('env','B2_APPLICATION_KEY') }}
+endpoint =
+
+[secret]
+type = crypt
+remote = b2:{{ backup_b2_bucket }}
+filename_encryption = off
+password = tCUWVbATI-xXtU16YUwMmNSaze9_MgjpdXJx8P77AfHT83pndPY
+password2 = TEUdyGJAyJ4v8-7ldiKxGbED_zxXCJdE3HQKAgyllgVcqwzjuNA

@@ -1,4 +1,5 @@
-version: '3.3'
+---
+version: "3.3"
 services:
   wireguard:
     image: ghcr.io/linuxserver/wireguard
@@ -35,5 +36,5 @@ services:
       - /pool/media:/downloads
       - ./watch:/watch
     network_mode: "service:wireguard"
-    depends_on: [ "wireguard", ]
+    depends_on: ["wireguard"]
     restart: unless-stopped

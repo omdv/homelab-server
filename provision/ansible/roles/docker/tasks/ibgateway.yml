@@ -11,7 +11,7 @@
       - "8014:8888"
     labels:
       traefik.enable: "false"
-      launchpanel.enabled: "yes"
+      launchpanel.enabled: "true"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "ibgateway"
       launchpanel.port: "8014"

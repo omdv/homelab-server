@@ -3,14 +3,14 @@
   docker_container:
     name: cloudcmd
     state: started
-    restart: yes
+    restart: true
     image: coderaiser/cloudcmd:14.9.3-alpine
     restart_policy: always
     ports:
       - 8005:8000
     labels:
       traefik.enable: "false"
-      launchpanel.enabled: "yes"
+      launchpanel.enabled: "true"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "cloudcmd"
       launchpanel.port: "8005"

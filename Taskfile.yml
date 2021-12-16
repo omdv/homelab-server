@@ -16,12 +16,9 @@ vars:
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/provision/terraform"
 
 # env:
-  # KUBECONFIG: "{{.PROJECT_DIR}}/provision/kubeconfig"
+# KUBECONFIG: "{{.PROJECT_DIR}}/provision/kubeconfig"
 
 includes:
   ansible: .taskfiles/ansible.yml
   pre-commit: .taskfiles/pre-commit.yml
   lint: .taskfiles/lint.yml
-  # flux: .taskfiles/flux.yml
-  # format: .taskfiles/format.yml
-  # terraform: .taskfiles/terraform.yml

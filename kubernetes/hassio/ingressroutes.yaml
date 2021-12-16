@@ -28,7 +28,7 @@ spec:
       services:
         - name: hassio
           port: 8123
-      # middlewares:
-      #   - name: forward-auth
+  # middlewares:
+  # - name: forward-auth
   tls:
     certResolver: default

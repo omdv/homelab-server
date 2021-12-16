@@ -3,7 +3,7 @@
   docker_container:
     name: redis
     state: started
-    restart: yes
+    restart: true
     restart_policy: always
     ports:
       - 6379:6379

@@ -270,7 +270,7 @@ generate_ansible_hosts() {
             node_id=$(echo "${var}" | awk -F"_" '{print $5}')
             node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
             if [[ "${!node_control}" == "true" ]]; then
-                printf "        remote:\n"
+                printf "        k8s-%s:\n" "${node_id}"
                 printf "          ansible_host: %s\n" "${!var}"
             else
                 worker_node_count=$((worker_node_count+1))

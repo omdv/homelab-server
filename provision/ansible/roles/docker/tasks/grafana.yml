@@ -5,7 +5,7 @@
     state: directory
     owner: 472
     group: 472
-  become: yes
+  become: true
 
 - file:
     path: "{{ pool }}/config/grafana/plugins"
@@ -13,7 +13,7 @@
     mode: 0755
     owner: 472
     group: 472
-  become: yes
+  become: true
 
 - name: start grafana container
   docker_container:
@@ -24,7 +24,7 @@
       - 8003:3000
     labels:
       traefik.enable: "false"
-      launchpanel.enabled: "yes"
+      launchpanel.enabled: "true"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "grafana"
       launchpanel.port: "8003"

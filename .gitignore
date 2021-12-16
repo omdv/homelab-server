@@ -7,7 +7,6 @@ bin
 *.iso
 # vscode-sops
 .decrypted~*.yaml
-.config.env
 *.agekey
 # Temp folders
 .temp*

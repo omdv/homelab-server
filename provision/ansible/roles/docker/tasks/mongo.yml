@@ -54,7 +54,7 @@
     roles: "{{ item.roles }}"
     state: present
   with_items:
-    - {db: nhl, user: nhl, pass: nhl, roles: "readWrite,dbAdmin"}
+    - { db: nhl, user: nhl, pass: nhl, roles: "readWrite,dbAdmin" }
 
 - name: start mongo express
   docker_container:
@@ -70,7 +70,7 @@
       - 8011:8081
     labels:
       traefik.enable: "false"
-      launchpanel.enabled: "yes"
+      launchpanel.enabled: "true"
       launchpanel.ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       launchpanel.name: "mongo"
       launchpanel.port: "8011"

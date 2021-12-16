@@ -1,0 +1,22 @@
+---
+- name: install misc apt packages
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - vim
+      - ubuntu-drivers-common
+      - apache2-utils
+      - unattended-upgrades
+      - apt-listchanges
+      - postgresql-client
+      - mongodb-clients
+      - unzip
+      - smartmontools
+
+- name: install required pip modules
+  pip:
+    name:
+      - passlib
+      - bcrypt
+      - pymongo

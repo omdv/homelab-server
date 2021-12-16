@@ -1,0 +1,15 @@
+[Unit]
+Description=Borg User Backup
+
+[Service]
+Type=simple
+Nice=19
+IOSchedulingClass=2
+IOSchedulingPriority=7
+ExecStartPre=/usr/bin/borg break-lock {{ backup_pool }}/repo-server
+ExecStart={{ backup_pool }}/borg-self-backup.sh
+User=root
+Group=root
+
+[Install]
+WantedBy=timers.target
