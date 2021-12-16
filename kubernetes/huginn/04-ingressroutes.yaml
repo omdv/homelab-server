@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`hg.#HOMELAB_DOMAIN#`)
+    - match: Host(`hg.zzd.ai`)
       kind: Rule
       services:
         - name: huginn

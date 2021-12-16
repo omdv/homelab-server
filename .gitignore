@@ -1,3 +1,23 @@
-compose-transmission-wireguard
-wirehole
-wg0.conf
+# Trash
+.DS_Store
+Thumbs.db
+# Binaries
+bin
+/flux
+*.iso
+# Temp folders
+.temp*
+.private/
+.logs/
+.task/
+# Ansible
+# Terraform
+.terraform
+.terraform.tfstate*
+terraform.tfstate*
+# Sops
+.decrypted~*
+*.agekey
+# Kubernetes
+kubeconfig
+talosconfig

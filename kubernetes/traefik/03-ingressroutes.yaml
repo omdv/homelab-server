@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefik.#HOMELAB_DOMAIN#`)
+    - match: Host(`traefik.zzd.ai`)
       kind: Rule
       services:
         - name: api@internal

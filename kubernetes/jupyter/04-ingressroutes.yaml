@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`jpt.#HOMELAB_DOMAIN#`)
+    - match: Host(`jpt.zzd.ai`)
       kind: Rule
       services:
         - name: jupyter

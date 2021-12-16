@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`hm.#HOMELAB_DOMAIN#`)
+    - match: Host(`hm.zzd.ai`)
       kind: Rule
       services:
         - name: heimdall

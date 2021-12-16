@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`#HOMELAB_DOMAIN#`)
+    - match: Host(`zzd.ai`)
       kind: Rule
       services:
         - name: nginx
