@@ -56,20 +56,6 @@
     # version: docker_compose_version.stdout_lines[0]
     version: 1.29.2
 
-- name: install docker-compose locally
-  get_url:
-    url: https://github.com/docker/compose/releases/download/{{ version }}/docker-compose-linux-x86_64
-    dest: /home/om/.local/bin/docker-compose
-    owner: om
-    group: om
-    mode: 0755
-    force: true
-  delegate_to: 127.0.0.1
-  become: false
-  vars:
-    # version: docker_compose_version.stdout_lines[0]
-    version: 1.29.2
-
 - name: create remote context on local machine
   command: docker context create remote --docker "host=ssh://{{ user }}@{{ ip4 }}"
   delegate_to: 127.0.0.1

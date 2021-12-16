@@ -97,17 +97,6 @@ also:
 | **Power Supply** | [SeaSonic FOCUS Plus Gold 550 W 80+ Gold Certified Fully Modular ATX Power Supply](https://pcpartpicker.com/product/bkp323/seasonic-focus-plus-gold-550w-80-gold-certified-fully-modular-atx-power-supply-ssr-550fx) |
 | **Case Fan**     | [Noctua NF-A14 PWM 82.5 CFM 140 mm Fan](https://pcpartpicker.com/product/dwR48d/noctua-case-fan-nfa14pwm)                                                                                                            |
 
-## Execution
-
-```bash
-ansible-playbook playbook.yml  -i hosts --extra-vars "ansible_sudo_pass="$HOMELAB_ROOT_PASS
-```
-
-## Setup
-
-1. Define env variables (list TBD)
-2. Setup git `make setup`
-
 ## Cleaning domain name prior to commit
 
 Commit will be rejected if it detects domain name. Remove it with `make rm_domain`. Add back with `make add_domain`
