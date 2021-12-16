@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`cc.zzd.ai`)
+    - match: Host(`cc.#HOMELAB_DOMAIN#`)
       kind: Rule
       services:
         - name: cyberchef

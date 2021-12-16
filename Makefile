@@ -1,6 +1,6 @@
 ### VARIABLES ###
 
-GITHUB_REPO='k8s-home-cluster'
+GITHUB_REPO='homelab-server'
 TEST_CLUSTER='kind-local'
 PROD_CLUSTER='remote'
 
@@ -27,7 +27,15 @@ bootstrap_production:
     --path=./clusters/production
 
 .PHONY: bootstrap
-bootstrap: bootstrap_testing bootstrap_production
+# bootstrap: bootstrap_testing bootstrap_production
+bootstrap:
+	kubectl ctx ${TEST_CLUSTER}
+	flux bootstrap github \
+    --owner=${GITHUB_USER} \
+    --repository=${GITHUB_REPO} \
+    --branch=main \
+    --personal \
+    --path=./cluster/base
 
 
 ### UTILITIES ###

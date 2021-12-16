@@ -1,0 +1,120 @@
+---
+- hosts:
+    - homelab
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Pausing for 5 seconds...
+      pause:
+        seconds: 5
+  vars:
+    k3s_become_for_all: true
+
+  tasks:
+    - name: Set hostname to inventory hostname
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+      when:
+        - ansible_hostname != inventory_hostname
+
+    - name: Update /etc/hosts to include hostname
+      ansible.builtin.blockinfile:
+        path: /etc/hosts
+        create: true
+        block: |
+          127.0.0.1 localhost
+          127.0.1.1 {{ inventory_hostname }}
+          # The following lines are desirable for IPv6 capable hosts
+          ::1 ip6-localhost ip6-loopback
+          fe00::0 ip6-localnet
+          ff00::0 ip6-mcastprefix
+          ff02::1 ip6-allnodes
+          ff02::2 ip6-allrouters
+          ff02::3 ip6-allhosts
+
+    - name: Check for bridge-nf-call-iptables
+      ansible.builtin.stat:
+        path: /proc/sys/net/bridge/bridge-nf-call-iptables
+      register: bridge_nf_call_iptables_result
+
+    - name: Set Kubernetes network configuration
+      ansible.builtin.blockinfile:
+        path: /etc/sysctl.d/99-kubernetes-cri.conf
+        mode: 0644
+        create: true
+        block: |
+          net.ipv4.ip_forward = 1
+          net.bridge.bridge-nf-call-iptables = 1
+          net.ipv6.conf.all.forwarding = 1
+          net.bridge.bridge-nf-call-ip6tables = 1
+      when:
+        - bridge_nf_call_iptables_result.stat.exists
+      register: sysctl_network
+
+    - name: Reload Kubernetes network configuration
+      ansible.builtin.shell: sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
+      when:
+        - sysctl_network.changed
+        - bridge_nf_call_iptables_result.stat.exists
+
+    - name: Check if cluster is installed
+      ansible.builtin.stat:
+        path: "/etc/rancher/k3s/config.yaml"
+      register: k3s_check_installed
+      check_mode: false
+
+    - name: Set manifest facts
+      ansible.builtin.set_fact:
+        k3s_server_manifests_templates: []
+        k3s_server_manifests_urls: []
+      when: k3s_check_installed.stat.exists
+
+    - name: Install Kubernetes
+      include_role:
+        name: xanmanning.k3s
+        public: true
+
+    - name: Get absolute path to this Git repository
+      delegate_to: localhost
+      become: false
+      run_once: true
+      ansible.builtin.command: "git rev-parse --show-toplevel"
+      register: repo_abs_path
+
+    - name: Copy kubeconfig to provision folder
+      run_once: true
+      ansible.builtin.fetch:
+        src: "/etc/rancher/k3s/k3s.yaml"
+        dest: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+        flat: true
+      when:
+        - k3s_control_node is defined
+        - k3s_control_node
+
+    - name: Update kubeconfig with the right IPv4 address
+      delegate_to: localhost
+      become: false
+      run_once: true
+      ansible.builtin.replace:
+        path: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+        regexp: "https://127.0.0.1:6443"
+        replace: "https://{{ k3s_registration_address }}:6443"
+
+    - name: Remove deployed manifest templates
+      ansible.builtin.file:
+        path: "{{ k3s_server_manifests_dir }}/{{ item | basename | regex_replace('\\.j2$', '') }}"
+        state: absent
+      loop: "{{ k3s_server_manifests_templates }}"
+      when:
+        - k3s_server_manifests_templates
+        - k3s_server_manifests_templates | length > 0
+
+    - name: Remove deployed manifest urls
+      ansible.builtin.file:
+        path: "{{ k3s_server_manifests_dir }}/{{ item.filename }}"
+        state: absent
+      loop: "{{ k3s_server_manifests_urls }}"
+      when:
+        - k3s_server_manifests_urls
+        - k3s_server_manifests_urls | length > 0

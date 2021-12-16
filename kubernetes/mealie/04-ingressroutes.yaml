@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`recipe.zzd.ai`)
+    - match: Host(`recipe.#HOMELAB_DOMAIN#`)
       kind: Rule
       services:
         - name: mealie

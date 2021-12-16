@@ -1,5 +1,6 @@
 ---
-- template:
+- name: push network template
+  template:
     src: netplan.j2
     dest: /etc/netplan/50-cloud-init.yaml
     owner: root
@@ -7,6 +8,7 @@
     mode: "u=rw,g=r,o=r"
   # when: ansible_default_ipv4.interface == {{ interface }}
 
-- reboot:
+- name: restart server
+  reboot:
     reboot_timeout: 60
   # when: ansible_default_ipv4.interface == {{ interface }}

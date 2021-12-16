@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`auth.zzd.ai`)
+    - match: Host(`auth.#HOMELAB_DOMAIN#`)
       kind: Rule
       services:
         - name: traefik-auth
