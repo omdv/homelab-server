@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
   - config-pv.yaml
   - config-pvc.yaml
-  - helm-release.yaml
-  # - dashboard
+  - service.yaml
+  - deployment.yaml

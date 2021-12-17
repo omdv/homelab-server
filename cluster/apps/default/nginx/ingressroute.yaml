@@ -2,20 +2,19 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: dashboard
+  name: nginx
+  namespace: default
   labels:
-    app: traefik
+    app: nginx
 
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefik.${SECRET_DOMAIN}`)
+    - match: Host(`${SECRET_DOMAIN}`)
       kind: Rule
       services:
-        - name: api@internal
-          kind: TraefikService
-      middlewares:
-        - name: forward-auth
+        - name: nginx
+          port: 80
   tls:
     certResolver: default
