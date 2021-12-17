@@ -12,3 +12,4 @@ bases:
   - paperless
   - pgbackup
   - huginn
+  - cyberchef

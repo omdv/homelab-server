@@ -2,18 +2,19 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: nginx
+  name: whoami
+  namespace: default
   labels:
-    app: nginx
+    app: whoami
 
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`zzd.ai`)
+    - match: Host(`whoami.${SECRET_DOMAIN}`)
       kind: Rule
       services:
-        - name: nginx
+        - name: whoami
           port: 80
   tls:
     certResolver: default
