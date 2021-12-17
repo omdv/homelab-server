@@ -31,7 +31,17 @@ spec:
       enabled: true
       existingClaim: pvc-traefik
       path: /data
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+      fallbackApiVersion: v1
+    ingressRoute:
+      dashboard:
+        enabled: false
     globalArguments:
+      - "--api.insecure=true"
+      - "--serverstransport.insecureskipverify=true"
+      - "--providers.kubernetesingress.ingressclass=traefik"
       - "--metrics.prometheus=true"
       - "--metrics.prometheus.entryPoint=metrics"
     additionalArguments:
