@@ -16,21 +16,10 @@ spec:
         name: traefik-charts
         namespace: flux-system
       interval: 5m
-  dependsOn:
-    - name: cert-manager
-      namespace: cert-manager
   values:
-    image:
-      name: ghcr.io/k8s-at-home/traefik
     deployment:
       kind: Deployment
       replicas: 1
-    service:
-      enabled: true
-      type: LoadBalancer
-      spec:
-        loadBalancerIP: "${METALLB_TRAEFIK_ADDR}"
-        externalTrafficPolicy: Local
     logs:
       general:
         format: json
@@ -38,24 +27,20 @@ spec:
       access:
         enabled: true
         format: json
-    ingressClass:
+    persistence:
       enabled: true
-      isDefaultClass: true
-      fallbackApiVersion: v1
-    ingressRoute:
-      dashboard:
-        enabled: false
+      existingClaim: pvc-traefik
+      path: /data
     globalArguments:
       - "--api.insecure=true"
       - "--serverstransport.insecureskipverify=true"
       - "--providers.kubernetesingress.ingressclass=traefik"
       - "--metrics.prometheus=true"
       - "--metrics.prometheus.entryPoint=metrics"
-      - "--entryPoints.websecure.forwardedHeaders.trustedIPs=10.0.0.0/8,192.168.0.0/16,172.16.0.0/12,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,104.16.0.0/13,104.24.0.0/14,108.162.192.0/18,131.0.72.0/22,141.101.64.0/18,162.158.0.0/15,172.64.0.0/13,173.245.48.0/20,188.114.96.0/20,190.93.240.0/20,197.234.240.0/22,198.41.128.0/17,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32"
     additionalArguments:
-      - "--providers.kubernetesingress.ingressendpoint.ip=${METALLB_TRAEFIK_ADDR}"
-      - "--providers.kubernetesingress.allowexternalnameservices=true"
-      - "--providers.kubernetescrd.allowexternalnameservices=true"
+      - "--certificatesresolvers.default.acme.tlschallenge"
+      - "--certificatesresolvers.default.acme.email=${SECRET_CERT_EMAIL}"
+      - "--certificatesresolvers.default.acme.storage=/data/acme.json"
     ports:
       traefik:
         expose: true

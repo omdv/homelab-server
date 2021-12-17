@@ -111,3 +111,6 @@ Commit will be rejected if it detects domain name. Remove it with `make rm_domai
 - wireguard and pihole on k3s/traefik
 - better way to template domain name
 - proper resource specs for every deployment
+- trusted IPs on ingress
+- automatic PV provisioning
+- tie zfs pool to k8s

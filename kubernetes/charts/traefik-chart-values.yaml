@@ -22,11 +22,6 @@ ports:
     exposedPort: 9119
     port: 9100
     protocol: TCP
-# wireguard:
-#   port: 51280
-#   containerPort: 51280
-#   expose: true
-#   protocol: UDP
 persistence:
   enabled: true
   existingClaim: pvc-traefik

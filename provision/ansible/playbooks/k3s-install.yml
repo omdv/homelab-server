@@ -11,6 +11,11 @@
         seconds: 5
   vars:
     k3s_become_for_all: true
+    k3s_server:
+      disable:
+        - traefik
+        - metrics-server
+        - local-storage
   tasks:
     - name: Check if cluster is installed
       ansible.builtin.stat:
