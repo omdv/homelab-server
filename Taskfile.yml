@@ -22,3 +22,4 @@ includes:
   ansible: .taskfiles/ansible.yml
   pre-commit: .taskfiles/pre-commit.yml
   lint: .taskfiles/lint.yml
+  terraform: .taskfiles/terraform.yml

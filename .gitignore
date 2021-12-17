@@ -17,6 +17,7 @@ bin
 xanmanning.k3s*
 # Terraform
 .terraform
+.terraform.lock.hcl
 .terraform.tfstate*
 terraform.tfstate*
 # Sops
