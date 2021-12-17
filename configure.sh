@@ -237,50 +237,25 @@ generate_ansible_host_secrets() {
     local node_id=
     local node_username=
     local node_password=
-    for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
-        node_id=$(echo "${var}" | awk -F"_" '{print $5}')
-        {
-            node_username="BOOTSTRAP_ANSIBLE_SSH_USERNAME_${node_id}"
-            node_password="BOOTSTRAP_ANSIBLE_SUDO_PASSWORD_${node_id}"
-            printf "kind: Secret\n"
-            printf "ansible_user: %s\n" "${!node_username}"
-            printf "ansible_become_pass: %s\n" "${!node_password}"
-        } > "${PROJECT_DIR}/provision/ansible/inventory/host_vars/k8s-${node_id}.sops.yml"
-        sops --encrypt --in-place "${PROJECT_DIR}/provision/ansible/inventory/host_vars/k8s-${node_id}.sops.yml"
-    done
+    {
+        node_username="BOOTSTRAP_ANSIBLE_SSH_USERNAME"
+        node_password="BOOTSTRAP_ANSIBLE_SUDO_PASSWORD"
+        printf "kind: Secret\n"
+        printf "ansible_user: %s\n" "${!node_username}"
+        printf "ansible_become_pass: %s\n" "${!node_password}"
+    } > "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${BOOTSTRAP_ANSIBLE_HOST_NAME}.sops.yml"
+    sops --encrypt --in-place "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${BOOTSTRAP_ANSIBLE_HOST_NAME}.sops.yml"
 }
 
 generate_ansible_hosts() {
-    local worker_node_count=
     {
         printf -- "---\n"
         printf "kubernetes:\n"
         printf "  children:\n"
         printf "    master:\n"
         printf "      hosts:\n"
-        worker_node_count=0
-        for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
-            node_id=$(echo "${var}" | awk -F"_" '{print $5}')
-            node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
-            if [[ "${!node_control}" == "true" ]]; then
-                printf "        k8s-%s:\n" "${node_id}"
-                printf "          ansible_host: %s\n" "${!var}"
-            else
-                worker_node_count=$((worker_node_count+1))
-            fi
-        done
-        if [[ ${worker_node_count} -gt 0 ]]; then
-            printf "    worker:\n"
-            printf "      hosts:\n"
-            for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
-                node_id=$(echo "${var}" | awk -F"_" '{print $5}')
-                node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
-                if [[ "${!node_control}" == "false" ]]; then
-                    printf "        k8s-%s:\n" "${node_id}"
-                    printf "          ansible_host: %s\n" "${!var}"
-                fi
-            done
-        fi
+        printf "        %s:\n" "${BOOTSTRAP_ANSIBLE_HOST_NAME}"
+        printf "          ansible_host: %s\n" "${BOOTSTRAP_ANSIBLE_HOST_ADDR}"
     } > "${PROJECT_DIR}/provision/ansible/inventory/hosts.yml"
 }
 

@@ -2,7 +2,7 @@
 - hosts:
     - master
   roles:
-    - ubuntu
+    - ubuntu-setup
   vars:
     - user: "{{ lookup('env','HOMELAB_USER') }}"
     - ip4: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
