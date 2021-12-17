@@ -1,0 +1,17 @@
+---
+version: "3"
+
+tasks:
+  check:
+    desc: Flux pre-install check
+    dir: ./
+    cmds:
+      - "flux --kubeconfig={{.KUBECONFIG}} check --pre"
+
+  install:
+    desc: Install Flux
+    dir: ./
+    cmds:
+      - "kubectl --kubeconfig={{.KUBECONFIG }} create namespace flux-system --dry-run=client -o yaml | kubectl --kubeconfig={{.KUBECONFIG}} apply -f -"
+      - "cat ~/.config/sops/age/keys.txt | kubectl --kubeconfig={{.KUBECONFIG}} -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin --save-config --dry-run=client -o yaml | kubectl apply -f -"
+      - "kubectl --kubeconfig={{.KUBECONFIG}} apply --kustomize={{.CLUSTER_DIR}}/base/flux-system"
