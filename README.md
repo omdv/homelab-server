@@ -103,14 +103,11 @@ Commit will be rejected if it detects domain name. Remove it with `make rm_domai
 
 ## TODO
 
-- microservices (go.micro?) with additional traefik providers
 - local docker registry
-- unattended upgrades
 - docker remote api certs
 - ro on /lib/modules
 - wireguard and pihole on k3s/traefik
-- better way to template domain name
-- proper resource specs for every deployment
 - trusted IPs on ingress
 - automatic PV provisioning
 - tie zfs pool to k8s
+- automate image tag posting to github
