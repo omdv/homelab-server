@@ -1,3 +1,4 @@
+# prettier-ignore
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -9,9 +10,9 @@ metadata:
 spec:
   destination:
     namespace: networking
-    server: { { .Values.spec.destination.server } }
+    server: {{ .Values.spec.destination.server }}
   project: default
   source:
     path: argo/apps/traefik
-    repoURL: { { .Values.spec.source.repoURL } }
-    targetRevision: { { .Values.spec.source.targetRevision } }
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
