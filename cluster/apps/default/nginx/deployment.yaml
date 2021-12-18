@@ -26,13 +26,6 @@ spec:
           volumeMounts:
             - mountPath: /usr/share/nginx/html
               name: storage-volume
-          resources:
-            requests:
-              cpu: "10m"
-              memory: "10Mi"
-            limits:
-              cpu: "20m"
-              memory: "20Mi"
       volumes:
         - name: storage-volume
           persistentVolumeClaim:
