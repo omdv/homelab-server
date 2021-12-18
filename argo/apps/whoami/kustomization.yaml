@@ -1,0 +1,7 @@
+---
+namespace: apps
+
+resources:
+  - services.yaml
+  - deployments.yaml
+  - ingressroutes.yaml

@@ -8,7 +8,7 @@ globalArguments:
   - --global.checknewversion
 additionalArguments:
   - --certificatesresolvers.default.acme.tlschallenge
-  - --certificatesresolvers.default.acme.email=omdv.public@gmail.com
+  - --certificatesresolvers.default.acme.email=${SECRET_CERT_EMAIL}"
   - --certificatesresolvers.default.acme.storage=/data/acme.json
 logs:
   access:
