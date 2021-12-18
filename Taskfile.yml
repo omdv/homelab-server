@@ -17,8 +17,9 @@ vars:
   KUBECONFIG: "{{.PROJECT_DIR}}/provision/kubeconfig"
 
 includes:
-  ansible: .taskfiles/ansible.yml
-  pre-commit: .taskfiles/pre-commit.yml
-  lint: .taskfiles/lint.yml
-  terraform: .taskfiles/terraform.yml
-  flux: .taskfiles/flux.yml
+  ansible: .taskfiles/ansible.yaml
+  pre-commit: .taskfiles/pre-commit.yaml
+  lint: .taskfiles/lint.yaml
+  terraform: .taskfiles/terraform.yaml
+  flux: .taskfiles/flux.yaml
+  argo: .taskfiles/argo.yaml
