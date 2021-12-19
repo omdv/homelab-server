@@ -18,3 +18,25 @@ spec:
           port: 80
   tls:
     certResolver: default
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hidden
+  labels:
+    app: hidden
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`hidden.${SECRET_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: whoami
+          port: 80
+      middlewares:
+        - name: forward-auth
+  tls:
+    certResolver: default

@@ -30,16 +30,21 @@ task pre-commit:init
 
 - Run `./configure.sh --verify` to check dependencies and env vars.
 
-- Setup and configure Ubuntu
+- Baremetal provisioning
 
 ```bash
 task ansible:playbook:ubuntu-setup
+task ansible:playbook:ubuntu-prepare
+task ansible:playbook:k3s-install
 ```
 
-- Prepare Ubuntu for k3s installation
+- Flux installation
+
+Please execute second command two times if it gives you error.
 
 ```bash
-task ansible:playbook:ubuntu-prepare
+task flux:check
+task flux:install
 ```
 
 ## Host configuration
