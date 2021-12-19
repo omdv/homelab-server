@@ -119,4 +119,6 @@ Commit will be rejected if it detects domain name. Remove it with `make rm_domai
 - switch from flux to argo - WIP
 - doc/graph generation
 - cert-manager
-- vault vs sops?
+- vault vs age?
+- switch from traefik to nginx-ingress with hajimari
+- add country live check for wireguard

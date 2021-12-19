@@ -5,6 +5,8 @@ set -o pipefail
 
 # shellcheck disable=SC2155
 export PROJECT_DIR=$(git rev-parse --show-toplevel)
+export WIREGUARD_DIR="${PROJECT_DIR}/.wireguard"
+export WIREGUARD_CONFIG_FILE=$(base64 -w 0 ${WIREGUARD_DIR}/$(ls ${WIREGUARD_DIR}))
 
 # shellcheck disable=SC2155
 export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
@@ -49,6 +51,11 @@ main() {
         envsubst < "${PROJECT_DIR}/tmpl/argo/values.yaml" \
             > "${PROJECT_DIR}/argo/base/values.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/cluster-secrets.sops.yaml"
+        # wireguard
+        # export WIREGUARD_CONFIG_FILE=$(cat ${PROJECT_DIR}/.wireguard/$(ls ${PROJECT_DIR}/.wireguard/) | base64) &&\
+        envsubst < "${PROJECT_DIR}/tmpl/cluster/wireguard.secrets.sops.yaml" \
+            > "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
         # terraform
         envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
             > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"

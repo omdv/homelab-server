@@ -26,3 +26,5 @@ terraform.tfstate*
 # Kubernetes
 kubeconfig
 talosconfig
+# Wireguard config
+.wireguard/*
