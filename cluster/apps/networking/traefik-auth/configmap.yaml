@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: traefik-auth-config
+  namespace: networking
   labels:
     app: traefik-auth
 
