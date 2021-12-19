@@ -5,7 +5,7 @@ metadata:
   name: forward-auth
   namespace: networking
   labels:
-    app: traefik-auth
+    app: traefik
 
 spec:
   forwardAuth:
