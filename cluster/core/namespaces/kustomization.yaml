@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - metrics.yaml
   - networking.yaml
+  - vpn.yaml
