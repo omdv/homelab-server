@@ -1,7 +1,7 @@
 ---
 spec:
   destination:
-    server: https://${CLUSTER_ADDR}:6443
+    server: https://192.168.0.24:6443
   source:
     repoURL: https://github.com/omdv/homelab-server
     targetRevision: HEAD
