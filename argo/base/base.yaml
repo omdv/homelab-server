@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: base
+spec:
+  generators:
+    - git:
+        repoURL: ${GIT_REPOSITORY}
+        revision: HEAD
+        directories:
+          - path: argo/base/*
+      template:
+        metadata:
+          name: "{{path.basename}}"
+        spec:
+          project: default
+          source:
+            repoURL: ${GIT_REPOSITORY}
+            targetRevision: HEAD
+            path: "{{path}}"
+          destination:
+            server: https://kubernetes.default.svc
+            namespace: "{{path.basename}}"
