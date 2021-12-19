@@ -24,6 +24,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: hidden
+  namespace: default
   labels:
     app: hidden
 
