@@ -118,3 +118,5 @@ Commit will be rejected if it detects domain name. Remove it with `make rm_domai
 - renovate / automate image tag posting to github
 - switch from flux to argo - WIP
 - doc/graph generation
+- cert-manager
+- vault vs sops?
