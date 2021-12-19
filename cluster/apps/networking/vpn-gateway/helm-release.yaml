@@ -17,8 +17,18 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      repository: ghcr.io/k8s-at-home/pod-gateway
+      tag: v1.4.0
     routed_namespaces:
       - vpn-routed
+    webhook:
+      image:
+        repository: ghcr.io/k8s-at-home/gateway-admision-controller
+        tag: v3.4.0
+      gatewayDefault: true
+      gatewayLabel: setGateway
+      gatewayAnnotation: setGateway
     settings:
       VPN_INTERFACE: wg0
       VPN_BLOCK_OTHER_TRAFFIC: false
