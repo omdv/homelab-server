@@ -17,6 +17,6 @@ spec:
         - name: api@internal
           kind: TraefikService
       middlewares:
-        - name: forward-auth
+        - name: networking-forward-auth@kubernetescrd
   tls:
     certResolver: default

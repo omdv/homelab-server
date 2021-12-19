@@ -38,6 +38,6 @@ spec:
         - name: whoami
           port: 80
       middlewares:
-        - name: forward-auth
+        - name: networking-forward-auth@kubernetescrd
   tls:
     certResolver: default
