@@ -6,4 +6,4 @@ resources:
   - config-pvc.yaml
   - helm-release.yaml
   - middleware.yaml
-  # - dashboard
+  - dashboard
