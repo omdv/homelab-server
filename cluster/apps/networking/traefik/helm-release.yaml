@@ -38,12 +38,20 @@ spec:
     ingressRoute:
       dashboard:
         enabled: false
+    providers:
+      kubernetesCRD:
+        enabled: true
+        allowCrossNamespace: true
+        allowExternalNameServices: false
+        namespaces: []
+      kubernetesIngress:
+        enabled: true
+    metrics:
+      prometheus:
+        entryPoint: metrics
     globalArguments:
       - "--api.insecure=true"
       - "--serverstransport.insecureskipverify=true"
-      - "--providers.kubernetesingress.ingressclass=traefik"
-      - "--metrics.prometheus=true"
-      - "--metrics.prometheus.entryPoint=metrics"
     additionalArguments:
       - "--certificatesresolvers.default.acme.tlschallenge"
       - "--certificatesresolvers.default.acme.email=${SECRET_CERT_EMAIL}"

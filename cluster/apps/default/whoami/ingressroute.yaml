@@ -26,7 +26,7 @@ metadata:
   name: hidden
   namespace: default
   labels:
-    app: whoami
+    app: hidden
 
 spec:
   entryPoints:
