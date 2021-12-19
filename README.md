@@ -111,3 +111,4 @@ Commit will be rejected if it detects domain name. Remove it with `make rm_domai
 - automatic PV provisioning
 - tie zfs pool to k8s
 - automate image tag posting to github
+- switch from flux to argo - WIP
