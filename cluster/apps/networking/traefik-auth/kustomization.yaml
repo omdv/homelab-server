@@ -6,4 +6,3 @@ resources:
   - services.yaml
   - deployments.yaml
   - ingressroutes.yaml
-  - middleware.yaml

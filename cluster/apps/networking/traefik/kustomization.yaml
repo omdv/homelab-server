@@ -5,4 +5,5 @@ resources:
   - config-pv.yaml
   - config-pvc.yaml
   - helm-release.yaml
+  - middleware.yaml
   # - dashboard
