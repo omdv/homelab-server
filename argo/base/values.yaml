@@ -1,7 +1,7 @@
 ---
 spec:
   destination:
-    server: https://kubernetes.default.svc
+    server: https://${CLUSTER_ADDR}:6443
   source:
     repoURL: https://github.com/omdv/homelab-server
     targetRevision: HEAD
