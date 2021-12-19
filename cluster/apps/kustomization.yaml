@@ -5,4 +5,5 @@ resources:
   - kube-system
   - networking
   - default
+  - vpn-gateway
   - vpn-routed
