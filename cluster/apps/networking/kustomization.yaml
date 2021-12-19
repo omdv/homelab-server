@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - traefik
   - traefik-auth
-  - vpn-gateway
