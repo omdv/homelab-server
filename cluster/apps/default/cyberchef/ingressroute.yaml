@@ -1,0 +1,22 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cyberchef
+  namespace: default
+  labels:
+    app: cyberchef
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`cc.${SECRET_DOMAIN}`)
+      kind: Rule
+      services:
+        - name: cyberchef
+          port: 8000
+      middlewares:
+        - name: networking-forward-auth@kubernetescrd
+  tls:
+    certResolver: default

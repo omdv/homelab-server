@@ -4,4 +4,6 @@ kind: Kustomization
 resources:
   - kube-system
   - networking
+  - vpn-gateway
+  - vpn-routed
   - default
