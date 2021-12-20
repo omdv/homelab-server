@@ -1,15 +1,8 @@
 ---
 server:
-  dataStorage:
-    enabled: true
-    # Size of the PVC created
-    size: 10Gi
-    # Location where the PVC will be mounted.
-    mountPath: "/pool/config/vault"
-    # Name of the storage class to use.  If null it will use the
-    # configured default Storage Class.
-    storageClass: vault-storage
-    # Access Mode of the storage device being used for the PVC
-    accessMode: ReadWriteOnce
-    # Annotations to apply to the PVC
-    annotations: {}
+  standalone:
+    enabled: "-"
+    config: |
+      storage "file" {
+        path = "/pool/config/vault"
+      }
