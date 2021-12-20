@@ -5,7 +5,7 @@ server:
     # Size of the PVC created
     size: 10Gi
     # Location where the PVC will be mounted.
-    mountPath: "/pool/config/vault"
+    mountPath: "/vault/data"
     # Name of the storage class to use.  If null it will use the
     # configured default Storage Class.
     storageClass: vault-storage
