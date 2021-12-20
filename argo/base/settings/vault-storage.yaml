@@ -35,5 +35,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
   volumeName: pv-nginx
   storageClassName: vault-storage
