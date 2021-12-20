@@ -8,31 +8,8 @@ server:
     mountPath: "/pool/config/vault"
     # Name of the storage class to use.  If null it will use the
     # configured default Storage Class.
-    storageClass: local-storage
+    storageClass: vault-storage
     # Access Mode of the storage device being used for the PVC
     accessMode: ReadWriteOnce
     # Annotations to apply to the PVC
     annotations: {}
-  standalone:
-    enabled: "-"
-
-    # config is a raw string of default configuration when using a Stateful
-    # deployment. Default is to use a PersistentVolumeClaim mounted at /vault/data
-    # and store data there. This is only used when using a Replica count of 1, and
-    # using a stateful set. This should be HCL.
-
-    # Note: Configuration files are stored in ConfigMaps so sensitive data
-    # such as passwords should be either mounted through extraSecretEnvironmentVars
-    # or through a Kube secret.  For more information see:
-    # https://www.vaultproject.io/docs/platform/k8s/helm/run#protecting-sensitive-vault-configurations
-    config: |
-      ui = true
-
-      listener "tcp" {
-        tls_disable = 1
-        address = "[::]:8200"
-        cluster_address = "[::]:8201"
-      }
-      storage "file" {
-        path = "/pool/config/vault"
-      }
