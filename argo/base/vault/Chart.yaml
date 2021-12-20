@@ -1,0 +1,11 @@
+---
+apiVersion: v2
+name: vault
+description: A Helm chart for Kubernetes
+type: application
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+  - name: vault
+    version: 9.0.3
+    repository: https://helm.releases.hashicorp.com
