@@ -1,5 +1,13 @@
 ---
 server:
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    mountPath: "/vault/data"
+    storageClass: vault-storage
+    accessMode: ReadWriteOnce
+    annotations: {}
+
   standalone:
     enabled: true
     config: |
