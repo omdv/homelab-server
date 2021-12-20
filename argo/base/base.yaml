@@ -6,7 +6,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: ${GIT_REPOSITORY}
+        repoURL: https://github.com/omdv/homelab-server.git
         revision: HEAD
         directories:
           - path: argo/base/*
@@ -16,7 +16,7 @@ spec:
           spec:
             project: default
             source:
-              repoURL: ${GIT_REPOSITORY}
+              repoURL: https://github.com/omdv/homelab-server.git
               targetRevision: HEAD
               path: "{{path}}"
             destination:
@@ -28,7 +28,7 @@ spec:
     spec:
       project: "default"
       source:
-        repoURL: ${GIT_REPOSITORY}
+        repoURL: https://github.com/omdv/homelab-server.git
         targetRevision: HEAD
         path: "{{path}}"
       destination:
