@@ -8,4 +8,4 @@ appVersion: "1.0"
 dependencies:
   - name: vault
     version: v0.18.0
-    repository: https://helm.releases.hashicorp.com
+    repository: https://github.com/hashicorp/vault-helm
