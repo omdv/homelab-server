@@ -22,10 +22,18 @@ ports:
     exposedPort: 9119
     port: 9100
     protocol: TCP
+# persistence:
+#   enabled: true
+#   existingClaim: pvc-traefik
+#   path: /data
 persistence:
   enabled: true
-  existingClaim: pvc-traefik
+  name: data
+  accessMode: ReadWriteOnce
+  size: 128Mi
+  storageClass: "longhorn"
   path: /data
+  annotations: {}
 resources:
   requests:
     cpu: "100m"

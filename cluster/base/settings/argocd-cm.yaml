@@ -4,9 +4,8 @@ kind: ConfigMap
 data:
   configManagementPlugins: |
     - name: sopsNdu
-      init:
         command: ["/bin/sh", "-c"]
-        args: [ "helm init --client-only && helm dependency build" ]
+        args: [ "" ]
       generate:
         command: ["/bin/sh", "-c"]
         args: [ "sops -d enc.${ARGOCD_APP_NAMESPACE}.values.yaml > ${ARGOCD_APP_NAMESPACE}.values.yaml && helm template -f ${ARGOCD_APP_NAMESPACE}.values.yaml . "  ]

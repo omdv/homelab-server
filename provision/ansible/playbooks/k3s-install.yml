@@ -15,7 +15,6 @@
       disable:
         - traefik
         - metrics-server
-        - local-storage
   tasks:
     - name: Check if cluster is installed
       ansible.builtin.stat:
@@ -47,6 +46,16 @@
         src: "/etc/rancher/k3s/k3s.yaml"
         dest: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
         flat: true
+      when:
+        - k3s_control_node is defined
+        - k3s_control_node
+
+    - name: Change kubeconfig mode
+      run_once: true
+      ansible.builtin.file:
+        path: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
+        state: directory
+        mode: 0600
       when:
         - k3s_control_node is defined
         - k3s_control_node

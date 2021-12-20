@@ -10,27 +10,21 @@ spec:
         revision: HEAD
         directories:
           - path: argo/base/*
-        template:
-          metadata:
-            name: "{{path.basename}}"
-          spec:
-            project: default
-            source:
-              repoURL: https://github.com/omdv/homelab-server.git
-              targetRevision: HEAD
-              path: "{{path}}"
-            destination:
-              server: https://kubernetes.default.svc
-              namespace: argocd
   template:
     metadata:
-      name: "{{cluster}}-base"
+      name: "{{path.basename}}"
     spec:
-      project: "default"
+      project: default
       source:
         repoURL: https://github.com/omdv/homelab-server.git
         targetRevision: HEAD
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: argocd
+        namespace: "{{path.basename}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

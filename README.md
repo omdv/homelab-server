@@ -18,6 +18,11 @@ Install following tools:
 - direnv
 - pre-commit
 
+## Google Cloud Platform
+
+[Service account for Vault auto-unseal](https://shadow-soft.com/vault-auto-unseal/)
+OAuth tokens
+
 ## Steps
 
 - Fill `.config.env` with your variables. I am keeping most of this as my profile variables, so I am just refering to local env variables.

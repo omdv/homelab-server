@@ -23,3 +23,4 @@ includes:
   terraform: .taskfiles/terraform.yaml
   flux: .taskfiles/flux.yaml
   argo: .taskfiles/argo.yaml
+  k3s: .taskfiles/k3s.yaml
