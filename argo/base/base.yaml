@@ -22,15 +22,3 @@ spec:
           destination:
             server: https://kubernetes.default.svc
             namespace: argocd
-  template:
-    metadata:
-      name: "{{cluster}}-base"
-    spec:
-      project: "default"
-      source:
-        repoURL: ${GIT_REPOSITORY}
-        targetRevision: HEAD
-        path: "{{path}}"
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: argocd
