@@ -7,7 +7,7 @@ tasks:
     dir: ./
     cmds:
       - "kubectl apply -f https://openebs.github.io/charts/zfs-operator.yaml"
-      - "kubectl apply -f {{.CLUSTER_DIR}}/init/zfs-sc.yaml"
+      - "kubectl apply -f {{.CLUSTER_DIR}}/init/zfs-localpv/storage-class.yaml"
       - 'kubectl patch storageclass local-path -p ''{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'''
       - 'kubectl patch storageclass zfspv -p ''{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'''
 
