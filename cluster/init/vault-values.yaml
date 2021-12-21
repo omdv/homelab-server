@@ -23,7 +23,6 @@ server:
       storage "file" {
         path = "/vault/data"
       }
-
       seal "gcpckms" {
         credentials = "/vault/userconfig/kms-creds/credentials.json"
         project     = "omdv-homelab"
