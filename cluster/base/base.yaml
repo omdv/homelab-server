@@ -9,7 +9,7 @@ spec:
         repoURL: https://github.com/omdv/homelab-server.git
         revision: HEAD
         directories:
-          - path: argo/base/*
+          - path: cluster/base/*
   template:
     metadata:
       name: "{{path.basename}}"

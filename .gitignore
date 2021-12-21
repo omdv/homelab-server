@@ -28,5 +28,5 @@ kubeconfig
 talosconfig
 # Wireguard config
 .wireguard/*
-# Cloud provider keys for API access
-.cloud-config/*
+# Secrets created during bootstrap
+.bootstrap-secrets/*

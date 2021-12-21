@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+stringData:
+  VAULT_ADDR: ${VAULT_ADDR}
+  AVP_AUTH_TYPE: approle
+  AVP_ROLE_ID: ${AVP_ROLE_ID}
+  AVP_SECRET_ID: ${AVP_SECRET_ID}
+  AVP_TYPE: vault
+kind: Secret
+metadata:
+  name: vault-configuration
+  namespace: argocd
+type: Opaque

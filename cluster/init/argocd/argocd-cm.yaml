@@ -8,7 +8,7 @@ data:
     - name: argocd-vault-plugin
       generate:
         command: ["argocd-vault-plugin"]
-        args: ["generate", "./"]
+        args: ["generate -s vault-configuration", "./"]
     - name: argocd-vault-plugin-helm
       generate:
         command: ["sh", "-c"]

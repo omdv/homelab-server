@@ -16,15 +16,17 @@ tasks:
     dir: ./
     cmds:
       - "kubectl create namespace vault --dry-run=client -o yaml | kubectl apply -f -"
-      - "kubectl create secret generic kms-creds -n vault --from-file=.cloud-config/credentials.json --dry-run=client -o yaml | kubectl apply -f -"
+      - "kubectl create secret generic kms-creds -n vault --from-file=.bootstrap-secrets/credentials.json --dry-run=client -o yaml | kubectl apply -f -"
       - "helm repo add hashicorp https://helm.releases.hashicorp.com && helm repo update"
-      - "helm install vault hashicorp/vault -n vault --version {{.VAULT_HELM_VERSION}} -f {{.CLUSTER_DIR}}/init/vault-values.yaml"
+      - "helm install vault hashicorp/vault -n vault --version {{.VAULT_HELM_VERSION}} -f {{.CLUSTER_DIR}}/init/vault/values.yaml"
 
   vault:init:
-    desc: Initialize vault
+    desc: Initialize vault and login
     dir: ./
     cmds:
-      - "kubectl exec -n vault vault-0 -- vault operator init -format=json > .cloud-config/vault-keys.json"
+      - "kubectl exec -n vault vault-0 -- vault operator init -format=json > .bootstrap-secrets/vault-keys.json"
+      - "kubectl exec -n vault vault-0 -- vault login $(cat .bootstrap-secrets/vault-keys.json | jq -r .root_token)"
+      - "kubectl exec -n vault vault-0 -- vault secrets enable -path=secret/ kv"
 
   argo:install:
     desc: Install argo
@@ -32,8 +34,6 @@ tasks:
     cmds:
       - "kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -"
       - "kubectl apply -k {{.CLUSTER_DIR}}/init/argocd -n argocd --dry-run=client -o yaml | kubectl apply -f -"
-      # - "helm repo add argo https://argoproj.github.io/argo-helm && helm repo update"
-      # - "helm install argocd argo/argo-cd -n argocd --version {{.ARGO_HELM_VERSION}} -f {{.CLUSTER_DIR}}/init/argocd-values.yaml"
 
   argo:init:
     desc: Initialize argo - expecting port-forward svc/argocd-server to 8080
@@ -44,7 +44,10 @@ tasks:
       - "argocd account update-password --current-password \
         $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=\"{.data.password}\" | base64 -d) \
         --new-password {{.HOMELAB_ARGOCD_PASSWORD}}"
-      - "kubectl delete secret/argocd-initial-admin-secret -n argocd "
+      - "kubectl delete secret/argocd-initial-admin-secret -n argocd"
+      - "argocd cluster add default --in-cluster --yes"
+      - "./cluster/init/vault/configure-avp.sh"
+      - "kubectl apply -f .bootstrap-secrets/vault-settings.yaml -n argocd --force --dry-run=client -o yaml | kubectl apply -f -"
 
   argo:uninstall:
     desc: Uninstall argo

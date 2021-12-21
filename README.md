@@ -43,13 +43,48 @@ task ansible:playbook:ubuntu-prepare
 task ansible:playbook:k3s-install
 ```
 
-- Flux installation
+- Cluster preparation
 
-Please execute second command two times if it gives you error.
+Install zfs-localpv.
 
 ```bash
-task flux:check
-task flux:install
+task zfspv
+```
+
+On a host system check that dataset under main zfs pool is created:
+
+```bash
+zfs list
+NAME                       USED  AVAIL     REFER  MOUNTPOINT
+pool                      1.79T  3.48T     1.79T  /pool
+pool/k3s                   568K  3.48T       96K  /pool/k3s
+```
+
+Install and initialize vault.
+TODO: describe how to get GCP keys and role
+
+```bash
+task cluster:vault:install
+task cluster:vault:init # wait for pod/vault-0 to be up
+```
+
+Now the vault should be unsealed and initialized:
+
+```bash
+k exec -it -n vault vault-0 -- vault
+
+Key                      Value
+---                      -----
+Recovery Seal Type       shamir
+Initialized              true
+Sealed                   false
+Total Recovery Shares    5
+Threshold                3
+Version                  1.9.0
+Storage Type             file
+Cluster Name             vault-cluster-21f860b5
+Cluster ID               275d5a0b-5493-8f63-ad90-68bd72c3e02c
+HA Enabled               false
 ```
 
 ## Host configuration
