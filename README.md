@@ -87,6 +87,36 @@ Cluster ID               275d5a0b-5493-8f63-ad90-68bd72c3e02c
 HA Enabled               false
 ```
 
+Inject the environment variables we need for secrets into vault:
+
+```bash
+./configure.sh --vault
+```
+
+Verify the secret:
+
+```bash
+k exec -n vault vault-0 -- vault kv get kv/secret/gitops
+
+======= Metadata =======
+Key                Value
+---                -----
+created_time       2021-12-22T20:17:12.538085046Z
+custom_metadata    <nil>
+deletion_time      n/a
+destroyed          false
+version            7
+
+=============== Data ===============
+Key                            Value
+---                            -----
+VAULT_DOMAIN                   *****
+VAULT_OAUTH_CLIENT_ID          *****
+VAULT_OAUTH_CLIENT_SECRET      *****
+VAULT_OAUTH_EMAIL_WHITELIST    *****
+name                           my-secret
+```
+
 Install argocd
 
 ```bash
@@ -171,12 +201,10 @@ Commit will be rejected if it detects domain name. Remove it with `make rm_domai
 - ro on /lib/modules
 - wireguard and pihole on k3s/traefik
 - trusted IPs on ingress
-- automatic PV provisioning
-- tie zfs pool to k8s
 - renovate / automate image tag posting to github
 - switch from flux to argo - WIP
 - doc/graph generation
 - cert-manager
-- vault vs age?
 - switch from traefik to nginx-ingress with hajimari
 - add country live check for wireguard
+- appRole for external-secrets

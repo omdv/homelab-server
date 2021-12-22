@@ -19,24 +19,26 @@ cat << EOF
 Usage: $(basename "$0") <options>
     -h, --help                      Display help
     --verify                        Verify .config.env settings
+    --vault                         Inject env vars into vault
 EOF
 }
 
 main() {
     local verify=
+    local vault=
 
     parse_command_line "$@"
-
     verify_binaries
 
     if [[ "${verify}" == 1 ]]; then
         verify_ansible_hosts
-        verify_metallb
-        verify_kubevip
         verify_age
         verify_git_repository
         verify_cloudflare
+        verify_vault
         success
+    elif [[ "${vault}" == 1 ]]; then
+        generate_cluster_secrets
     else
         # sops configuration file
         envsubst < "${PROJECT_DIR}/tmpl/.sops.yaml" \
@@ -44,22 +46,20 @@ main() {
         # cluster
         envsubst < "${PROJECT_DIR}/tmpl/cluster/cluster-settings.yaml" \
             > "${PROJECT_DIR}/cluster/base/cluster-settings.yaml"
-        envsubst < "${PROJECT_DIR}/tmpl/cluster/gotk-sync.yaml" \
-            > "${PROJECT_DIR}/cluster/base/flux-system/gotk-sync.yaml"
-        envsubst < "${PROJECT_DIR}/tmpl/cluster/cluster-secrets.sops.yaml" \
-            > "${PROJECT_DIR}/cluster/base/cluster-secrets.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/argo/values.yaml" \
             > "${PROJECT_DIR}/argo/base/values.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/cluster-secrets.sops.yaml"
+
         # wireguard
         # export WIREGUARD_CONFIG_FILE=$(cat ${PROJECT_DIR}/.wireguard/$(ls ${PROJECT_DIR}/.wireguard/) | base64) &&\
         envsubst < "${PROJECT_DIR}/tmpl/cluster/wireguard.secrets.sops.yaml" \
             > "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
+
         # terraform
         envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
             > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
+
         # ansible
         generate_ansible_hosts
         generate_ansible_host_secrets
@@ -76,6 +76,9 @@ parse_command_line() {
             --verify)
                 verify=1
                 ;;
+            --vault)
+                vault=1
+                ;;
             *)
                 break
                 ;;
@@ -86,6 +89,9 @@ parse_command_line() {
 
     if [[ -z "$verify" ]]; then
         verify=0
+    fi
+    if [[ -z "$vault" ]]; then
+        vault=0
     fi
 }
 
@@ -153,25 +159,6 @@ verify_binaries() {
     _has_binary "terraform"
 }
 
-verify_kubevip() {
-    _has_envar "BOOTSTRAP_ANSIBLE_KUBE_VIP_ADDRESS"
-    _has_valid_ip "${BOOTSTRAP_ANSIBLE_KUBE_VIP_ADDRESS}" "BOOTSTRAP_ANSIBLE_KUBE_VIP_ADDRESS"
-}
-
-verify_metallb() {
-    local ip_floor=
-    local ip_ceil=
-    _has_envar "BOOTSTRAP_METALLB_LB_RANGE"
-    _has_envar "BOOTSTRAP_METALLB_TRAEFIK_ADDR"
-
-    ip_floor=$(echo "${BOOTSTRAP_METALLB_LB_RANGE}" | cut -d- -f1)
-    ip_ceil=$(echo "${BOOTSTRAP_METALLB_LB_RANGE}" | cut -d- -f2)
-
-    _has_valid_ip "${ip_floor}" "BOOTSTRAP_METALLB_LB_RANGE"
-    _has_valid_ip "${ip_ceil}" "BOOTSTRAP_METALLB_LB_RANGE"
-    _has_valid_ip "${BOOTSTRAP_METALLB_TRAEFIK_ADDR}" "BOOTSTRAP_METALLB_TRAEFIK_ADDR"
-}
-
 verify_git_repository() {
     _has_envar "BOOTSTRAP_GIT_REPOSITORY"
 
@@ -234,6 +221,22 @@ verify_ansible_hosts() {
             _log "ERROR" "Unable to SSH into host '${!var}' with username '${!node_username}'"
             exit 1
         fi
+    done
+}
+
+verify_vault() {
+    _has_envar "VAULT_DOMAIN"
+    _has_envar "VAULT_OAUTH_CLIENT_ID"
+    _has_envar "VAULT_OAUTH_CLIENT_SECRET"
+    _has_envar "VAULT_OAUTH_EMAIL_WHITELIST"
+    _log "INFO" "Found variables for vault injection"
+}
+
+generate_cluster_secrets() {
+    # initialize secret @ secret/gitops
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/gitops name=my-secret
+    for var in "${!VAULT_@}"; do
+        kubectl exec -n vault vault-0 -- vault kv patch kv/secret/gitops "$var"="$(echo -n ${!var})"
     done
 }
 

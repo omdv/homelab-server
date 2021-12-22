@@ -5,8 +5,3 @@ kind: Kustomization
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/release-2.2/manifests/install.yaml
   - https://raw.githubusercontent.com/argoproj-labs/applicationset/v0.3.0/manifests/install.yaml
-  - avp-rbac.yaml
-
-patchesStrategicMerge:
-  - argocd-repo-server-deploy.yaml
-  - argocd-cm.yaml

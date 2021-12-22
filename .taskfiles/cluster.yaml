@@ -25,15 +25,25 @@ tasks:
     dir: ./
     cmds:
       - "kubectl exec -n vault vault-0 -- vault operator init -format=json > {{.SECRETS_DIR}}/vault-keys.json"
+      - "export VAULT_TOKEN=$(cat {{.SECRETS_DIR}}/vault-keys.json | jq -r .root_token) && \
+        envsubst < \"{{.PROJECT_DIR}}/tmpl/cluster/vault-token.yaml\" \
+        > {{.SECRETS_DIR}}/vault-secret.yaml"
       - "kubectl exec -n vault vault-0 -- vault login $(cat {{.SECRETS_DIR}}/vault-keys.json | jq -r .root_token)"
-      - "kubectl exec -n vault vault-0 -- vault secrets enable -path=secret/ kv"
-      - "kubectl exec -n vault vault-0 -- vault auth enable approle"
-      - "kubectl exec -n vault vault-0 -- vault write auth/approle/role/avp \
-        secret_id_ttl=1m \
-        token_num_uses=1 \
-        token_ttl=1h \
-        token_max_ttl=24h \
-        policies=default,read-only"
+      - "kubectl exec -n vault vault-0 -- vault secrets enable -version=2 kv"
+      # - "kubectl exec -n vault vault-0 -- vault auth enable approle"
+      # - "kubectl exec -n vault vault-0 -- vault write auth/approle/role/avp \
+      #   secret_id_ttl=1m \
+      #   token_num_uses=1 \
+      #   token_ttl=1h \
+      #   token_max_ttl=24h \
+      #   policies=default,read-only"
+
+  vault:delete:
+    desc: Delete vault and reset pvc
+    dir: ./
+    cmds:
+      - " helm delete vault -n vault"
+      - "kubectl delete pvc/data-vault-0 -n vault"
 
   argo:install:
     desc: Install argo
@@ -53,11 +63,28 @@ tasks:
         --new-password {{.HOMELAB_ARGOCD_PASSWORD}}"
       - "kubectl delete secret/argocd-initial-admin-secret -n argocd"
       - "argocd cluster add default --in-cluster --yes"
-      - "./cluster/init/argocd/configure-avp.sh"
-      - "kubectl apply -f {{.SECRETS_DIR}}/avp-secret.yaml -n argocd --force=true --dry-run=client -o yaml | kubectl apply -f -"
 
   argo:uninstall:
     desc: Uninstall argo
     dir: ./
     cmds:
       - "kubectl delete -k {{.CLUSTER_DIR}}/init/argocd -n argocd"
+
+  secrets:install:
+    desc: Install external-secrets
+    dir: ./
+    cmds:
+      - "helm repo add external-secrets https://charts.external-secrets.io && helm repo update"
+      - "helm install external-secrets external-secrets/external-secrets \
+        -n external-secrets \
+        --create-namespace \
+        --set installCRDs=true"
+      - "kubectl apply -f {{.SECRETS_DIR}}/vault-secret.yaml"
+      - "kubectl apply -k {{.CLUSTER_DIR}}/init/secrets"
+
+  secrets:delete:
+    desc: Delete external-secrets
+    dir: ./
+    cmds:
+      - "helm delete external-secrets -n external-secrets"
+      - "kubectl delete $(kubectl get secret -n external-secrets --output name) -n external-secrets"
