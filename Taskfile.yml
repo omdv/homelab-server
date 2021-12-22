@@ -12,6 +12,7 @@ vars:
   PROJECT_DIR:
     sh: "git rev-parse --show-toplevel"
   CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
+  SECRETS_DIR: "{{.PROJECT_DIR}}/.bootstrap-secrets"
   ANSIBLE_DIR: "{{.PROJECT_DIR}}/provision/ansible"
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/provision/terraform"
   KUBECONFIG: "{{.PROJECT_DIR}}/provision/kubeconfig"

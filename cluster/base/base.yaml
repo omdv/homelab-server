@@ -3,6 +3,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: base
+  annotations:
+    avp.kuberenetes.io/ignore: "true"
 spec:
   generators:
     - git:
@@ -26,5 +28,3 @@ spec:
         automated:
           prune: true
           selfHeal: true
-        syncOptions:
-          - CreateNamespace=true

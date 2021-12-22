@@ -87,6 +87,24 @@ Cluster ID               275d5a0b-5493-8f63-ad90-68bd72c3e02c
 HA Enabled               false
 ```
 
+Install argocd
+
+```bash
+task cluster:argo:install
+```
+
+At this point we don't have ingress for Argo, so we need to forward the port to argo service to continue setup. In a different terminal tab forward the port:
+
+```bash
+k port-forward -n argocd svc/argocd-server 8080:443
+```
+
+Now in original tab we can finish initializing argo by:
+
+```bash
+task cluster:argo:init
+```
+
 ## Host configuration
 
 Ansible-based provisioning of host system (Ubuntu). Key features:

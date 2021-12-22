@@ -4,7 +4,7 @@
 # Result will be stored in the file to be passed to "argocd create new app"
 export vv="kubectl exec -n vault vault-0 -- vault"
 export VAULT_ROLE_NAME="avp"
-export VAULT_ADDR="vault.vault.svc.cluster.local:8200"
+export VAULT_ADDR="https://vault.vault.svc.cluster.local"
 export PROJECT_DIR=$(git rev-parse --show-toplevel)
 
 if ! $vv token lookup > /dev/null 2>&1; then
@@ -18,7 +18,7 @@ export AVP_ROLE_ID=$role_id
 export AVP_SECRET_ID=$secret_id
 
 envsubst < "${PROJECT_DIR}/tmpl/cluster/vault-settings.yaml" \
-    > "${PROJECT_DIR}/.bootstrap-secrets/vault-settings.yaml"
+    > "${PROJECT_DIR}/.bootstrap-secrets/avp-secret.yaml"
 
 # jq -n --arg role_id $VAULT_ROLE_ID --arg secret_id $VAULT_SECRET_ID --arg addr $VAULT_ADDR \
 # '{VAULT_ADDR: $addr, AVP_AUTH_TYPE: "approle", AVP_ROLE_ID: $role_id, AVP_SECRET_ID: $secret_id, AVP_TYPE: "vault"}' \
