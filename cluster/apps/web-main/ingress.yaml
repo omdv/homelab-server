@@ -10,7 +10,6 @@ metadata:
     cert-manager.io/issuer: "letsencrypt-staging"
 
 spec:
-  ingressClassName: nginx
   tls:
     - hosts:
         - zzd.ai
