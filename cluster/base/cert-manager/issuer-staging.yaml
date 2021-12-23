@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: omdv.public@gmail.com
+    privateKeySecretRef:
+      name: letsencrypt
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
