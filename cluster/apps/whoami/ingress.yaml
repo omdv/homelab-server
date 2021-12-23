@@ -7,7 +7,7 @@ metadata:
     app: whoami
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/clusterissuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
 
 spec:
   tls:
