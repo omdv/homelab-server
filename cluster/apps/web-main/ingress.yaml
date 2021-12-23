@@ -8,6 +8,10 @@ metadata:
 
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - whoami.zzd.ai
+      secretName: homelab-tls
   rules:
     - host: zzd.ai
       http:
