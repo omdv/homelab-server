@@ -18,6 +18,9 @@ vars:
   KUBECONFIG: "{{.PROJECT_DIR}}/provision/kubeconfig"
   VAULT_HELM_VERSION: "0.18.0"
 
+env:
+  BOOTSTRAP_ARGOCD_PASSWORD: {{.HOMELAB_ARGO_PASSWORD}}
+
 includes:
   ansible: .taskfiles/ansible.yaml
   pre-commit: .taskfiles/pre-commit.yaml

@@ -60,7 +60,7 @@ tasks:
         --password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d)"
       - "argocd account update-password --current-password \
         $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=\"{.data.password}\" | base64 -d) \
-        --new-password {{.HOMELAB_ARGOCD_PASSWORD}}"
+        --new-password {{.BOOTSTRAP_ARGOCD_PASSWORD}}"
       - "kubectl delete secret/argocd-initial-admin-secret -n argocd"
       - "argocd cluster add default --in-cluster --yes"
 
