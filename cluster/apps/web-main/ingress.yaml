@@ -1,0 +1,21 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-main
+  labels:
+    app: web-main
+
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: zzd.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-main
+                port:
+                  number: 80
