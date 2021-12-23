@@ -5,8 +5,8 @@ set -o pipefail
 
 # shellcheck disable=SC2155
 export PROJECT_DIR=$(git rev-parse --show-toplevel)
-export WIREGUARD_DIR="${PROJECT_DIR}/.wireguard"
-export WIREGUARD_CONFIG_FILE=$(base64 -w 0 ${WIREGUARD_DIR}/$(ls ${WIREGUARD_DIR}))
+# export WIREGUARD_DIR="${PROJECT_DIR}/.wireguard"
+# export WIREGUARD_CONFIG_FILE=$(base64 -w 0 ${WIREGUARD_DIR}/$(ls ${WIREGUARD_DIR}))
 
 # shellcheck disable=SC2155
 export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
@@ -225,10 +225,9 @@ verify_ansible_hosts() {
 }
 
 verify_vault() {
-    _has_envar "VAULT_DOMAIN"
     _has_envar "VAULT_OAUTH_CLIENT_ID"
     _has_envar "VAULT_OAUTH_CLIENT_SECRET"
-    _has_envar "VAULT_OAUTH_EMAIL_WHITELIST"
+    _has_envar "VAULT_OAUTH_COOKIE_SECRET"
     _log "INFO" "Found variables for vault injection"
 }
 
