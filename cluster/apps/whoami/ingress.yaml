@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Ingress
+metadata:
+  name: whoami
+  labels:
+    app: whoami
+
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: whoami.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: whoami
+                port:
+                  number: 80

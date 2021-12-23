@@ -2,6 +2,7 @@
 namespace: apps
 
 resources:
+  - external-secret.yaml
   - services.yaml
   - deployments.yaml
-  - ingressroutes.yaml
+  - ingress.yaml

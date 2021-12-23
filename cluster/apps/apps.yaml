@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: base
+  name: apps
   namespace: argocd
 spec:
   generators:
@@ -10,7 +10,7 @@ spec:
         repoURL: https://github.com/omdv/homelab-server.git
         revision: HEAD
         directories:
-          - path: cluster/base/*
+          - path: cluster/apps/*
   template:
     metadata:
       name: "{{path.basename}}"
