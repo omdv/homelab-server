@@ -80,7 +80,7 @@ tasks:
         --create-namespace \
         --set installCRDs=true"
       - "kubectl apply -f {{.SECRETS_DIR}}/vault-secret.yaml"
-      - "kubectl apply -k {{.CLUSTER_DIR}}/init/secrets"
+      - "kubectl apply -k {{.CLUSTER_DIR}}/init/external-secrets"
 
   secrets:delete:
     desc: Delete external-secrets

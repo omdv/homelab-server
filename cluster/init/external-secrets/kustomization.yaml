@@ -4,5 +4,4 @@ kind: Kustomization
 
 resources:
   - secret-store.yaml
-  - cluster-secret.yaml
   - rbac.yaml
