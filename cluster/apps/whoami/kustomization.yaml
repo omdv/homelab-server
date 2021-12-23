@@ -1,6 +1,4 @@
 ---
-namespace: apps
-
 resources:
   - external-secret.yaml
   - services.yaml
