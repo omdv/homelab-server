@@ -1,6 +1,18 @@
 ---
 resources:
-  - external-secret.yaml
+  # - external-secret.yaml
   - services.yaml
   - deployments.yaml
   - ingress.yaml
+
+# replacements:
+# - source:
+#     kind: Secret
+#     name: domain-secret
+#     namespace: whoami
+#     fieldPath: data.domain
+#   targets:
+#   - select:
+#       name: whoami
+#       kind: Ingress
+#     fieldPath: spec.rules.0.host

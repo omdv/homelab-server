@@ -208,3 +208,4 @@ Commit will be rejected if it detects domain name. Remove it with `make rm_domai
 - switch from traefik to nginx-ingress with hajimari
 - add country live check for wireguard
 - appRole for external-secrets
+- kubeflow??
