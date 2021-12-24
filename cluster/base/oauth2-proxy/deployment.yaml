@@ -19,11 +19,11 @@ spec:
         - args:
             - --provider=google
             - --email-domain=*
-# - --upstream=file:///dev/null
+            - --upstream=file:///dev/null
             - --http-address=0.0.0.0:4180
             - --cookie-domain=zzd.ai
             - --whitelist-domain=.zzd.ai
-# - --pass-host-header
+            - --pass-host-header
           envFrom:
             - secretRef:
                 name: oauth2-secret
