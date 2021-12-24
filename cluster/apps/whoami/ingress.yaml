@@ -2,6 +2,37 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  name: hidden
+  labels:
+    app: whoami
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.$host/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.$host/oauth2/start?rd=$escaped_request_uri"
+    nginx.ingress.kubernetes.io/auth-response-headers: Authorization
+
+spec:
+  tls:
+    - hosts:
+        - hidden.zzd.ai
+      secretName: my-certs-hidden
+  rules:
+    - host: hidden.zzd.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: whoami
+                port:
+                  number: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
   name: whoami
   labels:
     app: whoami
