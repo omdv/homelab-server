@@ -3,4 +3,3 @@ resources:
   - services.yaml
   - deployments.yaml
   - ingress.yaml
-  - hidden.yaml
