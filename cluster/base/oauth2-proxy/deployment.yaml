@@ -23,6 +23,7 @@ spec:
             - --http-address=0.0.0.0:4180
             - --cookie-domain=.zzd.ai
             - --whitelist-domain=.zzd.ai
+            - --authenticated-emails-file=/volume/emails
           envFrom:
             - secretRef:
                 name: oauth2-secret
@@ -32,6 +33,9 @@ spec:
           ports:
             - containerPort: 4180
               protocol: TCP
+          volumeMounts:
+            - mountPath: /volume
+              name: storage-volume
           resources:
             requests:
               cpu: "10m"
@@ -39,3 +43,7 @@ spec:
             limits:
               cpu: "20m"
               memory: "20Mi"
+      volumes:
+        - name: storage-volume
+          persistentVolumeClaim:
+            claimName: pvc-oauth2-proxy
