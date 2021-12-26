@@ -3,11 +3,16 @@
 Mono repo to manage provision of homelab server. Some features:
 
 - Ubuntu with zfs pool
-- Cloud backups
-- [K3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
-- Docker-compose apps
+- Automated external backups
+- Most of the applications are ran on [K3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
+- ArgoCD managed cluster
+- ZFS-based persistent volumes
+- Hashicorp's Vault with external-secrets integration
+- Oauth2-proxy email authentication/authorization
 
-## Prepare your local machine
+## Prior to Deployment
+
+### Prepare your local machine
 
 Install following tools:
 
@@ -18,14 +23,14 @@ Install following tools:
 - direnv
 - pre-commit
 
-## Google Cloud Platform
+### Google Cloud Platform oauth2 keys and service account
 
 [Service account for Vault auto-unseal](https://shadow-soft.com/vault-auto-unseal/)
 OAuth tokens
 
-## Steps
+## Deployment Guide
 
-- Fill `.config.env` with your variables. I am keeping most of this as my profile variables, so I am just refering to local env variables.
+- Add your variables to `.config.env`. I am keeping most of this as my profile variables, so I am just refering to local env variables. Be careful not to push it into remote repository.
 
 - Install pre-commit hooks
 
@@ -87,13 +92,13 @@ Cluster ID               275d5a0b-5493-8f63-ad90-68bd72c3e02c
 HA Enabled               false
 ```
 
-Inject the environment variables we need for secrets into vault:
+Inject the secrets into vault:
 
 ```bash
 ./configure.sh --vault
 ```
 
-Verify the secret:
+Verify the secrets:
 
 ```bash
 k exec -n vault vault-0 -- vault kv get kv/secret/oauth2
@@ -117,6 +122,8 @@ VAULT_OAUTH2_EMAIL_WHITELIST    *****
 name                           my-secret
 ```
 
+> :exclamation: we use oauth2-proxy with [email authentication](https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/oauth_provider#email-authentication) option. Comma-separated email whitelist provided via `VAULT_OAUTH2_EMAIL_WHITELIST` can pushed into Vault with `./configure.sh --vault`.
+
 Install argocd
 
 ```bash
@@ -137,40 +144,10 @@ task cluster:argo:init
 
 Add apps...(TODO: Add details)
 
-## Host configuration
 
-Ansible-based provisioning of host system (Ubuntu). Key features:
+Example topology (TODO: refresh)
 
-- zfs and networking
-- backup
-- system monitoring
-- firewall
-- email for system notifications
-- kubernetes and docker
-
-## Services
-
-Docker-based services:
-
-- plex
-- transmission
-- calibre
-- databases
-- jupyter
-
-Kubernetes (k3s) services:
-
-- nginx (static website)
-- jupyter
-- books (calibre-web)
-- summary page for local docker services (custom-built)
-
-also:
-
-- Pod security policies and general hardening
-- Traefik ingress with Let's Encrypt
-- Forward auth to protect private sites
-  ![Services](topology.svg)
+![Services](topology.svg)
 
 ## Hardware
 
@@ -191,10 +168,6 @@ also:
 | **Case**         | [Fractal Design Node 304 Mini ITX Tower Case](https://pcpartpicker.com/product/BWFPxr/fractal-design-case-fdcanode304bl)                                                                                             |
 | **Power Supply** | [SeaSonic FOCUS Plus Gold 550 W 80+ Gold Certified Fully Modular ATX Power Supply](https://pcpartpicker.com/product/bkp323/seasonic-focus-plus-gold-550w-80-gold-certified-fully-modular-atx-power-supply-ssr-550fx) |
 | **Case Fan**     | [Noctua NF-A14 PWM 82.5 CFM 140 mm Fan](https://pcpartpicker.com/product/dwR48d/noctua-case-fan-nfa14pwm)                                                                                                            |
-
-## Cleaning domain name prior to commit
-
-Commit will be rejected if it detects domain name. Remove it with `make rm_domain`. Add back with `make add_domain`
 
 ## TODO
 
