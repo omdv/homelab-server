@@ -8,20 +8,55 @@ env:
   TZ: America/Chicago
 
 hajimari:
-  instanceName: null
-  defaultEnable: false
-  title: null
-  name: "You"
-  customApps: []
-
   groups:
-    links:
-      - name: Discord
-        url: 'https://discord.com'
-      - name: Gmail
-        url: 'http://gmail.com'
-      - name: Slack
-        url: 'https://slack.com/signin'
+    - name: Communicate
+      links:
+        - name: Discord
+          url: 'https://discord.com'
+        - name: Gmail
+          url: 'http://gmail.com'
+        - name: Slack
+          url: 'https://slack.com/signin'
+    - name: Cloud
+      links:
+        - name: Box
+          url: 'https://box.com'
+        - name: Dropbox
+          url: 'https://dropbox.com'
+        - name: Drive
+          url: 'https://drive.google.com'
+    - name: Design
+      links:
+        - name: Awwwards
+          url: 'https://awwwards.com'
+        - name: Dribbble
+          url: 'https://dribbble.com'
+        - name: Muz.li
+          url: 'https://medium.muz.li/'
+    - name: Dev
+      links:
+        - name: Codepen
+          url: 'https://codepen.io/'
+        - name: Devdocs
+          url: 'https://devdocs.io'
+        - name: Devhints
+          url: 'https://devhints.io'
+    - name: Reading
+      links:
+        - name: Instapaper
+          url: 'https://www.instapaper.com/u'
+        - name: Medium
+          url: 'http://medium.com'
+        - name: Reddit
+          url: 'http://reddit.com'
+    - name: Tech
+      links:
+        - name: TheNextWeb
+          url: 'https://thenextweb.com/'
+        - name: The Verge
+          url: 'https://theverge.com/'
+        - name: MIT Technology Review
+          url: 'https://www.technologyreview.com/'
 
 service:
   main:
@@ -34,7 +69,21 @@ serviceAccount:
 
 ingress:
   main:
-    enabled: false
+    enabled: true
+    hosts:
+      - host: hj.zzd.ai
+        paths:
+          - path: /
+            pathType: Prefix
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://$host$uri"
+    tls:
+      - hosts:
+          - hj.zzd.ai
+        secretName: my-certs-hajimari
 
 persistence:
   data:
