@@ -241,7 +241,7 @@ generate_cluster_secrets() {
 
     # patch email whitelist
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/oauth2 \
-        VAULT_OAUTH2_EMAIL_WHITELIST="$(echo "${VAULT_OAUTH2_EMAIL_WHITELIST}" | sed 's/,/\\n/g')"
+        VAULT_OAUTH2_EMAIL_WHITELIST="$(echo "${VAULT_OAUTH2_EMAIL_WHITELIST}" | sed 's/,/\n/g')"
 }
 
 success() {
