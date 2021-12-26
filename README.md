@@ -4,11 +4,15 @@ Mono repo to manage provision of homelab server. Some features:
 
 - Ubuntu with zfs pool
 - Automated external backups
-- Most of the applications are ran on [K3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
-- ArgoCD managed cluster
+- Most of the applications are on [K3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
+
+K8s cluster features:
+- ArgoCD managed apps / gitops
 - ZFS-based persistent volumes
 - Hashicorp's Vault with external-secrets integration
+- Ingress-nginx with cert-manager and hajimari
 - Oauth2-proxy email authentication/authorization
+- WIP: can run apps behind wireguard gateway
 
 ## Prior to Deployment
 
@@ -26,7 +30,8 @@ Install following tools:
 ### Google Cloud Platform oauth2 keys and service account
 
 [Service account for Vault auto-unseal](https://shadow-soft.com/vault-auto-unseal/)
-OAuth tokens
+
+OAuth tokens (TODO: add link/guide)
 
 ## Deployment Guide
 
@@ -151,6 +156,8 @@ Example topology (TODO: refresh)
 
 ## Hardware
 
+This all runs on single machine in acclaimed Node 304 case, which can house 6 HDDs. I am considering upgrading to multi-node deployment for "fun" part of it, but the current form-factor meets all needs and is quiet, functional and aesthetic enough to sit in plain sight in the Living room.
+
 [PCPartPicker Part List](https://pcpartpicker.com/list/RBVDTC)
 
 | Type             | Item                                                                                                                                                                                                                 |
@@ -172,16 +179,13 @@ Example topology (TODO: refresh)
 ## TODO
 
 - local docker registry
-- docker remote api certs
-- ro on /lib/modules
 - wireguard and pihole on k3s/traefik
 - trusted IPs on ingress
 - renovate / automate image tag posting to github
-- switch from flux to argo - WIP
 - doc/graph generation
 - cert-manager
 - switch from traefik to nginx-ingress with hajimari
 - add country live check for wireguard
-- appRole for external-secrets
+- appRole vs root token for external-secrets
 - automatic generation of approved email file
 - kubeflow??
