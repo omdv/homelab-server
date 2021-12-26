@@ -34,7 +34,7 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /volume
-              name: storage-volume
+              name: oauth2-emails
           resources:
             requests:
               cpu: "10m"
@@ -43,6 +43,8 @@ spec:
               cpu: "20m"
               memory: "20Mi"
       volumes:
-        - name: storage-volume
-          persistentVolumeClaim:
-            claimName: pvc-oauth2-proxy
+        - name: oauth2-emails
+          secret: oauth2-secret
+          items:
+            - key: EMAIL_WHITELIST
+              path: emails
