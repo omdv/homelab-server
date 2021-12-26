@@ -9,7 +9,6 @@ hajimari:
     TZ: America/Chicago
 
   hajimari:
-    defaultEnable: true
     namespaceSelector:
       any: true
     name: "omdv"
