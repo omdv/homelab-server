@@ -147,8 +147,23 @@ Now in original tab we can finish initializing argo by:
 task cluster:argo:init
 ```
 
-Add apps...(TODO: Add details)
+Now that argo is running you can add two folders: `base` and `apps`:
 
+```bash
+argocd app create base \
+--dest-namespace argocd \
+--dest-server https://kubernetes.default.svc \
+--repo ${YOUR_REPO} \
+--path cluster/base/
+```
+
+```bash
+argocd app create apps \
+--dest-namespace argocd \
+--dest-server https://kubernetes.default.svc \
+--repo ${YOUR_REPO} \
+--path cluster/apps/
+```
 
 Example topology (TODO: refresh)
 
