@@ -225,18 +225,23 @@ verify_ansible_hosts() {
 }
 
 verify_vault() {
-    _has_envar "VAULT_OAUTH_CLIENT_ID"
-    _has_envar "VAULT_OAUTH_CLIENT_SECRET"
-    _has_envar "VAULT_OAUTH_COOKIE_SECRET"
-    _log "INFO" "Found variables for vault injection"
+    _has_envar "VAULT_OAUTH2_CLIENT_ID"
+    _has_envar "VAULT_OAUTH2_CLIENT_SECRET"
+    _has_envar "VAULT_OAUTH2_COOKIE_SECRET"
+    _has_envar "VAULT_OAUTH2_EMAIL_WHITELIST"
+    _log "INFO" "Found variables for OAUTH2"
 }
 
 generate_cluster_secrets() {
-    # initialize secret @ secret/gitops
-    kubectl exec -n vault vault-0 -- vault kv put kv/secret/gitops name=my-secret
-    for var in "${!VAULT_@}"; do
-        kubectl exec -n vault vault-0 -- vault kv patch kv/secret/gitops "$var"="$(echo -n ${!var})"
+    # initialize secret @ secret/oauth2
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/oauth2 name=my-secret
+    for var in "${!VAULT_OAUTH2@}"; do
+        kubectl exec -n vault vault-0 -- vault kv patch kv/secret/oauth2 "$var"="$(echo -n ${!var})"
     done
+
+    # patch email whitelist
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/oauth2 \
+        VAULT_OAUTH2_EMAIL_WHITELIST="$(echo "${VAULT_OAUTH2_EMAIL_WHITELIST}" | sed 's/,/\\n/g')"
 }
 
 success() {

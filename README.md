@@ -96,7 +96,7 @@ Inject the environment variables we need for secrets into vault:
 Verify the secret:
 
 ```bash
-k exec -n vault vault-0 -- vault kv get kv/secret/gitops
+k exec -n vault vault-0 -- vault kv get kv/secret/oauth2
 
 ======= Metadata =======
 Key                Value
@@ -110,10 +110,10 @@ version            7
 =============== Data ===============
 Key                            Value
 ---                            -----
-VAULT_DOMAIN                   *****
-VAULT_OAUTH_CLIENT_ID          *****
-VAULT_OAUTH_CLIENT_SECRET      *****
-VAULT_OAUTH_EMAIL_WHITELIST    *****
+VAULT_OAUTH2_CLIENT_ID          *****
+VAULT_OAUTH2_CLIENT_SECRET      *****
+VAULT_OAUTH2_COOKIE_SECRET      *****
+VAULT_OAUTH2_EMAIL_WHITELIST    *****
 name                           my-secret
 ```
 
@@ -134,6 +134,8 @@ Now in original tab we can finish initializing argo by:
 ```bash
 task cluster:argo:init
 ```
+
+Add apps...(TODO: Add details)
 
 ## Host configuration
 
@@ -208,4 +210,5 @@ Commit will be rejected if it detects domain name. Remove it with `make rm_domai
 - switch from traefik to nginx-ingress with hajimari
 - add country live check for wireguard
 - appRole for external-secrets
+- automatic generation of approved email file
 - kubeflow??
