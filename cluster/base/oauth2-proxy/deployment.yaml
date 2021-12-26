@@ -44,7 +44,8 @@ spec:
               memory: "20Mi"
       volumes:
         - name: oauth2-emails
-          secret: oauth2-secret
-          items:
-            - key: EMAIL_WHITELIST
-              path: emails
+          secret:
+            secretName: oauth2-secret
+            items:
+              - key: EMAIL_WHITELIST
+                path: emails
