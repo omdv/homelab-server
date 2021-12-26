@@ -9,6 +9,8 @@ hajimari:
     TZ: America/Chicago
 
   hajimari:
+    defaultEnable: true
+    name: "omdv"
     groups:
       - name: Communicate
         links:
