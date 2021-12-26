@@ -19,18 +19,10 @@
   tags:
     - backup
 
-# - import_tasks: calibre.yml
-#   tags:
-#     - calibre
-
 # - import_tasks: docker.yml
 #   tags:
 #     - docker
 #     - docker-core
-
-# - import_tasks: kubernetes.yml
-#   tags:
-#     - kubernetes
 
 - import_tasks: monitoring.yml
   tags:
