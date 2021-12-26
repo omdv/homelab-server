@@ -7,6 +7,7 @@ Mono repo to manage provision of homelab server. Some features:
 - Most of the applications are on [K3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
 
 K8s cluster features:
+
 - ArgoCD managed apps / gitops
 - ZFS-based persistent volumes
 - Hashicorp's Vault with external-secrets integration
@@ -16,9 +17,7 @@ K8s cluster features:
 
 ## Prior to Deployment
 
-### Prepare your local machine
-
-Install following tools:
+### Install following tools on local machine
 
 - age
 - ansible
@@ -27,11 +26,10 @@ Install following tools:
 - direnv
 - pre-commit
 
-### Google Cloud Platform oauth2 keys and service account
+### Get GCP oauth2 keys and service account
 
-[Service account for Vault auto-unseal](https://shadow-soft.com/vault-auto-unseal/)
-
-OAuth tokens (TODO: add link/guide)
+- [Service account for Vault auto-unseal](https://shadow-soft.com/vault-auto-unseal/)
+- OAuth tokens (TODO: add link/guide)
 
 ## Deployment Guide
 
@@ -127,7 +125,8 @@ VAULT_OAUTH2_EMAIL_WHITELIST    *****
 name                           my-secret
 ```
 
-> :exclamation: we use oauth2-proxy with [email authentication](https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/oauth_provider#email-authentication) option. Comma-separated email whitelist provided via `VAULT_OAUTH2_EMAIL_WHITELIST` can pushed into Vault with `./configure.sh --vault`.
+> :exclamation: we use oauth2-proxy with [email authentication](https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/oauth_provider#email-authentication).
+> Comma-separated email whitelist provided via `VAULT_OAUTH2_EMAIL_WHITELIST` can pushed into Vault with `./configure.sh --vault`.
 
 Install argocd
 
@@ -171,7 +170,8 @@ Example topology (TODO: refresh)
 
 ## Hardware
 
-This all runs on single machine in acclaimed Node 304 case, which can house 6 HDDs. I am considering upgrading to multi-node deployment for "fun" part of it, but the current form-factor meets all needs and is quiet, functional and aesthetic enough to sit in plain sight in the Living room.
+This all runs on single machine in acclaimed Node 304 case, which can house 6 HDDs.
+I am considering upgrading to multi-node deployment for "fun" part of it, but the current form-factor meets all needs and is quiet, functional and aesthetic enough to sit in plain sight in the Living room.
 
 [PCPartPicker Part List](https://pcpartpicker.com/list/RBVDTC)
 

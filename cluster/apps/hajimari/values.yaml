@@ -12,51 +12,51 @@ hajimari:
     - name: Communicate
       links:
         - name: Discord
-          url: 'https://discord.com'
+          url: "https://discord.com"
         - name: Gmail
-          url: 'http://gmail.com'
+          url: "http://gmail.com"
         - name: Slack
-          url: 'https://slack.com/signin'
+          url: "https://slack.com/signin"
     - name: Cloud
       links:
         - name: Box
-          url: 'https://box.com'
+          url: "https://box.com"
         - name: Dropbox
-          url: 'https://dropbox.com'
+          url: "https://dropbox.com"
         - name: Drive
-          url: 'https://drive.google.com'
+          url: "https://drive.google.com"
     - name: Design
       links:
         - name: Awwwards
-          url: 'https://awwwards.com'
+          url: "https://awwwards.com"
         - name: Dribbble
-          url: 'https://dribbble.com'
+          url: "https://dribbble.com"
         - name: Muz.li
-          url: 'https://medium.muz.li/'
+          url: "https://medium.muz.li/"
     - name: Dev
       links:
         - name: Codepen
-          url: 'https://codepen.io/'
+          url: "https://codepen.io/"
         - name: Devdocs
-          url: 'https://devdocs.io'
+          url: "https://devdocs.io"
         - name: Devhints
-          url: 'https://devhints.io'
+          url: "https://devhints.io"
     - name: Reading
       links:
         - name: Instapaper
-          url: 'https://www.instapaper.com/u'
+          url: "https://www.instapaper.com/u"
         - name: Medium
-          url: 'http://medium.com'
+          url: "http://medium.com"
         - name: Reddit
-          url: 'http://reddit.com'
+          url: "http://reddit.com"
     - name: Tech
       links:
         - name: TheNextWeb
-          url: 'https://thenextweb.com/'
+          url: "https://thenextweb.com/"
         - name: The Verge
-          url: 'https://theverge.com/'
+          url: "https://theverge.com/"
         - name: MIT Technology Review
-          url: 'https://www.technologyreview.com/'
+          url: "https://www.technologyreview.com/"
 
 service:
   main:

@@ -19,7 +19,7 @@ vars:
   VAULT_HELM_VERSION: "0.18.0"
 
 env:
-  BOOTSTRAP_ARGOCD_PASSWORD: {{.HOMELAB_ARGO_PASSWORD}}
+  BOOTSTRAP_ARGOCD_PASSWORD: "{{ .HOMELAB_ARGO_PASSWORD }}"
 
 includes:
   ansible: .taskfiles/ansible.yaml
