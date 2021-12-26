@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cyberchef
+  labels:
+    app: cyberchef
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://$host$uri"
+    hajimari.io/enable: "true"
+
+spec:
+  tls:
+    - hosts:
+        - cc.zzd.ai
+      secretName: my-certs-cyberchef
+  rules:
+    - host: cc.zzd.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cyberchef
+                port:
+                  number: 8000
