@@ -9,6 +9,7 @@ hajimari:
     TZ: America/Chicago
 
   hajimari:
+    defaultEnable: false # show all ingresses, regardless of annotation
     namespaceSelector:
       any: true
     name: "omdv"
