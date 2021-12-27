@@ -30,26 +30,21 @@ tasks:
         > {{.SECRETS_DIR}}/vault-secret.yaml"
       - "kubectl exec -n vault vault-0 -- vault login $(cat {{.SECRETS_DIR}}/vault-keys.json | jq -r .root_token)"
       - "kubectl exec -n vault vault-0 -- vault secrets enable -version=2 kv"
-      # - "kubectl exec -n vault vault-0 -- vault auth enable approle"
-      # - "kubectl exec -n vault vault-0 -- vault write auth/approle/role/avp \
-      #   secret_id_ttl=1m \
-      #   token_num_uses=1 \
-      #   token_ttl=1h \
-      #   token_max_ttl=24h \
-      #   policies=default,read-only"
 
   vault:delete:
     desc: Delete vault and reset pvc
     dir: ./
     cmds:
-      - " helm delete vault -n vault"
+      - "helm delete vault -n vault"
       - "kubectl delete pvc/data-vault-0 -n vault"
 
   argo:install:
     desc: Install argo
     dir: ./
     cmds:
+      - "helm repo add argo https://argoproj.github.io/argo-helm --force-update && helm repo update"
       - "kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -"
+      - "helm install my-release argo/argo-cd -f {{.CLUSTER_DIR}}/init/argocd/values.yaml"
       - "kubectl apply -k {{.CLUSTER_DIR}}/init/argocd -n argocd --dry-run=client -o yaml | kubectl apply -f -"
 
   argo:init:
@@ -64,7 +59,7 @@ tasks:
       - "kubectl delete secret/argocd-initial-admin-secret -n argocd"
       - "argocd cluster add default --in-cluster --yes"
 
-  argo:uninstall:
+  argo:delete:
     desc: Uninstall argo
     dir: ./
     cmds:
