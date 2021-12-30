@@ -50,11 +50,11 @@ main() {
 # envsubst < "${PROJECT_DIR}/tmpl/argo/values.yaml" \
 #     > "${PROJECT_DIR}/argo/base/values.yaml"
 
-        # wireguard
-        # export WIREGUARD_CONFIG_FILE=$(cat ${PROJECT_DIR}/.wireguard/$(ls ${PROJECT_DIR}/.wireguard/) | base64) &&\
-        envsubst < "${PROJECT_DIR}/tmpl/cluster/wireguard.secrets.sops.yaml" \
-            > "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
+# # wireguard
+# # export WIREGUARD_CONFIG_FILE=$(cat ${PROJECT_DIR}/.wireguard/$(ls ${PROJECT_DIR}/.wireguard/) | base64) &&\
+# envsubst < "${PROJECT_DIR}/tmpl/cluster/wireguard.secrets.sops.yaml" \
+#     > "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
+# sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
 
         # template argo values
         export ARGO_PWD=$(htpasswd -nbBC 10 "" $BOOTSTRAP_ARGO_ADMIN_PASSWORD | tr -d ':\n' | sed 's/$2y/$2a/')
@@ -266,7 +266,7 @@ generate_cluster_secrets() {
     # initialize secret @ secret/wireguard
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/wireguard name=my-wireguard-secret
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_COUNTRY"="$VAULT_WIREGUARD_COUNTRY"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_CONFIG"="$(base64 -w 0 $WIREGUARD_CONFIG_FILE)"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_CONFIG"="$(cat $WIREGUARD_CONFIG_FILE)"
 }
 
 verify_argo() {
