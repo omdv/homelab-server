@@ -8,7 +8,7 @@ argo-cd:
     ingress:
       enabled: true
       annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        cert-manager.io/cluster-issuer: "letsencrypt-staging"
         nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
         nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://"
       labels: {}
@@ -25,21 +25,29 @@ argo-cd:
             - argo.zzd.ai
     additionalApplications:
       - name: base
+        project: default
         source:
           repoURL: https://github.com/omdv/homelab-server
           targetRevision: HEAD
           path: cluster/base
         destination:
           server: https://kubernetes.default.svc
-          namespace: argocd
+        syncPolicy:
+          automated:
+            prune: false
+            selfHeal: true
       - name: apps
+        project: default
         source:
           repoURL: https://github.com/omdv/homelab-server
           targetRevision: HEAD
           path: cluster/apps
         destination:
           server: https://kubernetes.default.svc
-          namespace: argocd
+        syncPolicy:
+          automated:
+            prune: false
+            selfHeal: true
   configs:
     secret:
-      argocdServerAdminPassword: $2a$10$bT2VIF4VB.ceIVn1VARsbeNsTCMZYf27swj1fmnipJDK0ehpjwKYO
+      argocdServerAdminPassword: $2a$10$vOTFfpBQgiQK7w2DCfPyG.jf/Izz4296B/1R4seWNdWHe5p8TC08q
