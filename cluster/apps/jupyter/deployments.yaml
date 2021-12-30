@@ -1,0 +1,40 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: jupyter
+  labels:
+    app: jupyter
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jupyter
+  template:
+    metadata:
+      labels:
+        app: jupyter
+    spec:
+      containers:
+        - name: jupyter
+          image: jupyter/scipy-notebook:latest
+          ports:
+            - containerPort: 8888
+              protocol: TCP
+          command: ["start.sh"]
+          args: ["jupyter", "lab"]
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "500Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1000Mi"
+          volumeMounts:
+            - mountPath: /home/jovyan
+              name: volume
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: pvc-jupyter
