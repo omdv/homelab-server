@@ -9,6 +9,8 @@ argo-cd:
       enabled: true
       annotations:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        kubernetes.io/tls-acme: "true"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
         nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
         nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://"
       labels: {}
@@ -20,7 +22,7 @@ argo-cd:
       pathType: Prefix
       extraPaths:
       tls:
-        - secretName: my-certs-argo
+        - secretName: argocd-secret
           hosts:
             - argo.zzd.ai
     additionalApplications:
