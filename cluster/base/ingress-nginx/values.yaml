@@ -8,3 +8,5 @@ controller:
     ports:
       http: 80
       https: 443
+  extraArgs:
+    - "--enable-ssl-passthrough"
