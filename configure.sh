@@ -235,7 +235,8 @@ verify_vault() {
     _has_envar "VAULT_OAUTH2_CLIENT_SECRET"
     _has_envar "VAULT_OAUTH2_COOKIE_SECRET"
     _has_envar "VAULT_OAUTH2_EMAIL_WHITELIST"
-    _log "INFO" "Found variables for OAUTH2"
+    _has_envar "VAULT_DYNDNS_NAMECHEAP_PASSWORD"
+    _log "INFO" "Found variables for OAUTH2 and DYNDNS"
 }
 
 generate_cluster_secrets() {
@@ -248,6 +249,12 @@ generate_cluster_secrets() {
     # patch email whitelist
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/oauth2 \
         VAULT_OAUTH2_EMAIL_WHITELIST="$(echo "${VAULT_OAUTH2_EMAIL_WHITELIST}" | sed 's/,/\n/g')"
+
+    # initialize secret @ secret/dyndns
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/dyndns name=my-dns-secret
+    for var in "${!VAULT_DYNDNS@}"; do
+        kubectl exec -n vault vault-0 -- vault kv patch kv/secret/dyndns "$var"="$(echo -n ${!var})"
+    done
 }
 
 verify_argo() {
