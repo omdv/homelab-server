@@ -36,6 +36,7 @@ main() {
         verify_git_repository
         verify_cloudflare
         verify_vault
+        verify_argo
         success
     elif [[ "${vault}" == 1 ]]; then
         generate_cluster_secrets
@@ -55,10 +56,15 @@ main() {
 #     > "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
 # sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
 
-        # terraform
-        envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
-            > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
+        # template argo values
+        export ARGO_PWD=$(htpasswd -nbBC 10 "" $BOOTSTRAP_ARGO_ADMIN_PASSWORD | tr -d ':\n' | sed 's/$2y/$2a/' | base64 -w 0)
+        envsubst < "${PROJECT_DIR}/tmpl/argo/secret.yaml" \
+            > "${PROJECT_DIR}/cluster/init/argocd/secret.yaml"
+
+# # terraform
+# envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
+#     > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
+# sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
 
         # ansible
         generate_ansible_hosts
@@ -242,6 +248,11 @@ generate_cluster_secrets() {
     # patch email whitelist
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/oauth2 \
         VAULT_OAUTH2_EMAIL_WHITELIST="$(echo "${VAULT_OAUTH2_EMAIL_WHITELIST}" | sed 's/,/\n/g')"
+}
+
+verify_argo() {
+    _has_envar "BOOTSTRAP_ARGO_ADMIN_PASSWORD"
+    _log "INFO" "Found variables for ARGO"
 }
 
 success() {

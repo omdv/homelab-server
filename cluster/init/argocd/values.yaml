@@ -1,0 +1,26 @@
+---
+dex:
+  enabled: false
+server:
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://"
+    labels: {}
+    ingressClassName: "nginx"
+    hosts:
+      - argo.zzd.ai
+    paths:
+      - /
+    pathType: Prefix
+    extraPaths:
+    tls:
+      - secretName: my-certs-argo
+        hosts:
+          - argo.zzd.ai
+    https: true
+configs:
+  ## `htpasswd -nbBC 10 "" ${ARGO_ADMIN_PASSWORD} | tr -d ':\n' | sed 's/$2y/$2a/'`
+  argocdServerAdminPassword: "$2a$10$qtc7qbsrmrOeQ3OE6AgsMeigwV8pXPT3uezwLCYSD2tgPQnZ6ppzW"
