@@ -6,10 +6,10 @@ metadata:
   labels:
     app: web-main
   annotations:
-    kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
 
 spec:
+  ingressClassName: nginx
   tls:
     - hosts:
         - zzd.ai

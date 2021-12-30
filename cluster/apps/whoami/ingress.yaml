@@ -6,12 +6,12 @@ metadata:
   labels:
     app: whoami
   annotations:
-    kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
     nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://$host$uri"
 
 spec:
+  ingressClassName: nginx
   tls:
     - hosts:
         - hidden.zzd.ai
@@ -40,6 +40,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
 
 spec:
+  ingressClassName: nginx
   tls:
     - hosts:
         - whoami.zzd.ai
