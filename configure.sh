@@ -58,7 +58,7 @@ main() {
 
         # template argo values
         export ARGO_PWD=$(htpasswd -nbBC 10 "" $BOOTSTRAP_ARGO_ADMIN_PASSWORD | tr -d ':\n' | sed 's/$2y/$2a/')
-        envsubst < "${PROJECT_DIR}/tmpl/argo/values.yaml" \
+        envsubst '$ARGO_PWD $BOOTSTRAP_GIT_REPOSITORY' < "${PROJECT_DIR}/tmpl/argo/values.yaml" \
             > "${PROJECT_DIR}/cluster/init/argocd/values.yaml"
 
 # # terraform

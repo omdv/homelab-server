@@ -9,10 +9,8 @@ argo-cd:
       enabled: true
       annotations:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        kubernetes.io/tls-acme: "true"
-        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
         nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
-        nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://"
+        nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://$host$uri"
       labels: {}
       ingressClassName: "nginx"
       hosts:
@@ -22,7 +20,7 @@ argo-cd:
       pathType: Prefix
       extraPaths:
       tls:
-        - secretName: argocd-secret
+        - secretName: my-certs-argo
           hosts:
             - argo.zzd.ai
     additionalApplications:
@@ -52,4 +50,4 @@ argo-cd:
             selfHeal: true
   configs:
     secret:
-      argocdServerAdminPassword: $2a$10$5eRepAXxffCbK1mp2YItEetxYP513UNRC9hWFb5YIQg2H4Zx2BXn6
+      argocdServerAdminPassword: $2a$10$14fNE9VnjCZ/QpQA5xvaOu2N9z/gLXoxq467gzGgDAcjgf0mz8XDm
