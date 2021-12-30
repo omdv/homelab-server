@@ -30,3 +30,6 @@ talosconfig
 .wireguard/*
 # Secrets created during bootstrap
 .bootstrap-secrets/*
+# Charts folders
+charts/
+Chart.lock
