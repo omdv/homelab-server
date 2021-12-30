@@ -25,5 +25,5 @@ argo-cd:
             - argo.zzd.ai
   configs:
     secret:
-      ## `htpasswd -nbBC 10 ""  | tr -d ':\n' | sed 's/$2y/$2a/'`
-      argocdServerAdminPassword: $2a$10$UQpI1W.7Y8ZtWAIQOiewEuYQ.buDqDoEf4vcAQVCV01tDZHZVDLTW
+      ## `htpasswd -nbBC 10 "" ${ARGO_ADMIN_PASSWORD} | tr -d ':\n' | sed 's/$2y/$2a/'`
+      argocdServerAdminPassword: ${ARGO_PWD}

@@ -57,9 +57,9 @@ main() {
 # sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
 
         # template argo values
-        export ARGO_PWD=$(htpasswd -nbBC 10 "" $BOOTSTRAP_ARGO_ADMIN_PASSWORD | tr -d ':\n' | sed 's/$2y/$2a/' | base64 -w 0)
-        envsubst < "${PROJECT_DIR}/tmpl/argo/secret.yaml" \
-            > "${PROJECT_DIR}/cluster/init/argocd/secret.yaml"
+        export ARGO_PWD=$(htpasswd -nbBC 10 "" $BOOTSTRAP_ARGO_ADMIN_PASSWORD | tr -d ':\n' | sed 's/$2y/$2a/')
+        envsubst < "${PROJECT_DIR}/tmpl/argo/values.yaml" \
+            > "${PROJECT_DIR}/cluster/init/argocd/values.yaml"
 
 # # terraform
 # envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
