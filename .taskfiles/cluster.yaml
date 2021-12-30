@@ -62,7 +62,7 @@ tasks:
     desc: Uninstall argo
     dir: ./
     cmds:
-      - "kubectl delete -k {{.CLUSTER_DIR}}/init/argocd -n argocd"
+      - "helm delete argocd -n argocd"
 
   secrets:install:
     desc: Install external-secrets

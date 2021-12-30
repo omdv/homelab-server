@@ -23,7 +23,23 @@ argo-cd:
         - secretName: my-certs-argo
           hosts:
             - argo.zzd.ai
+    additionalApplications:
+      - name: base
+        source:
+          repoURL: ${BOOTSTRAP_GIT_REPOSITORY}
+          targetRevision: HEAD
+          path: cluster/base
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: argocd
+      - name: apps
+        source:
+          repoURL: ${BOOTSTRAP_GIT_REPOSITORY}
+          targetRevision: HEAD
+          path: cluster/apps
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: argocd
   configs:
     secret:
-      ## `htpasswd -nbBC 10 "" ${ARGO_ADMIN_PASSWORD} | tr -d ':\n' | sed 's/$2y/$2a/'`
       argocdServerAdminPassword: ${ARGO_PWD}

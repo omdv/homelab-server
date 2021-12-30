@@ -23,7 +23,23 @@ argo-cd:
         - secretName: my-certs-argo
           hosts:
             - argo.zzd.ai
+    additionalApplications:
+      - name: base
+        source:
+          repoURL: https://github.com/omdv/homelab-server
+          targetRevision: HEAD
+          path: cluster/base
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: argocd
+      - name: apps
+        source:
+          repoURL: https://github.com/omdv/homelab-server
+          targetRevision: HEAD
+          path: cluster/apps
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: argocd
   configs:
     secret:
-      ## `htpasswd -nbBC 10 ""  | tr -d ':\n' | sed 's/$2y/$2a/'`
-      argocdServerAdminPassword: $2a$10$UQpI1W.7Y8ZtWAIQOiewEuYQ.buDqDoEf4vcAQVCV01tDZHZVDLTW
+      argocdServerAdminPassword: $2a$10$bT2VIF4VB.ceIVn1VARsbeNsTCMZYf27swj1fmnipJDK0ehpjwKYO
