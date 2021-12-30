@@ -5,11 +5,11 @@ set -o pipefail
 
 # shellcheck disable=SC2155
 export PROJECT_DIR=$(git rev-parse --show-toplevel)
-# export WIREGUARD_DIR="${PROJECT_DIR}/.wireguard"
-# export WIREGUARD_CONFIG_FILE=$(base64 -w 0 ${WIREGUARD_DIR}/$(ls ${WIREGUARD_DIR}))
 
 # shellcheck disable=SC2155
 export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+export WIREGUARD_DIR="${PROJECT_DIR}/.bootstrap-secrets"
+export WIREGUARD_CONFIG_FILE="${WIREGUARD_DIR}/wireguard.conf"
 
 # shellcheck disable=SC1091
 source "${PROJECT_DIR}/.config.env"
@@ -50,11 +50,11 @@ main() {
 # envsubst < "${PROJECT_DIR}/tmpl/argo/values.yaml" \
 #     > "${PROJECT_DIR}/argo/base/values.yaml"
 
-# # wireguard
-# # export WIREGUARD_CONFIG_FILE=$(cat ${PROJECT_DIR}/.wireguard/$(ls ${PROJECT_DIR}/.wireguard/) | base64) &&\
-# envsubst < "${PROJECT_DIR}/tmpl/cluster/wireguard.secrets.sops.yaml" \
-#     > "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
-# sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
+        # wireguard
+        # export WIREGUARD_CONFIG_FILE=$(cat ${PROJECT_DIR}/.wireguard/$(ls ${PROJECT_DIR}/.wireguard/) | base64) &&\
+        envsubst < "${PROJECT_DIR}/tmpl/cluster/wireguard.secrets.sops.yaml" \
+            > "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
 
         # template argo values
         export ARGO_PWD=$(htpasswd -nbBC 10 "" $BOOTSTRAP_ARGO_ADMIN_PASSWORD | tr -d ':\n' | sed 's/$2y/$2a/')
@@ -236,12 +236,19 @@ verify_vault() {
     _has_envar "VAULT_OAUTH2_COOKIE_SECRET"
     _has_envar "VAULT_OAUTH2_EMAIL_WHITELIST"
     _has_envar "VAULT_DYNDNS_NAMECHEAP_PASSWORD"
-    _log "INFO" "Found variables for OAUTH2 and DYNDNS"
+    _has_envar "VAULT_WIREGUARD_COUNTRY"
+    _log "INFO" "Found variables for Vault injection"
+    if test -f "$WIREGUARD_CONFIG_FILE"; then
+        _log "INFO" "Found wireguard config file"
+    else
+        _log "ERROR" "Couldn't find the wireguard config file"
+        exit 1
+    fi
 }
 
 generate_cluster_secrets() {
     # initialize secret @ secret/oauth2
-    kubectl exec -n vault vault-0 -- vault kv put kv/secret/oauth2 name=my-secret
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/oauth2 name=my-oauth2-secret
     for var in "${!VAULT_OAUTH2@}"; do
         kubectl exec -n vault vault-0 -- vault kv patch kv/secret/oauth2 "$var"="$(echo -n ${!var})"
     done
@@ -255,6 +262,11 @@ generate_cluster_secrets() {
     for var in "${!VAULT_DYNDNS@}"; do
         kubectl exec -n vault vault-0 -- vault kv patch kv/secret/dyndns "$var"="$(echo -n ${!var})"
     done
+
+    # initialize secret @ secret/wireguard
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/wireguard name=my-wireguard-secret
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_COUNTRY"="$VAULT_WIREGUARD_COUNTRY"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_CONFIG"="$(base64 -w 0 $WIREGUARD_CONFIG_FILE)"
 }
 
 verify_argo() {
