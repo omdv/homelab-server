@@ -33,7 +33,9 @@ K8s cluster features:
 
 ## Deployment Guide
 
-- Add your variables to `.config.env`. I am keeping most of this as my profile variables, so I am just refering to local env variables. Be careful not to push it into remote repository.
+- Add your variables to `.config.env`.
+
+> :exclamation: You can add an extra level of security and refer to your profile local variables, like I do. This helps with not pushing some values to remote repo by mistake. Git hooks will help with checking it as well.
 
 - Install pre-commit hooks
 
@@ -51,7 +53,9 @@ task ansible:playbook:ubuntu-prepare
 task ansible:playbook:k3s-install
 ```
 
-- Cluster preparation
+- Cluster bootstrap.
+
+The below commands will all be executed in sequency by one `task cluster:install`. However you can follow step-by-step below.
 
 Install zfs-localpv.
 
@@ -59,7 +63,7 @@ Install zfs-localpv.
 task zfspv
 ```
 
-On a host system check that dataset under main zfs pool is created:
+You can check on a host system that dataset under main zfs pool is created:
 
 ```bash
 zfs list
@@ -73,10 +77,10 @@ TODO: describe how to get GCP keys and role
 
 ```bash
 task cluster:vault:install
-task cluster:vault:init # wait for pod/vault-0 to be up
+task cluster:vault:init
 ```
 
-Now the vault should be unsealed and initialized:
+Now the vault should be unsealed and initialized, which you can check with:
 
 ```bash
 k exec -it -n vault vault-0 -- vault
@@ -101,7 +105,7 @@ Inject the secrets into vault:
 ./configure.sh --vault
 ```
 
-Verify the secrets:
+You can verify that secrets are injected:
 
 ```bash
 k exec -n vault vault-0 -- vault kv get kv/secret/oauth2
@@ -134,35 +138,17 @@ Install argocd
 task cluster:argo:install
 ```
 
-At this point we don't have ingress for Argo, so we need to forward the port to argo service to continue setup. In a different terminal tab forward the port:
+This will install ingress and create an admin password. It will also create two applications: `base` and `apps`. The `base` app will create a load balancer, after which you can access UI at `argo.${your_domain}`. Since this route is protected with oauth2 if you need to connect using CLI open a different tab and forward the port:
 
 ```bash
 k port-forward -n argocd svc/argocd-server 8080:443
 ```
 
-Now in original tab we can finish initializing argo by:
+Then login into the server with:
 
 ```bash
-task cluster:argo:init
-```
-
-Now that argo is running you can add two folders: `base` and `apps`:
-
-```bash
-argocd app create base \
---dest-namespace argocd \
---dest-server https://kubernetes.default.svc \
---repo ${YOUR_REPO} \
---path cluster/base/
-```
-
-```bash
-argocd app create apps \
---dest-namespace argocd \
---dest-server https://kubernetes.default.svc \
---repo ${YOUR_REPO} \
---path cluster/apps/
-```
+ argocd login localhost:8080 --insecure --username admin --password $HOMELAB_ARGOCD_PASSWORD
+ ```
 
 Example topology (TODO: refresh)
 
@@ -204,3 +190,4 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 - appRole vs root token for external-secrets
 - automatic generation of approved email file
 - kubeflow??
+- argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
