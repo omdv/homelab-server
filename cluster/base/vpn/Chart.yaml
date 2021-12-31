@@ -1,5 +1,5 @@
 ---
-name: vpn-gateway
+name: vpn
 apiVersion: v2
 version: 1.0.0
 dependencies:
