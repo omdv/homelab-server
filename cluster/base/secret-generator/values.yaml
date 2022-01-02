@@ -1,27 +1,9 @@
 ---
 kubernetes-secret-generator:
-  global:
-    imageRegistry:
-    imagePullSecrets:
-
-  image:
-    registry: quay.io
-    repository: mittwald/kubernetes-secret-generator
-    # if no tag is given, the chart's appVersion is used
-    # tag: latest
-    pullPolicy: Always
-
   imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""
   deploymentStrategy: "Recreate"
-
-  serviceAccount:
-    # Specifies whether a service account should be created
-    create: true
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
-    name:
 
   securityContext:
     capabilities:
@@ -39,23 +21,10 @@ kubernetes-secret-generator:
       cpu: 100m
       memory: 128Mi
 
-  # Length of the generated secrets
   secretLength: 40
-
-  # Namespace that are watched for secret generation
-  # Accepts a comma-separated list of namespaces: ns1,ns2
-  # If set to "", all namespaces will be watched
-  # Accessing secrets in namespaces other than the deployed one requires permissions via a cluster role (on by default)
   watchNamespace: ""
-
   useMetricsService: false
 
-  # RBAC parameteres
-  # https://kubernetes.io/docs/reference/access-authn-authz/rbac/
   rbac:
-    # Disables creation of rbac resources
     create: true
-    # The cluster role allows access to all namespaces in the cluster.
-    # Set to false to restrict access to the deployed namespace only.
-    # ClusterRole is deployed by Default
     clusterRole: true
