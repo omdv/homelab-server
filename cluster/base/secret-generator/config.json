@@ -1,0 +1,7 @@
+{
+    "app": {
+        "name": "secret-generator",
+        "path": "cluster/base/secret-generator",
+        "namespace": "kube-system"
+    }
+}

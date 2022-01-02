@@ -1,0 +1,8 @@
+---
+name: secret-generator
+apiVersion: v2
+version: 1.0.0
+dependencies:
+  - name: kubernetes-secret-generator
+    version: 3.3.4
+    repository: https://helm.mittwald.de
