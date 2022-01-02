@@ -1,0 +1,7 @@
+{
+    "app": {
+        "name": "vpn",
+        "path": "cluster/base/vpn",
+        "namespace": "vpn"
+    }
+}

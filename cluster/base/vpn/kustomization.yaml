@@ -1,0 +1,4 @@
+---
+resources:
+  - network-policy.yaml
+  - terminal.yaml
