@@ -3,7 +3,6 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: dyndns
-  namespace: kube-system
   labels:
     app: dyndns
 
