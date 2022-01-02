@@ -5,8 +5,6 @@ metadata:
   name: paperless-config
   labels:
     app: paperless
-  annotations:
-    secret-generator.v1.mittwald.de/autogenerate: PAPERLESS_SECRET_KEY
 
 data:
   PAPERLESS_REDIS: redis://192.168.0.24:6379

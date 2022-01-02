@@ -1,6 +1,7 @@
 ---
 resources:
   - configmap.yaml
+  - secret.yaml
   - volumes.yaml
   - services.yaml
   - deployments.yaml
