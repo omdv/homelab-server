@@ -10,7 +10,7 @@ Mono repo to manage provision of homelab server. Some features:
 - [k3s]: Hashicorp's Vault with external-secrets integration
 - [k3s]: Ingress-nginx with cert-manager and hajimari
 - [k3s]: Oauth2-proxy email authentication/authorization
-- [k3s]: WIP: can run apps behind wireguard gateway
+- [k3s]: Run apps behind wireguard gateway
 
 ## Prior to Deployment
 
@@ -188,3 +188,4 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 - kubeflow??
 - argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
 - init folder managed by argocd
+- automatic liveness probe for VPN
