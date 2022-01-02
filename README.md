@@ -2,18 +2,15 @@
 
 Mono repo to manage provision of homelab server. Some features:
 
-- Ubuntu with zfs pool
-- Automated external backups
-- Most of the applications are on [K3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
-
-K8s cluster features:
-
-- ArgoCD managed apps / gitops
-- ZFS-based persistent volumes
-- Hashicorp's Vault with external-secrets integration
-- Ingress-nginx with cert-manager and hajimari
-- Oauth2-proxy email authentication/authorization
-- WIP: can run apps behind wireguard gateway
+- [host]: Ubuntu with zfs pool
+- [host]: Automated external backups
+- [host]: [k3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
+- [k3s]: ArgoCD managed apps / gitops
+- [k3s]: ZFS-based persistent volumes
+- [k3s]: Hashicorp's Vault with external-secrets integration
+- [k3s]: Ingress-nginx with cert-manager and hajimari
+- [k3s]: Oauth2-proxy email authentication/authorization
+- [k3s]: WIP: can run apps behind wireguard gateway
 
 ## Prior to Deployment
 
@@ -42,6 +39,8 @@ K8s cluster features:
 ```bash
 task pre-commit:init
 ```
+
+- Add a wireguard config file from your provider into `.bootstrap-secrets` folder and name it `wireguard.conf`.
 
 - Run `./configure.sh --verify` to check dependencies and env vars.
 
@@ -184,10 +183,8 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 - trusted IPs on ingress
 - renovate / automate image tag posting to github
 - doc/graph generation
-- cert-manager
-- switch from traefik to nginx-ingress with hajimari
 - add country live check for wireguard
 - appRole vs root token for external-secrets
-- automatic generation of approved email file
 - kubeflow??
 - argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
+- init folder managed by argocd
