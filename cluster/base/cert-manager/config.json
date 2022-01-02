@@ -1,0 +1,7 @@
+{
+    "app": {
+        "name": "cert-manager",
+        "path": "cluster/base/cert-manager",
+        "namespace": "networking"
+    }
+}

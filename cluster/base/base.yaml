@@ -9,20 +9,20 @@ spec:
     - git:
         repoURL: https://github.com/omdv/homelab-server.git
         revision: HEAD
-        directories:
-          - path: cluster/base/*
+        files:
+          - path: "cluster/base/**/config.json"
   template:
     metadata:
-      name: "{{path.basename}}"
+      name: "{{app.name}}"
     spec:
       project: default
       source:
         repoURL: https://github.com/omdv/homelab-server.git
         targetRevision: HEAD
-        path: "{{path}}"
+        path: "{{app.path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{path.basename}}"
+        namespace: "{{app.namespace}}"
       syncPolicy:
         automated:
           prune: true

@@ -1,0 +1,7 @@
+{
+    "app": {
+        "name": "pod-gateway",
+        "path": "cluster/base/pod-gateway",
+        "namespace": "networking"
+    }
+}

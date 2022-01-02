@@ -56,6 +56,8 @@
         path: "{{ repo_abs_path.stdout }}/provision/kubeconfig"
         state: directory
         mode: 0600
+        owner: "{{ lookup('env', 'USER') }}"
+        group: "{{ lookup('env', 'USER') }}"
       when:
         - k3s_control_node is defined
         - k3s_control_node

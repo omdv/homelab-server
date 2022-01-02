@@ -1,0 +1,7 @@
+{
+    "app": {
+        "name": "oauth2-proxy",
+        "path": "cluster/base/oauth2-proxy",
+        "namespace": "networking"
+    }
+}

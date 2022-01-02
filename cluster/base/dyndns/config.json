@@ -1,0 +1,7 @@
+{
+    "app": {
+        "name": "dyndns",
+        "path": "cluster/base/dyndns",
+        "namespace": "networking"
+    }
+}
