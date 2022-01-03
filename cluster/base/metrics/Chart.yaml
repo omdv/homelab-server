@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: metrics
+type: application
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+  - name: kube-prometheus
+    version: 6.5.3
+    repository: https://charts.bitnami.com/bitnami
