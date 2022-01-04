@@ -13,6 +13,8 @@ pod-gateway:
     gatewayDefault: true
     gatewayLabel: setGateway
     gatewayAnnotation: setGateway
+  securityContext:
+    runAsNonRoot: true
   settings:
     VPN_INTERFACE: wg0
     VPN_BLOCK_OTHER_TRAFFIC: true
@@ -39,6 +41,7 @@ pod-gateway:
       securityContext:
         runAsUser: 568
         runAsGroup: 568
+        runAsNonRoot: true
       configFileSecret: wireguard-secret
 # livenessProbe:
 #   exec:
