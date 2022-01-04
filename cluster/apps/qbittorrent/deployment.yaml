@@ -1,0 +1,43 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: qbittorrent
+  labels:
+    app: qbittorrent
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+    spec:
+      containers:
+        - name: qbittorrent
+          image: lscr.io/linuxserver/qbittorrent
+          ports:
+            - name: webui
+              containerPort: 8080
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
+            - mountPath: /downloads
+              name: downloads-volume
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "10Mi"
+            limits:
+              cpu: "20m"
+              memory: "20Mi"
+      volumes:
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: qbittorrent-config
+        - name: downloads-volume
+          persistentVolumeClaim:
+            claimName: qbittorrent-data
