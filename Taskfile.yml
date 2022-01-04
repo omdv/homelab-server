@@ -16,7 +16,6 @@ vars:
   ANSIBLE_DIR: "{{.PROJECT_DIR}}/provision/ansible"
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/provision/terraform"
   KUBECONFIG: "{{.PROJECT_DIR}}/provision/kubeconfig"
-  VAULT_HELM_VERSION: "0.18.0"
 
 env:
   BOOTSTRAP_ARGOCD_PASSWORD: "{{ .HOMELAB_ARGO_PASSWORD }}"

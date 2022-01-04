@@ -17,8 +17,8 @@ tasks:
     cmds:
       - "kubectl create namespace vault --dry-run=client -o yaml | kubectl apply -f -"
       - "kubectl create secret generic kms-creds -n vault --from-file={{.SECRETS_DIR}}/credentials.json --dry-run=client -o yaml | kubectl apply -f -"
-      - "helm repo add hashicorp https://helm.releases.hashicorp.com && helm repo update"
-      - "helm status vault -n vault || helm install --wait --timeout 600s vault hashicorp/vault -n vault --version {{.VAULT_HELM_VERSION}} -f {{.CLUSTER_DIR}}/init/vault/values.yaml"
+      - "helm repo add hashicorp https://helm.releases.hashicorp.com && helm dependency update {{.CLUSTER_DIR}}/init/vault"
+      - "helm status vault -n vault || helm install --wait --timeout 600s vault -n vault {{.CLUSTER_DIR}}/init/vault"
 
   vault:init:
     desc: Initialize vault, login, init pv, create appRole
@@ -93,6 +93,7 @@ tasks:
       - task: vault:init
       - "./configure.sh --vault"
       - kubectl exec -n vault vault-0 -- vault kv get kv/secret/oauth2
+      - kubectl exec -n vault vault-0 -- vault kv get kv/secret/wireguard
       - task: secrets:install
       - "./configure.sh"
       - task: argo:install
