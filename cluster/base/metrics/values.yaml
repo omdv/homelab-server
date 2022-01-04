@@ -1,6 +1,5 @@
 ---
 kube-prometheus:
-  fullnameOverride: "prometheus"
   alertmanager:
     enabled: false
   prometheus:
