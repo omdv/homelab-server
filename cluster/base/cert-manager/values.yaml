@@ -1,0 +1,23 @@
+cert-manager:
+  installCRDs: true
+
+  replicaCount: 1
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+
+  securityContext:
+    runAsNonRoot: true
+
+  prometheus:
+    enabled: true
+    servicemonitor:
+      enabled: false
+      prometheusInstance: default
+      targetPort: 9402
+      path: /metrics
+      interval: 60s
+      scrapeTimeout: 30s
+      labels: {}

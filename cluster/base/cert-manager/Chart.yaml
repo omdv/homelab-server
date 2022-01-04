@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: chart
+type: application
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+  - name: cert-manager
+    version: 1.6.1
+    repository: https://charts.bitnami.com/bitnami
