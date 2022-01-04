@@ -5,6 +5,8 @@ metadata:
   name: qbittorrent
   labels:
     app: qbittorrent
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 
 spec:
   replicas: 1

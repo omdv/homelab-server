@@ -5,6 +5,8 @@ metadata:
   name: terminal
   labels:
     app: terminal
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   replicas: 1
   selector:

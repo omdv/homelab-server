@@ -1,41 +1,42 @@
 ---
-global:
-  resources:
-    requests:
-      memory: '256Mi'
-      cpu: '250m'
-    limits:
-      memory: '256Mi'
-      cpu: '250m'
+vault:
+  global:
+    resources:
+      requests:
+        memory: '256Mi'
+        cpu: '250m'
+      limits:
+        memory: '256Mi'
+        cpu: '250m'
 
-server:
-  extraEnvironmentVars:
-    GOOGLE_REGION: global
-    GOOGLE_PROJECT: omdv-homelab
-    GOOGLE_APPLICATION_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
+  server:
+    extraEnvironmentVars:
+      GOOGLE_REGION: global
+      GOOGLE_PROJECT: omdv-homelab
+      GOOGLE_APPLICATION_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
 
-  readinessProbe:
-    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+    readinessProbe:
+      path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
 
-  extraVolumes:
-    - type: secret
-      name: kms-creds
-      load: false
+    extraVolumes:
+      - type: secret
+        name: kms-creds
+        load: false
 
-  standalone:
-    config: |
-      listener "tcp" {
-        tls_disable = 1
-        address = "[::]:8200"
-        cluster_address = "[::]:8201"
-      }
-      storage "file" {
-        path = "/vault/data"
-      }
-      seal "gcpckms" {
-        credentials = "/vault/userconfig/kms-creds/credentials.json"
-        project     = "omdv-homelab"
-        region      = "global"
-        key_ring    = "vault-keyring"
-        crypto_key  = "vault-key"
-      }
+    standalone:
+      config: |
+        listener "tcp" {
+          tls_disable = 1
+          address = "[::]:8200"
+          cluster_address = "[::]:8201"
+        }
+        storage "file" {
+          path = "/vault/data"
+        }
+        seal "gcpckms" {
+          credentials = "/vault/userconfig/kms-creds/credentials.json"
+          project     = "omdv-homelab"
+          region      = "global"
+          key_ring    = "vault-keyring"
+          crypto_key  = "vault-key"
+        }
