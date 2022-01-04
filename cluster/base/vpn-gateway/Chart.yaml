@@ -1,5 +1,5 @@
 ---
-name: vpn
+name: my-vpn-gateway-chart
 apiVersion: v2
 version: 1.0.0
 dependencies:
