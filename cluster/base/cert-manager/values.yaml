@@ -1,16 +1,12 @@
 cert-manager:
   installCRDs: true
-
   replicaCount: 1
-
   resources:
     requests:
       cpu: 10m
       memory: 32Mi
-
   securityContext:
     runAsNonRoot: true
-
   prometheus:
     enabled: true
     servicemonitor:
