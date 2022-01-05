@@ -1,7 +1,13 @@
 ---
 kube-prometheus:
-  alertmanager:
-    enabled: false
+  alertmanager.enabled: false
+  exporters:
+    node-exporter:
+      enabled: false
+    kube-state-metrics:
+      enabled: false
+  kubeControllerManager.enabled: false
+  kubeProxy.enabled: false
   prometheus:
     additionalPrometheusRules:
       - name: custom-prometheus-rules
