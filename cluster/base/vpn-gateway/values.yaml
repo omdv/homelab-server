@@ -13,6 +13,8 @@ pod-gateway:
     gatewayDefault: true
     gatewayLabel: setGateway
     gatewayAnnotation: setGateway
+  podSecurityContext:
+    runAsNonRoot: true
   securityContext:
     runAsNonRoot: true
   settings:
