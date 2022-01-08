@@ -2,7 +2,7 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: vpn-namespace
+  name: vpn
 
 # ingress and egress only from k8s
 spec:
