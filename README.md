@@ -54,15 +54,15 @@ task ansible:playbook:k3s-install
 
 - Cluster bootstrap.
 
-The below commands will all be executed in sequency by one `task cluster:install`. However you can follow step-by-step below.
+Run `task cluster:install` to bootstrap the cluster. If it fails due to "vault-0 not having assigned host", wait for pod to be up and execute same task again. You can also follow the individual steps below.
 
-Install zfs-localpv.
+Install zfs-localpv:
 
 ```bash
 task zfspv
 ```
 
-You can check on a host system that dataset under main zfs pool is created:
+(Optional) Check on a host system that dataset under main zfs pool is created:
 
 ```bash
 zfs list
@@ -189,3 +189,6 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 - argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
 - init folder managed by argocd
 - automatic liveness probe for VPN
+- enable metrics for key components
+- valetudo app
+- persist secrets
