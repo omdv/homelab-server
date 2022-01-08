@@ -4,6 +4,8 @@ kind: ApplicationSet
 metadata:
   name: base
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
 spec:
   generators:
     - git:
