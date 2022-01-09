@@ -17,7 +17,7 @@ qbittorrent:
   service:
     bittorrent:
       enabled: true
-      type: ClusterIp
+      type: ClusterIP
       ports:
         bittorrent:
           enabled: true
