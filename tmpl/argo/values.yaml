@@ -30,7 +30,7 @@ argo-cd:
         source:
           repoURL: ${BOOTSTRAP_GIT_REPOSITORY}
           targetRevision: HEAD
-          path: cluster/base
+          path: cluster/base/apps
         destination:
           server: https://kubernetes.default.svc
         syncPolicy:
@@ -42,7 +42,7 @@ argo-cd:
         source:
           repoURL: ${BOOTSTRAP_GIT_REPOSITORY}
           targetRevision: HEAD
-          path: cluster/apps
+          path: cluster/apps/apps
         destination:
           server: https://kubernetes.default.svc
         syncPolicy:

@@ -37,18 +37,18 @@ argo-cd:
           automated:
             prune: false
             selfHeal: true
-      # - name: apps
-      #   project: default
-      #   source:
-      #     repoURL: https://github.com/omdv/homelab-server
-      #     targetRevision: HEAD
-      #     path: cluster/apps
-      #   destination:
-      #     server: https://kubernetes.default.svc
-      #   syncPolicy:
-      #     automated:
-      #       prune: true
-      #       selfHeal: true
+      - name: apps
+        project: default
+        source:
+          repoURL: https://github.com/omdv/homelab-server
+          targetRevision: HEAD
+          path: cluster/apps/apps
+        destination:
+          server: https://kubernetes.default.svc
+        syncPolicy:
+          automated:
+            prune: true
+            selfHeal: true
   configs:
     secret:
-      argocdServerAdminPassword: $2a$10$lyx52B5cdppVzcTGygBZH.l7I80s3yKbsczFQJNlHYAttVesN8Kz6
+      argocdServerAdminPassword: $2a$10$iOnR1KOtODZ/oiLb4yJ9SOnb.4BT1ZPV4pyWIxbROfDMoVEdP9SBS
