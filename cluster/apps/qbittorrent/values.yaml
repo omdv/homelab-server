@@ -26,21 +26,22 @@ qbittorent:
           targetPort: 18289
   ingress:
     main:
-      enabled: false
-      # enabled: true
-      # ingressClassName: "nginx"
-      # annotations:
-      #   traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      #   cert-manager.io/cluster-issuer: letsencrypt-production
-      # hosts:
-      #   - host: "qb.${INT_DOMAIN}"
-      #     paths:
-      #       - path: /
-      #         pathType: Prefix
-      # tls:
-      #   - secretName: qbittorrent-tls
-      #     hosts:
-      #       - "qb.${INT_DOMAIN}"
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+        - host: qb.zzd.ai
+          paths:
+            - path: /
+              pathType: Prefix
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-staging"
+        nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
+        nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://$host$uri"
+        hajimari.io/enable: "true"
+      tls:
+        - hosts:
+            - qb.zzd.ai
+          secretName: my-certs-qbittorrent
   metrics:
     enabled: false
     # enabled: true
@@ -72,15 +73,3 @@ qbittorent:
       cpu: 500m
     limits:
       memory: 6000Mi
-  # podAnnotations:
-  #   backup.velero.io/backup-volumes: config
-  # affinity:
-  #   nodeAffinity:
-  #     preferredDuringSchedulingIgnoredDuringExecution:
-  #       - weight: 1
-  #         preference:
-  #           matchExpressions:
-  #             - key: feature.node.kubernetes.io/custom-intel-10g
-  #               operator: In
-  #               values:
-  #                 - "true"
