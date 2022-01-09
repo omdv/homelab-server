@@ -1,0 +1,86 @@
+---
+qbittorent:
+  # initContainers:
+  #   update-volume-permission:
+  #     image: busybox
+  #     command: ["sh", "-c", "chown -R 1000:1000 /config"]
+  #     volumeMounts:
+  #       - name: config
+  #         mountPath: /config
+  #     securityContext:
+  #       runAsUser: 0
+  image:
+    repository: ghcr.io/k8s-at-home/qbittorrent
+    tag: v4.3.9
+  env:
+    TZ: "America/Chicago"
+  service:
+    bittorrent:
+      enabled: true
+      type: ClusterIp
+      ports:
+        bittorrent:
+          enabled: true
+          port: 18289
+          protocol: TCP
+          targetPort: 18289
+  ingress:
+    main:
+      enabled: false
+      # enabled: true
+      # ingressClassName: "nginx"
+      # annotations:
+      #   traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      #   cert-manager.io/cluster-issuer: letsencrypt-production
+      # hosts:
+      #   - host: "qb.${INT_DOMAIN}"
+      #     paths:
+      #       - path: /
+      #         pathType: Prefix
+      # tls:
+      #   - secretName: qbittorrent-tls
+      #     hosts:
+      #       - "qb.${INT_DOMAIN}"
+  metrics:
+    enabled: false
+    # enabled: true
+    # exporter:
+    #   image:
+    #     repository: docker.io/esanchezm/prometheus-qbittorrent-exporter
+    #     tag: v1.2.0
+    # serviceMonitor:
+    #   interval: 1m
+    #   scrapeTimeout: 10s
+    # prometheusRule:
+    #   enabled: true
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: "OnRootMismatch"
+  persistence:
+    config:
+      enabled: true
+      existingClaim: qbittorrent-config
+    media:
+      enabled: true
+      existingClaim: qbittorrent-downloads
+      mountPath: /downloads
+  resources:
+    requests:
+      memory: 250Mi
+      cpu: 500m
+    limits:
+      memory: 6000Mi
+  # podAnnotations:
+  #   backup.velero.io/backup-volumes: config
+  # affinity:
+  #   nodeAffinity:
+  #     preferredDuringSchedulingIgnoredDuringExecution:
+  #       - weight: 1
+  #         preference:
+  #           matchExpressions:
+  #             - key: feature.node.kubernetes.io/custom-intel-10g
+  #               operator: In
+  #               values:
+  #                 - "true"

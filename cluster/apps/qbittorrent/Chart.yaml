@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: helm-qbittorrent
+type: application
+version: 0.2.0
+appVersion: "1.0"
+dependencies:
+  - name: qbittorrent
+    version: 13.2.0
+    repository: https://k8s-at-home.com/charts/
