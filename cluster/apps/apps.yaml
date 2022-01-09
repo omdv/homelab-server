@@ -2,21 +2,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: web-main
+  name: root-apps
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "5"
 spec:
   destination:
-    namespace: web-main
-    server: {{ .Values.spec.destination.server }}
+    namespace: argocd
+    name: in-cluster
   project: default
   source:
-    path: cluster/apps/web-main
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    path: cluster/apps/apps
+    repoURL: https://github.com/omdv/homelab-server
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
