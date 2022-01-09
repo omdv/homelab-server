@@ -7,7 +7,6 @@ metadata:
     app: terminal
   annotations:
     argocd.argoproj.io/sync-wave: "5"
-    setGateway: "true"
 spec:
   replicas: 1
   selector:
@@ -17,6 +16,8 @@ spec:
     metadata:
       labels:
         app: terminal
+      annotations:
+        setGateway: "true"
     spec:
       containers:
         - name: alpine
