@@ -2,4 +2,4 @@
 resources:
   - namespace.yaml
   - network-policy.yaml
-  - terminal.yaml
+  - deployment.yaml

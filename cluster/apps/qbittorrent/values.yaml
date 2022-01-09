@@ -67,6 +67,8 @@ qbittorrent:
       enabled: true
       existingClaim: qbittorrent-downloads
       mountPath: /downloads
+  podAnnotations:
+    setGateway: "true"
   resources:
     requests:
       memory: 250Mi
