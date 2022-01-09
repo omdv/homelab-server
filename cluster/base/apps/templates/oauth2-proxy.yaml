@@ -17,3 +17,7 @@ spec:
     path: cluster/base/oauth2-proxy
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
