@@ -29,3 +29,18 @@ spec:
               sleep 600 &
               wait $!;
               done
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - if [ $(wget -q -O- https://ipinfo.io/country) = 'SE' ]; then exit 0; else exit $?; fi
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "10Mi"
+            limits:
+              cpu: "30m"
+              memory: "30Mi"
