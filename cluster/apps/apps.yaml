@@ -12,7 +12,7 @@ spec:
     name: in-cluster
   project: default
   source:
-    path: cluster/apps/apps
+    path: cluster/apps/main
     repoURL: https://github.com/omdv/homelab-server
     targetRevision: HEAD
   syncPolicy:

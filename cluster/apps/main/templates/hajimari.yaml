@@ -2,19 +2,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress-nginx
+  name: hajimari
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   destination:
-    namespace: networking
+    namespace: hajimari
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: cluster/base/ingress-nginx
+    path: cluster/apps/hajimari
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:
