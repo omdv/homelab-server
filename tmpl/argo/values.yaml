@@ -25,7 +25,7 @@ argo-cd:
           hosts:
             - argo.zzd.ai
     additionalApplications:
-      - name: base
+      - name: apps
         project: default
         source:
           repoURL: ${BOOTSTRAP_GIT_REPOSITORY}

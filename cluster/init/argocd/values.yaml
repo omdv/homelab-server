@@ -25,7 +25,7 @@ argo-cd:
           hosts:
             - argo.zzd.ai
     additionalApplications:
-      - name: base
+      - name: apps
         project: default
         source:
           repoURL: https://github.com/omdv/homelab-server
@@ -39,4 +39,4 @@ argo-cd:
             selfHeal: true
   configs:
     secret:
-      argocdServerAdminPassword: $2a$10$RArgmstMgQAoLL2btUUDoeP/t9xB47iZd2Y3HsEHB7NW6DFNbc4Ky
+      argocdServerAdminPassword: $2a$10$zSlyibOt7Xo8DYiGq9lu0uzpY/KwMCbWQLp/UnFKih.l8D8dOYWFG

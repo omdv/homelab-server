@@ -2,7 +2,7 @@
 resources:
   - namespace.yaml
   - network-policy.yaml
-  - ingress.yaml
+  # - ingress.yaml
   - volumes.yaml
   - service.yaml
   - deployment.yaml
