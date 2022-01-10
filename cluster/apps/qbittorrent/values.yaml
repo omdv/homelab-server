@@ -3,7 +3,7 @@ qbittorrent:
   initContainers:
     update-volume-permission:
       image: busybox
-      command: ["sh", "-c", "id && chown -R 1000:1000 /config"]
+      command: ["sh", "-c", "chown -R 1000:1000 /config"]
       volumeMounts:
         - name: config
           mountPath: /config
@@ -56,9 +56,9 @@ qbittorrent:
     #   enabled: true
   podSecurityContext:
     runAsUser: 1000
-    # runAsGroup: 1000
-    # fsGroup: 1000
-    # fsGroupChangePolicy: "OnRootMismatch"
+    runAsGroup: 1000
+    fsGroup: 0
+    fsGroupChangePolicy: "OnRootMismatch"
   persistence:
     config:
       enabled: true
