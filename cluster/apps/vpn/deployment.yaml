@@ -29,14 +29,15 @@ spec:
               sleep 600 &
               wait $!;
               done
-          # livenessProbe:
-          #   exec:
-          #     command:
-          #       - sh
-          #       - -c
-          #       - if [ $(wget -q -O- https://ipinfo.io/country) = 'SE' ]; then exit 0; else exit $?; fi
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - if [ $(wget -q -O- https://ipinfo.io/country) = 'SE' ]; then exit 0; else exit $?; fi
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            failureThreshold: 5
           resources:
             requests:
               cpu: "10m"
