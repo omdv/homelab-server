@@ -13,9 +13,6 @@ pod-gateway:
     gatewayDefault: false
     gatewayLabel: setGateway
     gatewayAnnotation: setGateway
-    securityContext:
-      capabilies:
-        add: ["NET_ADMIN", "NET_RAW"]
   settings:
     VPN_INTERFACE: wg0
     VPN_BLOCK_OTHER_TRAFFIC: true
