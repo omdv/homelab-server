@@ -59,6 +59,7 @@ qbittorrent:
     runAsGroup: 1000
     fsGroup: 1000
     fsGroupChangePolicy: "OnRootMismatch"
+  securityContext:
     capabilities:
       add: ["NET_ADMIN"]
   persistence:
