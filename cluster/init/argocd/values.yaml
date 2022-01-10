@@ -39,4 +39,4 @@ argo-cd:
             selfHeal: true
   configs:
     secret:
-      argocdServerAdminPassword: $2a$10$zSlyibOt7Xo8DYiGq9lu0uzpY/KwMCbWQLp/UnFKih.l8D8dOYWFG
+      argocdServerAdminPassword: $2a$10$wZkqh6fbPna8dUNpS8kL7.57dlreq8UKj5YQM3RSVp.ygkK9vf7hW
