@@ -13,10 +13,9 @@ pod-gateway:
     gatewayDefault: false
     gatewayLabel: setGateway
     gatewayAnnotation: setGateway
-  # podSecurityContext:
-  #   runAsNonRoot: true
-  # securityContext:
-  #   runAsNonRoot: true
+    securityContext:
+      capabilies:
+        add: ["NET_ADMIN", "NET_RAW"]
   settings:
     VPN_INTERFACE: wg0
     VPN_BLOCK_OTHER_TRAFFIC: true
@@ -43,7 +42,6 @@ pod-gateway:
       securityContext:
         runAsUser: 568
         runAsGroup: 568
-        # runAsNonRoot: true
       configFileSecret: wireguard-secret
       livenessProbe:
         exec:
@@ -53,11 +51,11 @@ pod-gateway:
             - if [ $(curl -s https://ipinfo.io/country) = 'SE' ]; then exit 0; else exit $?; fi
         initialDelaySeconds: 30
         periodSeconds: 60
-        failureThreshold: 3
+        failureThreshold: 1
       env:
         TZ: "America/Chicago"
         IPTABLES_BACKEND: nft
-        KILLSWITCH: "false"
+        KILLSWITCH: "true"
       networkPolicy:
         enabled: true
         egress:
