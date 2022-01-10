@@ -54,14 +54,14 @@ qbittorrent:
     #   scrapeTimeout: 10s
     # prometheusRule:
     #   enabled: true
-  podSecurityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
-    fsGroupChangePolicy: "OnRootMismatch"
-  securityContext:
-    capabilities:
-      add: ["NET_ADMIN", "NET_RAW"]
+  # podSecurityContext:
+  #   runAsUser: 1000
+  #   runAsGroup: 1000
+  #   fsGroup: 1000
+  #   fsGroupChangePolicy: "OnRootMismatch"
+  # securityContext:
+  #   capabilities:
+  #     add: ["NET_ADMIN", "NET_RAW"]
   persistence:
     config:
       enabled: true
