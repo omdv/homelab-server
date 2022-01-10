@@ -1,7 +1,0 @@
----
-namespace: apps
-
-resources:
-  - 01-volumes.yaml
-  - 02-middlewares.yaml
-  - 03-ingressroutes.yaml
