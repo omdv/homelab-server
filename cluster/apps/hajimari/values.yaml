@@ -82,7 +82,7 @@ hajimari:
             - path: /
               pathType: Prefix
       annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-staging"
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
         nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
         nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://$host$uri"
       tls:

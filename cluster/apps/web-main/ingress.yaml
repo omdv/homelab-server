@@ -6,7 +6,7 @@ metadata:
   labels:
     app: web-main
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 
 spec:
   ingressClassName: nginx
