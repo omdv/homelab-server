@@ -1,55 +1,41 @@
 ---
-kube-prometheus:
-  # alertmanager.enabled: false
-  # exporters:
-  #   node-exporter:
-  #     enabled: true
-  #   kube-state-metrics:
-  #     enabled: true
-  # kubeControllerManager.enabled: true
-  # kubeProxy.enabled: false
-  prometheus:
+# Ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+kube-prometheus-stack:
+  fullnameOverride: prom
+  kubeEtcd:
     enabled: true
-    additionalPrometheusRules:
-      - name: custom-prometheus-rules
-        groups:
-          - name: node.rules
-            rules:
-              - record: cluster:node_cpu:sum_rate5m
-                expr: sum(rate(node_cpu{mode!="idle"}[5m]))
-              - record: cluster:node_cpu:ratio
-                expr: cluster:node_cpu:rate5m / count(sum(node_cpu) BY (instance, cpu))
-          - name: kubernetes.rules
-            rules:
-              - record: pod_name:container_memory_usage_bytes:sum
-                expr:
-                  sum(container_memory_usage_bytes{container_name!="POD",pod_name!=""}) BY
-                  (pod_name)
-              - record: pod_name:container_spec_cpu_shares:sum
-                expr: sum(container_spec_cpu_shares{container_name!="POD",pod_name!=""}) BY (pod_name)
-              - record: pod_name:container_cpu_usage:sum
-                expr:
-                  sum(rate(container_cpu_usage_seconds_total{container_name!="POD",pod_name!=""}[5m]))
-                  BY (pod_name)
-              - record: pod_name:container_fs_usage_bytes:sum
-                expr: sum(container_fs_usage_bytes{container_name!="POD",pod_name!=""}) BY (pod_name)
-              - record: namespace:container_memory_usage_bytes:sum
-                expr: sum(container_memory_usage_bytes{container_name!=""}) BY (namespace)
-              - record: namespace:container_spec_cpu_shares:sum
-                expr: sum(container_spec_cpu_shares{container_name!=""}) BY (namespace)
-              - record: namespace:container_cpu_usage:sum
-                expr:
-                  sum(rate(container_cpu_usage_seconds_total{container_name!="POD"}[5m]))
-                  BY (namespace)
-              - record: cluster:memory_usage:ratio
-                expr:
-                  sum(container_memory_usage_bytes{container_name!="POD",pod_name!=""}) BY
-                  (cluster) / sum(machine_memory_bytes) BY (cluster)
-              - record: cluster:container_spec_cpu_shares:ratio
-                expr:
-                  sum(container_spec_cpu_shares{container_name!="POD",pod_name!=""}) / 1000
-                  / sum(machine_cpu_cores)
-              - record: cluster:container_cpu_usage:ratio
-                expr:
-                  sum(rate(container_cpu_usage_seconds_total{container_name!="POD",pod_name!=""}[5m]))
-                  / sum(machine_cpu_cores)
+  kubeControllerManager:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  kubeProxy:
+    enabled: false
+  defaultRules:
+    rules:
+      time: false
+  prometheusOperator:
+    # Setting this option to 0 to disable cpu limits
+    # see https://github.com/prometheus-operator/prometheus-operator/blob/master/cmd/operator/main.go#L175
+    configReloaderCpu: 0
+  grafana:
+    enabled: false
+  prometheus-node-exporter:
+    fullnameOverride: node-exporter
+  kubeStateMetrics:
+    enabled: true
+  nodeExporter:
+    serviceMonitor:
+      relabelings:
+        - action: replace
+          regex: (.*)
+          replacement: $1
+          sourceLabels:
+            - __meta_kubernetes_pod_node_name
+          targetLabel: kubernetes_node
+  kubelet:
+    serviceMonitor:
+      metricRelabelings:
+        - action: replace
+          sourceLabels:
+            - node
+          targetLabel: instance
