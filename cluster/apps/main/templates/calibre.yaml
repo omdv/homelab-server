@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metrics
+  name: calibre
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,11 +10,11 @@ metadata:
     argocd.argoproj.io/sync-wave: "5"
 spec:
   destination:
-    namespace: metrics
+    namespace: books
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: cluster/apps/metrics
+    path: cluster/apps/calibre
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:
