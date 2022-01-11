@@ -3,10 +3,10 @@ kube-prometheus:
   alertmanager.enabled: false
   exporters:
     node-exporter:
-      enabled: false
+      enabled: true
     kube-state-metrics:
-      enabled: false
-  kubeControllerManager.enabled: false
+      enabled: true
+  kubeControllerManager.enabled: true
   kubeProxy.enabled: false
   prometheus:
     additionalPrometheusRules:
