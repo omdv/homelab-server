@@ -14,30 +14,14 @@ hajimari:
       any: true
     name: "omdv"
     groups:
-      - name: Communicate
+      - name: Local
         links:
-          - name: Discord
-            url: "https://discord.com"
-          - name: Gmail
-            url: "http://gmail.com"
-          - name: Slack
-            url: "https://slack.com/signin"
-      - name: Cloud
-        links:
-          - name: Box
-            url: "https://box.com"
-          - name: Dropbox
-            url: "https://dropbox.com"
-          - name: Drive
-            url: "https://drive.google.com"
-      - name: Design
-        links:
-          - name: Awwwards
-            url: "https://awwwards.com"
-          - name: Dribbble
-            url: "https://dribbble.com"
-          - name: Muz.li
-            url: "https://medium.muz.li/"
+          - name: Cloud Commander
+            url: "http://192.168.0.24:8005"
+          - name: Netdata
+            url: "http://192.168.0.24:19999"
+          - name: Portainer
+            url: "http://192.,168.0.24:8001"
       - name: Dev
         links:
           - name: Codepen
@@ -46,22 +30,6 @@ hajimari:
             url: "https://devdocs.io"
           - name: Devhints
             url: "https://devhints.io"
-      - name: Reading
-        links:
-          - name: Instapaper
-            url: "https://www.instapaper.com/u"
-          - name: Medium
-            url: "http://medium.com"
-          - name: Reddit
-            url: "http://reddit.com"
-      - name: Tech
-        links:
-          - name: TheNextWeb
-            url: "https://thenextweb.com/"
-          - name: The Verge
-            url: "https://theverge.com/"
-          - name: MIT Technology Review
-            url: "https://www.technologyreview.com/"
 
   service:
     main:

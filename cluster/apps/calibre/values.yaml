@@ -27,7 +27,7 @@ calibre:
       enabled: true
       ingressClassName: nginx
       hosts:
-        - host: books.zzd.ai
+        - host: calibre.zzd.ai
           paths:
             - path: /
               pathType: Prefix
@@ -38,7 +38,7 @@ calibre:
         hajimari.io/enable: "true"
       tls:
         - hosts:
-            - books.zzd.ai
+            - calibre.zzd.ai
           secretName: my-certs-calibre
   persistence:
     config:
