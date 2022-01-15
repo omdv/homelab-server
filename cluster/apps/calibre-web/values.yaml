@@ -1,13 +1,20 @@
 ---
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
 calibre:
   image:
-    repository: linuxserver/calibre
-    tag: version-v5.21.0
+    repository: linuxserver/calibre-web
     pullPolicy: IfNotPresent
+    tag: version-0.6.12
   env:
     TZ: "America/Chicago"
     PUID: "1000"
     PGID: "1000"
+  service:
+    main:
+      ports:
+        http:
+          port: 8083
   ingress:
     main:
       enabled: true
