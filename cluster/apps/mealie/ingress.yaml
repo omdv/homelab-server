@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mealie
+  labels:
+    app: mealie
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://$host$uri"
+    hajimari.io/enable: "true"
+
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - recipe.zzd.ai
+      secretName: my-certs-mealie
+  rules:
+    - host: recipe.zzd.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mealie
+                port:
+                  number: 80
