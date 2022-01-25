@@ -27,6 +27,24 @@ postgresql:
     accessModes:
       - ReadWriteOnce
 
+  securityContext:
+    enabled: true
+    fsGroup: 1000
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1000
+
+  volumePermissions:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/bitnami-shell
+      tag: 10-debian-10-r305
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    securityContext:
+      runAsUser: 0
+
   startupProbe:
     enabled: false
     initialDelaySeconds: 30
