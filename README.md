@@ -149,10 +149,6 @@ Then login into the server with:
  argocd login localhost:8080 --insecure --username admin --password $HOMELAB_ARGOCD_PASSWORD
  ```
 
-Example topology (TODO: refresh)
-
-![Services](topology.svg)
-
 ## Hardware
 
 This all runs on single machine in acclaimed Node 304 case, which can house 6 HDDs.
