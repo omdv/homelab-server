@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin-config
+  labels:
+    app: pgadmin
+
+data:
+  PGADMIN_LISTEN_PORT: "8080"

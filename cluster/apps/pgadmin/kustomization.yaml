@@ -1,0 +1,8 @@
+---
+resources:
+  - configmap.yaml
+  - secrets.yaml
+  - volumes.yaml
+  - service.yaml
+  - deployments.yaml
+  - ingress.yaml
