@@ -20,16 +20,11 @@ spec:
         - name: pgbackup
           image: prodrigestivill/postgres-backup-local:latest
           env:
-            - name: POSTGRES_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: pgbackup-secrets
-                  key: HOMELAB_LOCAL_IP
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: pgbackup-secrets
-                  key: HOMELAB_POSTGRES_PASS
+                  name: pgbackup-secret
+                  key: POSTGRES_PASSWORD
           envFrom:
             - configMapRef:
                 name: pgbackup-config
