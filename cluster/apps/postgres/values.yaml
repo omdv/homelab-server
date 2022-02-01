@@ -3,7 +3,7 @@ postgresql:
   image:
     registry: docker.io
     repository: bitnami/postgresql
-    tag: 11.14.0-debian-10-r28
+    tag: 13.5.0-debian-10-r76
     pullPolicy: IfNotPresent
     pullSecrets: []
     debug: false
@@ -14,11 +14,6 @@ postgresql:
   service:
     type: "NodePort"
     nodePort: "31433"
-
-  # TODO: add databases
-  initDbScripts: {}
-  initdbScriptsConfigMap: ""
-  initdbScriptsSecret: ""
 
   persistence:
     enabled: true
