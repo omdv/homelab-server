@@ -6,7 +6,6 @@
 - name: UFW access ports
   ufw:
     rule: allow
-    dest: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     to_port: "{{ item.port }}"
     proto: "{{ item.proto }}"
     comment: "{{ item.comment }}"

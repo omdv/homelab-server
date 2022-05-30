@@ -11,6 +11,7 @@
 - name: create k3s dataset under pool
   shell: zfs create pool/k3s
   become: true
+  ignore_errors: true
 
 # - shell: /sbin/zpool import -fm {{ zfs_pool }}
 #   when: ifexists.stdout is search("/cannot/")

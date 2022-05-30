@@ -27,11 +27,11 @@ tasks:
     cmds:
       - "ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/ubuntu-prepare.yml"
 
-  playbook:ubuntu-upgrade:
+  playbook:ubuntu-setup:
     desc: Upgrade all the k8s nodes operating system
     dir: provision/ansible
     cmds:
-      - "ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/ubuntu-upgrade.yml"
+      - "ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/ubuntu-setup.yml"
 
   playbook:k3s-install:
     desc: Install Kubernetes on the nodes
