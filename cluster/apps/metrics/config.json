@@ -1,7 +1,0 @@
-{
-    "app": {
-        "name": "metrics",
-        "path": "cluster/base/metrics",
-        "namespace": "metrics"
-    }
-}
