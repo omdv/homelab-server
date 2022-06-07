@@ -2,7 +2,9 @@
 - hosts:
     - master
     - worker
-  become: true
+  become: yes
+  become_user: root
+  become_method: sudo
   gather_facts: true
   any_errors_fatal: true
   pre_tasks:
@@ -10,7 +12,7 @@
       pause:
         seconds: 5
   vars:
-    k3s_become_for_all: true
+    k3s_become: true
     k3s_server:
       disable:
         - traefik
