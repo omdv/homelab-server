@@ -6,17 +6,23 @@ vault:
         memory: '256Mi'
         cpu: '250m'
       limits:
-        memory: '256Mi'
-        cpu: '250m'
+        memory: '512Mi'
+        cpu: '1000m'
+
+  service:
+    enabled: false
 
   server:
-    extraEnvironmentVars:
-      GOOGLE_REGION: global
-      GOOGLE_PROJECT: omdv-homelab
-      GOOGLE_APPLICATION_CREDENTIALS: /vault/userconfig/kms-creds/credentials.json
+    image:
+      repository: "hashicorp/vault"
+      tag: "1.10.3"
 
     readinessProbe:
+      enabled: true
       path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+
+    livenessProbe:
+      enabled: false
 
     extraVolumes:
       - type: secret
