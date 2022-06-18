@@ -59,7 +59,7 @@ Run `task cluster:install` to bootstrap the cluster. If it fails due to "vault-0
 Install zfs-localpv:
 
 ```bash
-task zfspv
+task cluster:zfspv
 ```
 
 (Optional) Check on a host system that dataset under main zfs pool is created:
@@ -71,8 +71,8 @@ pool                      1.79T  3.48T     1.79T  /pool
 pool/k3s                   568K  3.48T       96K  /pool/k3s
 ```
 
-Install and initialize vault.
-TODO: describe how to get GCP keys and role
+Install and initialize vault [using GCP KMS](https://learn.hashicorp.com/tutorials/vault/autounseal-gcp-kms?in=vault/auto-unseal).
+TODO: automate using Terraform
 
 ```bash
 task cluster:vault:install
@@ -82,7 +82,7 @@ task cluster:vault:init
 Now the vault should be unsealed and initialized, which you can check with:
 
 ```bash
-k exec -it -n vault vault-0 -- vault
+k exec -it -n vault vault-0 -- vault status
 
 Key                      Value
 ---                      -----

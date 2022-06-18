@@ -34,7 +34,6 @@ main() {
         verify_ansible_hosts
         verify_age
         verify_git_repository
-        verify_cloudflare
         verify_vault
         verify_argo
         success
@@ -153,7 +152,6 @@ verify_age() {
 verify_binaries() {
     _has_binary "ansible"
     _has_binary "envsubst"
-    _has_binary "flux"
     _has_binary "git"
     _has_binary "age"
     _has_binary "helm"
@@ -161,7 +159,7 @@ verify_binaries() {
     _has_binary "jq"
     _has_binary "sops"
     _has_binary "ssh"
-    _has_binary "task"
+    _has_binary "go-task"
     _has_binary "terraform"
 }
 
