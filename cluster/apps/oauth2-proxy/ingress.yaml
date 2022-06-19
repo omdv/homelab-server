@@ -6,7 +6,7 @@ metadata:
   labels:
     app: oauth2-proxy
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 
 spec:
   ingressClassName: nginx
