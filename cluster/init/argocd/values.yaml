@@ -3,7 +3,7 @@ argo-cd:
   global:
     image:
       repository: quay.io/argoproj/argocd
-      tag: "v2.2.5"
+      tag: "v2.4.0"
       imagePullPolicy: IfNotPresent
   dex:
     enabled: false
