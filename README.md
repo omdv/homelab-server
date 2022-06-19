@@ -131,23 +131,26 @@ name                           my-secret
 > :exclamation: we use oauth2-proxy with [email authentication](https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/oauth_provider#email-authentication).
 > Comma-separated email whitelist provided via `VAULT_OAUTH2_EMAIL_WHITELIST` can pushed into Vault with `./configure.sh --vault`.
 
+Install external-secrets CRD
+
+```bash
+task cluster:secrets:install
+```
+
 Install argocd
 
 ```bash
 task cluster:argo:install
 ```
 
-This will install ingress and create an admin password. It will also create two applications: `base` and `apps`. The `base` app will create a load balancer, after which you can access UI at `argo.${your_domain}`. Since this route is protected with oauth2 if you need to connect using CLI open a different tab and forward the port:
+ArgoCD will complete the cluster provisioning. After the load balancer is provisioned you should be able to access argocd UI at `argo.${your_domain}`. Alternatively you can connect with CLI with port forwarding, e.g.:
 
 ```bash
 k port-forward -n argocd svc/argocd-server 8080:443
-```
-
-Then login into the server with:
-
-```bash
- argocd login localhost:8080 --insecure --username admin --password $HOMELAB_ARGOCD_PASSWORD
+argocd login localhost:8080 --insecure --username admin --password $HOMELAB_ARGOCD_PASSWORD
  ```
+
+After provisioning ArgoCD will also assume control over its own installation and other applications in `init` folder, which we installed manually in previous steps.
 
 ## Hardware
 

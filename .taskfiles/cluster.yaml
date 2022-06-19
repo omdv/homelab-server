@@ -90,7 +90,7 @@ tasks:
     cmds:
       - task: zfspv
       - task: vault:install
-      - "sleep 10s"
+      - "sleep 30s"
       - task: vault:init
       - "./configure.sh --vault"
       - "kubectl exec -n vault vault-0 -- vault kv get kv/secret/oauth2"
