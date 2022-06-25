@@ -17,11 +17,11 @@ hajimari:
       - name: Local
         links:
           - name: Cloud Commander
-            url: "http://192.168.0.24:8005"
+            url: "http://192.168.1.24:8005"
           - name: Netdata
-            url: "http://192.168.0.24:19999"
+            url: "http://192.168.1.24:19999"
           - name: Portainer
-            url: "http://192.,168.0.24:8001"
+            url: "http://192.168.1.24:8001"
       - name: Dev
         links:
           - name: Codepen
