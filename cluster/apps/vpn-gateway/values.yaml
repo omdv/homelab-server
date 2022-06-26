@@ -43,9 +43,9 @@ pod-gateway:
       livenessProbe:
         exec:
           command:
-            - sh
+            - /bin/bash
             - -c
-            - if [ $(curl -s https://ipinfo.io/country) = 'SE' ]; then exit 0; else exit $?; fi
+            - if [[ $(curl -s https://ipinfo.io/country) = 'SE' ]]; then exit 0; else exit $?; fi
         initialDelaySeconds: 30
         periodSeconds: 60
         failureThreshold: 1
