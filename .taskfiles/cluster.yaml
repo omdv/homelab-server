@@ -90,11 +90,10 @@ tasks:
     cmds:
       - task: zfspv
       - task: vault:install
-      - "sleep 30s"
+      - "sleep 50s"
       - task: vault:init
       - "./configure.sh --vault"
       - "kubectl exec -n vault vault-0 -- vault kv get kv/secret/oauth2"
       - "kubectl exec -n vault vault-0 -- vault kv get kv/secret/wireguard"
       - task: secrets:install
-      - "./configure.sh"
       - task: argo:install

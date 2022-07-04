@@ -267,7 +267,7 @@ generate_cluster_secrets() {
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_CONFIG"="$(cat $WIREGUARD_CONFIG_FILE)"
 
     # initialize secret @ secret/postgres
-    kubectl exec -n vault vault-0 -- vault kv put kv/secret/postgres name=my-dns-secret
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/postgres name=my-postgres-secret
     for var in "${!VAULT_POSTGRES@}"; do
         kubectl exec -n vault vault-0 -- vault kv patch kv/secret/postgres "$var"="$(echo -n ${!var})"
     done
