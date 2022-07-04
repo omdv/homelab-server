@@ -1,7 +1,0 @@
-{
-    "app": {
-        "name": "vpn-gateway",
-        "path": "cluster/base/vpn-gateway",
-        "namespace": "vpn-gateway"
-    }
-}
