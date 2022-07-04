@@ -41,15 +41,15 @@ pod-gateway:
         runAsUser: 568
         runAsGroup: 568
       configFileSecret: wireguard-secret
-      livenessProbe:
-        exec:
-          command:
-            - sh
-            - -c
-            - if [ $(curl -s https://ipinfo.io/country) == 'SE' ]; then exit 0; else exit $?; fi
-        initialDelaySeconds: 30
-        periodSeconds: 60
-        failureThreshold: 1
+      # livenessProbe:
+      #   exec:
+      #     command:
+      #       - sh
+      #       - -c
+      #       - if [ $(curl -s https://ipinfo.io/country) == 'SE' ]; then exit 0; else exit $?; fi
+      #   initialDelaySeconds: 30
+      #   periodSeconds: 60
+      #   failureThreshold: 1
       env:
         TZ: "America/Chicago"
         IPTABLES_BACKEND: nft
