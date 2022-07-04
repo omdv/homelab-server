@@ -1,5 +1,0 @@
----
-resources:
-  - namespace.yaml
-  - network-policy.yaml
-  - deployment.yaml
