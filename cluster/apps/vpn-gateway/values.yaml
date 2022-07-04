@@ -55,7 +55,7 @@ pod-gateway:
         IPTABLES_BACKEND: nft
         KILLSWITCH: "true"
       networkPolicy:
-        enabled: true
+        enabled: false
         egress:
           - to:
               - ipBlock:
