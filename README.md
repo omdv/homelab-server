@@ -177,13 +177,14 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 
 ## TODO
 
+- add server connection in pgadmin
 - local docker registry
 - wireguard and pihole on k3s/traefik
 - trusted IPs on ingress
 - renovate / automate image tag posting to github
 - add country live check for wireguard
 - appRole vs root token for external-secrets
-- kubeflow??
+- kubeflow
 - argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
 - enable metrics for key components
 - valetudo app
