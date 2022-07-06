@@ -4,11 +4,6 @@
     - persistence
     - docker
 
-- import_tasks: plex.yml
-  tags:
-    - plex
-    - docker
-
 - import_tasks: portainer.yml
   tags:
     - portainer
@@ -27,9 +22,4 @@
 - import_tasks: redis.yml
   tags:
     - redis
-    - docker
-
-- import_tasks: netdata.yml
-  tags:
-    - netdata
     - docker
