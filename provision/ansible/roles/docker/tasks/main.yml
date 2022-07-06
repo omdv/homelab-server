@@ -9,11 +9,6 @@
     - plex
     - docker
 
-- import_tasks: cloudcmd.yml
-  tags:
-    - cloudcmd
-    - docker
-
 - import_tasks: portainer.yml
   tags:
     - portainer
@@ -38,13 +33,3 @@
   tags:
     - netdata
     - docker
-
-# - import_tasks: ibgateway.yml
-#   tags:
-#     - ibgateway
-#     - docker
-
-# - import_tasks: ibkr.yml
-#   tags:
-#     - ibkr
-#     - docker

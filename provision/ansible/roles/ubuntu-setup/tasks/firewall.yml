@@ -14,8 +14,6 @@
     - { port: "80", comment: http, proto: tcp }
     - { port: "443", comment: https, proto: tcp }
     - { port: "2376", comment: docker, proto: tcp }
-    - { port: "4789", comment: vxlan, proto: udp }
-    - { port: "5432", comment: postgres, proto: tcp }
     - { port: "6379", comment: redis, proto: tcp }
     - { port: "6443", comment: k3s, proto: tcp }
     - { port: "19999", comment: netdata, proto: tcp }

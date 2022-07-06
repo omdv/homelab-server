@@ -1,0 +1,37 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: cloudcmd
+  labels:
+    app: cloudcmd
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudcmd
+  template:
+    metadata:
+      labels:
+        app: cloudcmd
+    spec:
+      containers:
+        - name: cloudcmd
+          image: coderaiser/cloudcmd:16.3.1-alpine
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - mountPath: /pool
+              name: volume
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+            limits:
+              cpu: "400m"
+              memory: "400Mi"
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: pvc-cloudcmd
