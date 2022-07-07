@@ -1,0 +1,13 @@
+---
+namespace: apps
+
+resources:
+  - 00-configmap.yaml
+  - 02-services.yaml
+  - 03-deployments.yaml
+  - 04-ingressroutes.yaml
+
+secretGenerator:
+  - name: huginn-secrets
+    env: huginn-secrets.env
+    type: Opaque

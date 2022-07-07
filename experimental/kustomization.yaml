@@ -1,0 +1,15 @@
+---
+bases:
+  - general
+  - traefik
+  - traefik-auth
+  - nginx
+  - whoami
+  - dyndns
+  - wireguard
+  - jupyter
+  - heimdall
+  - paperless
+  - pgbackup
+  - huginn
+  - cyberchef

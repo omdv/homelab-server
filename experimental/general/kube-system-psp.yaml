@@ -1,0 +1,55 @@
+---
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: kube-system-psp
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: "*"
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  hostPorts:
+    - min: 80
+      max: 65535
+  runAsUser:
+    rule: "RunAsAny"
+  seLinux:
+    rule: "RunAsAny"
+  supplementalGroups:
+    rule: "RunAsAny"
+  fsGroup:
+    rule: "RunAsAny"
+  volumes:
+    - "*"
+  allowedCapabilities:
+    - NET_ADMIN
+    - NET_BIND_SERVICE
+  allowedHostPaths:
+    - pathPrefix: "/var/run"
+      readOnly: true
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kube-system-psp
+rules:
+  - apiGroups: ["policy"]
+    resources: ["podsecuritypolicies"]
+    verbs: ["use"]
+    resourceNames:
+      - kube-system-psp
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kube-system-psp
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kube-system-psp
+subjects:
+  - kind: Group
+    name: system:serviceaccounts

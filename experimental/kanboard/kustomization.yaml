@@ -1,0 +1,8 @@
+---
+namespace: apps
+
+resources:
+  - 01-volumes.yaml
+  - 02-services.yaml
+  - 03-deployments.yaml
+  - 04-ingressroutes.yaml
