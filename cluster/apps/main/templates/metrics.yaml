@@ -17,6 +17,8 @@ spec:
     path: cluster/apps/metrics
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      skipCrds: true
   syncPolicy:
     automated:
       prune: true
