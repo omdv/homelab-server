@@ -7,18 +7,32 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   destination:
     namespace: metrics
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: cluster/apps/metrics
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    repoURL: 'https://prometheus-community.github.io/helm-charts'
+    targetRevision: 36.2.1
     helm:
       skipCrds: true
+      values: |-
+        fullnameOverride: prom
+        kubeControllerManager:
+          enabled: false
+        kubeScheduler:
+          enabled: false
+        kubeProxy:
+          enabled: false
+        grafana:
+          enabled: false
+        prometheus-node-exporter:
+          fullnameOverride: node-exporter
+        kubeStateMetrics:
+          enabled: true
+    chart: kube-prometheus-stack
   syncPolicy:
     automated:
       prune: true
