@@ -35,9 +35,9 @@ spec:
                 - sh
                 - -c
                 - if [ $(wget -q -O- https://ipinfo.io/country) = 'SE' ]; then exit 0; else exit $?; fi
-            initialDelaySeconds: 120
-            periodSeconds: 30
-            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 1
           resources:
             requests:
               cpu: "10m"
