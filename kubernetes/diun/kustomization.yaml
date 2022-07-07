@@ -1,8 +1,0 @@
----
-namespace: apps
-
-resources:
-  - 00-configmap.yaml
-  - 01-roles.yaml
-  - 02-volumes.yaml
-  - 03-deployments.yaml
