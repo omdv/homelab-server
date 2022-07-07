@@ -1,0 +1,6 @@
+---
+resources:
+  - external-secret.yaml
+  - volumes.yaml
+  - deployment.yaml
+  - service.yaml

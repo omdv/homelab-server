@@ -235,6 +235,7 @@ verify_vault() {
     _has_envar "VAULT_OAUTH2_EMAIL_WHITELIST"
     _has_envar "VAULT_DYNDNS_NAMECHEAP_PASSWORD"
     _has_envar "VAULT_WIREGUARD_COUNTRY"
+    _has_envar "VAULT_SAMBA_USER"
     _log "INFO" "Found variables for Vault injection"
     if test -f "$WIREGUARD_CONFIG_FILE"; then
         _log "INFO" "Found wireguard config file"
@@ -271,6 +272,11 @@ generate_cluster_secrets() {
     for var in "${!VAULT_POSTGRES@}"; do
         kubectl exec -n vault vault-0 -- vault kv patch kv/secret/postgres "$var"="$(echo -n ${!var})"
     done
+
+    # initialize secret @ secret/samba
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/samba name=my-samba-secret
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/samba "VAULT_SAMBA_USER"="$VAULT_SAMBA_USER"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/samba "VAULT_SAMBA_PASSWORD"="$VAULT_SAMBA_PASSWORD"
 }
 
 verify_argo() {

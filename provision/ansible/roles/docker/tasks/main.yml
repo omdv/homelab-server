@@ -9,11 +9,6 @@
     - portainer
     - docker
 
-- import_tasks: samba.yml
-  tags:
-    - samba
-    - docker
-
 - import_tasks: mongo.yml
   tags:
     - mongo
