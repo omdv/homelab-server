@@ -9,7 +9,7 @@ metadata:
 spec:
   capacity:
     storage: 100Gi
-  storageClassName: local-storage
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -24,7 +24,7 @@ metadata:
     app: paperless
 
 spec:
-  storageClassName: local-storage
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:
@@ -43,7 +43,7 @@ metadata:
 spec:
   capacity:
     storage: 100Gi
-  storageClassName: local-storage
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -58,7 +58,7 @@ metadata:
     app: paperless
 
 spec:
-  storageClassName: local-storage
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:
@@ -77,7 +77,7 @@ metadata:
 spec:
   capacity:
     storage: 10Gi
-  storageClassName: local-storage
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -92,7 +92,7 @@ metadata:
     app: paperless
 
 spec:
-  storageClassName: local-storage
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:

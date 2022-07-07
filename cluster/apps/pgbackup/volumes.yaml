@@ -9,7 +9,7 @@ metadata:
 spec:
   capacity:
     storage: 100Gi
-  storageClassName: local-storage
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -24,7 +24,7 @@ metadata:
     app: pgbackup
 
 spec:
-  storageClassName: local-storage
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:
