@@ -1,5 +1,8 @@
 ---
 redis:
+  architecture: replication
+  auth:
+    enabled: false
   master:
     resources:
       requests:
