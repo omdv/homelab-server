@@ -8,7 +8,7 @@ plex:
   env:
     TZ: "America/Chicago"
     ADVERTISE_IP: "192.168.1.24"
-    ALLOWED_NETWORKS: "192.168.1.0/24,10.42.0.0/16"
+    # ALLOWED_NETWORKS: "192.168.1.0/24,10.42.0.0/16"
     # PLEX_CLAIM:
     # PLEX_PREFERENCE_1: "FriendlyName=plex-kubernetes"
     # PLEX_PREFERENCE_2: "EnableIPv6=0"
@@ -43,17 +43,20 @@ plex:
     transcode:
       enabled: true
       existingClaim: pvc-plex-transcode
-  additionalVolumes:
-    - name: pvc-plex-media
-      persistentVolumeClaim:
-        claimName: pvc-plex-media
-  additionalVolumeMounts:
-    # - name: pvc-plex-config
-    #   mountPath: "/config"
-    # - name: pvc-plex-transcode
-    #   mountPath: "/transcode"
-    - name: pvc-plex-media
-      mountPath: "/media"
+    media:
+      enabled: true
+      existingClaim: pvc-plex-media
+  # additionalVolumes:
+  #   - name: pvc-plex-media
+  #     persistentVolumeClaim:
+  #       claimName: pvc-plex-media
+  # additionalVolumeMounts:
+  #   # - name: pvc-plex-config
+  #   #   mountPath: "/config"
+  #   # - name: pvc-plex-transcode
+  #   #   mountPath: "/transcode"
+  #   - name: pvc-plex-media
+  #     mountPath: "/media"
 
   podSecurityContext:
     runAsUser: 1000
