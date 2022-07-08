@@ -3,11 +3,11 @@ redis:
   master:
     resources:
       requests:
-        cpu: 50m
-        memory: 64Mi
+        cpu: "0.002"
+        memory: 1Mi
       limits:
-        cpu: 250m
-        memory: 128Mi
+        cpu: "0.01"
+        memory: 16Mi
     persistence:
       enabled: false
     service:
@@ -16,3 +16,10 @@ redis:
         redis: 6379
   replica:
     replicaCount: 2
+    resources:
+      requests:
+        cpu: "0.002"
+        memory: 1Mi
+      limits:
+        cpu: "0.01"
+        memory: 16Mi
