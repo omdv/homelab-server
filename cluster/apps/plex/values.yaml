@@ -7,8 +7,8 @@ plex:
 
   env:
     TZ: "America/Chicago"
-    ADVERTISE_IP: 192.168.1.24
-    # ALLOWED_NETWORKS:
+    ADVERTISE_IP: "192.168.1.24"
+    ALLOWED_NETWORKS: "192.168.1.0/24,10.42.0.0/16"
     # PLEX_CLAIM:
     # PLEX_PREFERENCE_1: "FriendlyName=plex-kubernetes"
     # PLEX_PREFERENCE_2: "EnableIPv6=0"
@@ -56,9 +56,9 @@ plex:
       mountPath: "/media"
 
   podSecurityContext:
-    runAsUser: 568
-    runAsGroup: 568
-    fsGroup: 568
+    runAsUser: 1000
+    runAsGroup: 998
+    fsGroup: 998
 
   resources:
     requests:
