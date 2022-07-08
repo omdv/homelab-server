@@ -11,6 +11,7 @@ Mono repo to manage provision of homelab server. Some features:
 - [k3s]: Ingress-nginx with cert-manager and hajimari
 - [k3s]: Oauth2-proxy email authentication/authorization
 - [k3s]: Run apps behind wireguard gateway
+- [k3s]: Kube metrics on prometheus
 
 ## Prior to Deployment
 
@@ -176,15 +177,16 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 | **Case Fan**     | [Noctua NF-A14 PWM 82.5 CFM 140 mm Fan](https://pcpartpicker.com/product/dwR48d/noctua-case-fan-nfa14pwm)                                                                                                            |
 
 ## TODO
-
+- add renovate
 - add server connection in pgadmin
-- local docker registry
-- wireguard and pihole on k3s/traefik
 - trusted IPs on ingress
-- renovate / automate image tag posting to github
 - add country live check for wireguard
 - appRole vs root token for external-secrets
-- kubeflow
 - argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
-- enable metrics for key components
-- valetudo app
+
+## Apps to install
+- local docker registry
+- renovate / automate image tag posting to github
+- kubeflow
+- valetudo private cloud for robo vacuum
+- move redis / mongo to k8s
