@@ -38,18 +38,20 @@ plex:
 
   persistence:
     config:
-      enabled: false
+      enabled: true
+      existingClaim: pvc-plex-config
     transcode:
-      enabled: false
+      enabled: true
+      existingClaim: pvc-plex-transcode
   additionalVolumes:
-    - name: pvc-plex-config
+    - name: pvc-plex-media
       persistentVolumeClaim:
-        claimName: pvc-plex-config
+        claimName: pvc-plex-media
   additionalVolumeMounts:
-    - name: pvc-plex-config
-      mountPath: "/config"
-    - name: pvc-plex-transcode
-      mountPath: "/transcode"
+    # - name: pvc-plex-config
+    #   mountPath: "/config"
+    # - name: pvc-plex-transcode
+    #   mountPath: "/transcode"
     - name: pvc-plex-media
       mountPath: "/media"
 
