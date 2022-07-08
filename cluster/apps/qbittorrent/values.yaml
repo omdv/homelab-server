@@ -71,8 +71,8 @@ qbittorrent:
     setGateway: "true"
   resources:
     requests:
-      memory: 250Mi
-      cpu: 500m
+      memory: 8Mi
+      cpu: "0.002"
     limits:
-      memory: 6000Mi
-      cpu: 1500m
+      memory: 256Mi
+      cpu: "0.100"

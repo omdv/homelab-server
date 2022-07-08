@@ -40,8 +40,8 @@ spec:
             failureThreshold: 1
           resources:
             requests:
-              cpu: "10m"
-              memory: "10Mi"
+              cpu: "0.001"
+              memory: "1Mi"
             limits:
-              cpu: "30m"
-              memory: "30Mi"
+              cpu: "0.002"
+              memory: "8Mi"
