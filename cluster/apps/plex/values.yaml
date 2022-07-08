@@ -45,7 +45,7 @@ plex:
   resources:
     requests:
       cpu: 250m
-      memory: 128Mo
+      memory: 128Mi
     limits:
       cpu: 2500m
       memory: 512Mi
