@@ -1,0 +1,18 @@
+---
+redis:
+  master:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 250m
+        memory: 128Mi
+    persistence:
+      enabled: false
+    service:
+      type: ClusterIP
+      ports:
+        redis: 6379
+  replica:
+    replicaCount: 2

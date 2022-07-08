@@ -13,8 +13,3 @@
   tags:
     - mongo
     - docker
-
-- import_tasks: redis.yml
-  tags:
-    - redis
-    - docker
