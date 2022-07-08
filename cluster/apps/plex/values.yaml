@@ -7,7 +7,7 @@ plex:
 
   env:
     TZ: "America/Chicago"
-    # ADVERTISE_IP:
+    ADVERTISE_IP: 192.168.1.24
     # ALLOWED_NETWORKS:
     # PLEX_CLAIM:
     # PLEX_PREFERENCE_1: "FriendlyName=plex-kubernetes"
