@@ -1,0 +1,66 @@
+---
+plex:
+
+  image:
+    repository: ghcr.io/k8s-at-home/plex
+    pullPolicy: IfNotPresent
+
+  env:
+    TZ: "America/Chicago"
+    # ADVERTISE_IP:
+    # ALLOWED_NETWORKS:
+    # PLEX_CLAIM:
+    # PLEX_PREFERENCE_1: "FriendlyName=plex-kubernetes"
+    # PLEX_PREFERENCE_2: "EnableIPv6=0"
+    # PLEX_PREFERENCE_3: "logDebug=0"
+    # PLEX_PREFERENCE_4: "DisableTLSv1_0=1"
+    # PLEX_PREFERENCE_5: "LanNetworksBandwidth=xxx.xxx.xxx.0/18\,xxx.xxx.xxx.0/24\,xxx.xxx.xxx.0/24"
+    # PLEX_PREFERENCE_6: "TranscoderQuality=2"
+    # PLEX_PREFERENCE_7: "TreatWanIpAsLocal=0"
+    # PLEX_PREFERENCE_8: "TranscoderH264BackgroundPreset=fast"
+
+  service:
+    main:
+      primary: true
+      ports:
+        http:
+          port: 32400
+    dnla-tcp:
+      enabled: false
+    dnla-udp:
+      enabled: false
+
+  ingress:
+    main:
+      enabled: false
+
+  hostNetwork: true
+
+  persistence:
+    config:
+      enabled: false
+    transcode:
+      enabled: false
+  additionalVolumes:
+    - name: pvc-plex-config
+      persistentVolumeClaim:
+        claimName: pvc-plex-config
+  additionalVolumeMounts:
+    - name: pvc-plex-config
+      mountPath: "/config"
+    - name: pvc-plex-transcode
+      mountPath: "/transcode"
+    - name: pvc-plex-media
+      mountPath: "/media"
+
+  podSecurityContext:
+    runAsUser: 568
+    runAsGroup: 568
+    fsGroup: 568
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      memory: 4096Mi

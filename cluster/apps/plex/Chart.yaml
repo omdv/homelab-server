@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: helm-plex
+type: application
+version: 0.2.0
+appVersion: "1.0"
+dependencies:
+  - name: plex
+    version: 13.2.0
+    repository: https://k8s-at-home.com/charts/
