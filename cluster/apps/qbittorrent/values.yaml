@@ -75,3 +75,4 @@ qbittorrent:
       cpu: 500m
     limits:
       memory: 6000Mi
+      cpu: 1500m
