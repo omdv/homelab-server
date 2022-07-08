@@ -6,7 +6,7 @@ redis:
         cpu: "0.002"
         memory: 1Mi
       limits:
-        cpu: "0.01"
+        cpu: "0.1"
         memory: 16Mi
     persistence:
       enabled: false
@@ -21,5 +21,5 @@ redis:
         cpu: "0.002"
         memory: 1Mi
       limits:
-        cpu: "0.01"
+        cpu: "0.1"
         memory: 16Mi
