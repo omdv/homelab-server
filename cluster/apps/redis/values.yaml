@@ -1,6 +1,6 @@
 ---
 redis:
-  architecture: replication
+  architecture: standalone
   auth:
     enabled: false
   master:
@@ -18,7 +18,7 @@ redis:
       ports:
         redis: 6379
   replica:
-    replicaCount: 2
+    replicaCount: 1
     resources:
       requests:
         cpu: "0.01"
