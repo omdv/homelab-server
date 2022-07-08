@@ -12,8 +12,8 @@ postgresql:
   existingSecret: "postgres-secret"
 
   service:
-    type: "NodePort"
-    nodePort: "31433"
+    type: "ClusterIP"
+    nodePort: "5432"
 
   persistence:
     enabled: true
