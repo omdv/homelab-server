@@ -13,7 +13,8 @@ postgresql:
 
   service:
     type: "ClusterIP"
-    nodePort: "5432"
+    ports:
+      postgresql: 5432
 
   persistence:
     enabled: true
