@@ -67,8 +67,8 @@ pod-gateway:
                   cidr: 10.0.0.0/8
       resources:
         requests:
-          cpu: "0.001"
+          cpu: "0.005"
           memory: 8Mi
         limits:
-          cpu: "0.01"
+          cpu: "0.05"
           memory: 64Mi
