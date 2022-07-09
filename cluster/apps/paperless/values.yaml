@@ -1,0 +1,57 @@
+---
+paperless:
+  image:
+    # repository: ghcr.io/paperless-ngx/paperless-ngx
+    repository: docker.io/jonaswinkler/paperless-ng
+    tag: 1.4.5
+    pullPolicy: IfNotPresent
+
+  envFrom:
+    - secretRef:
+        name: paperless-secret
+  env:
+    PAPERLESS_REDIS: "redis://redis-master.redis.svc.cluster.local:6379"
+    PAPERLESS_DBHOST: "postgresql.postgres.svc.cluster.local"
+    PAPERLESS_DBPORT: 5432
+    PAPERLESS_TIME_ZONE: "America/Chicago"
+    PAPERLESS_URL: "paperless.zzd.ai"
+    PAPERLESS_ALLOWED_HOSTS: "paperless.zzd.ai"
+    PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.zzd.ai"
+    PAPERLESS_OCR_LANGUAGES: "eng ua ru"
+    PAPERLESS_PORT: 8000
+
+  service:
+    main:
+      ports:
+        http:
+          port: 8000
+
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+        - host: paperless.zzd.ai
+          paths:
+            - path: /
+              pathType: Prefix
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/auth-url: "https://auth.zzd.ai/oauth2/auth"
+        nginx.ingress.kubernetes.io/auth-signin: "https://auth.zzd.ai/oauth2/start?rd=https://$host$uri"
+        hajimari.io/enable: "true"
+      tls:
+        - hosts:
+            - paperless.zzd.ai
+          secretName: my-certs-paperless
+
+  persistence:
+    data:
+      enabled: true
+      existingClaim: pvc-paperless-data
+    media:
+      enabled: true
+      existingClaim: pvc-paperless-media
+    consume:
+      enabled: true
+      existingClaim: pvc-paperless-consume

@@ -1,7 +1,0 @@
-{
-    "app": {
-        "name": "vpn",
-        "path": "cluster/base/vpn-routed",
-        "namespace": "vpn"
-    }
-}
