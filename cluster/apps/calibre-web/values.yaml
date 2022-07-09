@@ -39,7 +39,8 @@ calibre-web:
       existingClaim: calibre-pvc
   resources:
     requests:
-      memory: 250Mi
-      cpu: 500m
+      memory: 16Mi
+      cpu: "0.01"
     limits:
-      memory: 6000Mi
+      memory: 256Mi
+      cpu: "0.1"
