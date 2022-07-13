@@ -184,9 +184,11 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 - appRole vs root token for external-secrets
 - argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
 
-## Apps to install
+## Apps to try
 - local docker registry
 - renovate / automate image tag posting to github
 - kubeflow
 - valetudo private cloud for robo vacuum
-- move redis / mongo to k8s
+- move mongo to k8s
+- velero
+- istio
