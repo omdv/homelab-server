@@ -35,7 +35,7 @@ spec:
               command:
                 - sh
                 - -c
-                - if [ $(wget -q -O- https://ipinfo.io/country) = 'SE' ]; then exit 0; else exit $?; fi
+                - if [ $(wget -q -O- http://ip.zxq.co/self/country) = 'SE' ]; then exit 0; else exit $?; fi
             initialDelaySeconds: 120
             periodSeconds: 30
             failureThreshold: 5
