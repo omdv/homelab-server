@@ -47,7 +47,7 @@ pod-gateway:
             - -c
             - if [ $(curl -s http://ip.zxq.co/self/country) = 'SE' ]; then exit 0; else exit $?; fi
         initialDelaySeconds: 30
-        periodSeconds: 60
+        periodSeconds: 600
         failureThreshold: 1
       env:
         TZ: "America/Chicago"
