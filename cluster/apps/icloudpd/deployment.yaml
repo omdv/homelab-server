@@ -1,0 +1,59 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: icloudpd-om
+  labels:
+    app: icloudpd
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: icloudpd
+  template:
+    metadata:
+      labels:
+        app: icloudpd
+    spec:
+      containers:
+        - name: icloudpd-om
+          image: prodrigestivill/postgres-backup-local:latest
+          env:
+            - name: apple_user
+              valueFrom:
+                secretKeyRef:
+                  name: icloudpd-om-secret
+                  key: APPLE_USER_OM
+            - name: telegram_token
+              valueFrom:
+                secretKeyRef:
+                  name: icloudpd-om-secret
+                  key: TELEGRAM_BOT_TOKEN
+            - name: telegram_chat_id
+              valueFrom:
+                secretKeyRef:
+                  name: icloudpd-om-secret
+                  key: TELEGRAM_BOT_CHAT_ID
+          envFrom:
+            - configMapRef:
+                name: icloudpd-om-config
+          volumeMounts:
+            - mountPath: /config
+              name: config
+            - mountPath: /home/om/iCloud
+              name: photos
+          resources:
+            requests:
+              cpu: "0.02"
+              memory: "8Mi"
+            limits:
+              cpu: "0.5"
+              memory: "64Mi"
+      volumes:
+        - name: photos
+          persistentVolumeClaim:
+            claimName: pvc-icloudpd-om-photos
+        - name: config
+          persistentVolumeClaim:
+            claimName: pvc-icloudpd-om-config

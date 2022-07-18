@@ -277,7 +277,15 @@ generate_cluster_secrets() {
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/samba name=my-samba-secret
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/samba "VAULT_SAMBA_USER"="$VAULT_SAMBA_USER"
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/samba "VAULT_SAMBA_PASSWORD"="$VAULT_SAMBA_PASSWORD"
+
+    # initialize secret @ secret/icloudpd
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/icloudpd name=my-icloudpd-secret
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/icloudpd "VAULT_ICLOUDPD_APPLE_USER_OM"="$VAULT_ICLOUDPD_APPLE_USER_OM"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/icloudpd "VAULT_TELEGRAM_BOT_TOKEN"="$VAULT_TELEGRAM_BOT_TOKEN"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/icloudpd "VAULT_TELEGRAM_BOT_CHAT_ID"="$VAULT_TELEGRAM_BOT_CHAT_ID"
 }
+
+
 
 verify_argo() {
     _has_envar "BOOTSTRAP_ARGO_ADMIN_PASSWORD"

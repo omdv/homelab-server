@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: icloudpd-om-config
+  labels:
+    app: icloudpd
+
+data:
+  user: "om"
+  user_id: "1000"
+  group: admins
+  group_id: "1000"
+  authentication_type: 2FA
+  notification_type: Telegram
+  telegram_token: "123654"
+  telegram_chat_id: "456321"
+  folder_structure: "{:%Y}"
+  notification_days: "14"
+  synchronisation_interval: "21600"
+  TZ: America/Chicago

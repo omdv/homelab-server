@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-icloudpd-om-photos
+  labels:
+    app: icloudpd
+
+spec:
+  capacity:
+    storage: 1000Gi
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /pool/photos/icloud-om
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-icloudpd-om-photos
+  labels:
+    app: icloudpd
+
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1000Gi
+  volumeName: pv-icloudpd-om-photos
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-icloudpd-om-config
+  labels:
+    app: icloudpd
+
+spec:
+  capacity:
+    storage: 1Gi
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /pool/config/icloud-om
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-icloudpd-om-config
+  labels:
+    app: icloudpd
+
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-icloudpd-om-config
