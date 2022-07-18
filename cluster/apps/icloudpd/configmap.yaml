@@ -11,6 +11,7 @@ data:
   user_id: "1000"
   group: admins
   group_id: "1000"
+  download_path: /home/om/iCloud
   authentication_type: 2FA
   notification_type: Telegram
   telegram_token: "123654"
