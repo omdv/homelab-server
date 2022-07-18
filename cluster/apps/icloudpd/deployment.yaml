@@ -20,7 +20,7 @@ spec:
         - name: icloudpd-om
           image: boredazfcuk/icloudpd:latest
           env:
-            - name: apple_user
+            - name: apple_id
               valueFrom:
                 secretKeyRef:
                   name: icloudpd-om-secret
