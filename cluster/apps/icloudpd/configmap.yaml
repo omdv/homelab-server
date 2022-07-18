@@ -17,5 +17,5 @@ data:
   telegram_chat_id: "456321"
   folder_structure: "{:%Y}"
   notification_days: "14"
-  synchronisation_interval: "21600"
+  synchronisation_interval: "43200"
   TZ: America/Chicago
