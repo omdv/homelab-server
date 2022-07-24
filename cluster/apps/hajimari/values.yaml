@@ -16,8 +16,6 @@ hajimari:
     groups:
       - name: Local
         links:
-          - name: Cloud Commander
-            url: "http://192.168.1.24:8123"
           - name: Netdata
             url: "http://192.168.1.24:19999"
           - name: Portainer
