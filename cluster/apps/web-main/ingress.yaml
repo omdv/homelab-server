@@ -13,9 +13,20 @@ spec:
   tls:
     - hosts:
         - zzd.ai
+        - hut.sh
       secretName: my-certs-main
   rules:
     - host: zzd.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-main
+                port:
+                  number: 80
+    - host: hut.sh
       http:
         paths:
           - path: /
