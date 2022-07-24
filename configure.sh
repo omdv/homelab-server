@@ -193,7 +193,6 @@ verify_cloudflare() {
 
     if [[ "$(echo "${account_zone}" | jq ".success")" == "true" ]]; then
         _log "INFO" "Verified Cloudflare Account and Zone information"
-        echo "${account_zone}"
     else
         errors=$(echo "${account_zone}" | jq -c ".errors")
         _log "ERROR" "Unable to get Cloudflare Account and Zone information ${errors}"
