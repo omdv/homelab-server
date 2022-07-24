@@ -43,9 +43,20 @@ spec:
   tls:
     - hosts:
         - whoami.zzd.ai
+        - whoami.hut.sh
       secretName: my-certs-whoami
   rules:
     - host: whoami.zzd.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: whoami
+                port:
+                  number: 80
+    - host: whoami.hut.sh
       http:
         paths:
           - path: /
