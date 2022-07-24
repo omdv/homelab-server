@@ -22,7 +22,7 @@ spec:
           ports:
             - containerPort: 8000
           volumeMounts:
-            - mountPath: /pool
+            - mountPath: /mnt/fs
               name: volume
           resources:
             requests:
