@@ -3,15 +3,15 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "3.5.0"
+      version = "~> 3.0"
     }
     http = {
       source  = "hashicorp/http"
-      version = "2.1.0"
+      version = "~> 2.0"
     }
     sops = {
       source  = "carlpett/sops"
-      version = "0.6.3"
+      version = "~> 0.6"
     }
   }
 }
@@ -21,8 +21,9 @@ data "sops_file" "cloudflare_secrets" {
 }
 
 provider "cloudflare" {
-  email   = data.sops_file.cloudflare_secrets.data["cloudflare_email"]
-  api_key = data.sops_file.cloudflare_secrets.data["cloudflare_apikey"]
+  # email   = data.sops_file.cloudflare_secrets.data["cloudflare_email"]
+  # api_key = data.sops_file.cloudflare_secrets.data["cloudflare_api"]
+  api_token = data.sops_file.cloudflare_secrets.data["cloudflare_api_token"]
 }
 
 data "cloudflare_zones" "domain" {
@@ -71,10 +72,6 @@ resource "cloudflare_zone_settings_override" "cloudflare_settings" {
     email_obfuscation   = "on"
     server_side_exclude = "on"
     hotlink_protection  = "off"
-    # /workers
-    security_header {
-      enabled = false
-    }
   }
 }
 
@@ -82,29 +79,29 @@ data "http" "ipv4" {
   url = "http://ipv4.icanhazip.com"
 }
 
-resource "cloudflare_record" "ipv4" {
-  name    = "ipv4"
-  zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
-  value   = chomp(data.http.ipv4.body)
-  proxied = true
-  type    = "A"
-  ttl     = 1
-}
+# resource "cloudflare_record" "ipv4" {
+#   name    = "ipv4"
+#   zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
+#   value   = chomp(data.http.ipv4.body)
+#   proxied = true
+#   type    = "A"
+#   ttl     = 1
+# }
 
-resource "cloudflare_record" "root" {
-  name    = data.sops_file.cloudflare_secrets.data["cloudflare_domain"]
-  zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
-  value   = "ipv4.${data.sops_file.cloudflare_secrets.data["cloudflare_domain"]}"
-  proxied = true
-  type    = "CNAME"
-  ttl     = 1
-}
+# resource "cloudflare_record" "root" {
+#   name    = data.sops_file.cloudflare_secrets.data["cloudflare_domain"]
+#   zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
+#   value   = "ipv4.${data.sops_file.cloudflare_secrets.data["cloudflare_domain"]}"
+#   proxied = true
+#   type    = "CNAME"
+#   ttl     = 1
+# }
 
-resource "cloudflare_record" "whoami" {
-  name    = "whoami"
-  zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
-  value   = "ipv4.${data.sops_file.cloudflare_secrets.data["cloudflare_domain"]}"
-  proxied = true
-  type    = "CNAME"
-  ttl     = 1
-}
+# resource "cloudflare_record" "whoami" {
+#   name    = "whoami"
+#   zone_id = lookup(data.cloudflare_zones.domain.zones[0], "id")
+#   value   = "ipv4.${data.sops_file.cloudflare_secrets.data["cloudflare_domain"]}"
+#   proxied = true
+#   type    = "CNAME"
+#   ttl     = 1
+# }

@@ -36,6 +36,7 @@ main() {
         verify_git_repository
         verify_vault
         verify_argo
+        verify_cloudflare
         success
     elif [[ "${vault}" == 1 ]]; then
         generate_cluster_secrets
@@ -60,10 +61,10 @@ main() {
         envsubst '$ARGO_PWD $BOOTSTRAP_GIT_REPOSITORY' < "${PROJECT_DIR}/tmpl/argo/values.yaml" \
             > "${PROJECT_DIR}/cluster/init/argocd/values.yaml"
 
-# # terraform
-# envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
-#     > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
-# sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
+        # template terraform
+        envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
+            > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
 
         # ansible
         generate_ansible_hosts
@@ -180,19 +181,19 @@ verify_cloudflare() {
     local account_zone=
     local errors=
 
-    _has_envar "BOOTSTRAP_CLOUDFLARE_APIKEY"
     _has_envar "BOOTSTRAP_CLOUDFLARE_DOMAIN"
-    _has_envar "BOOTSTRAP_CLOUDFLARE_EMAIL"
+    _has_envar "BOOTSTRAP_CLOUDFLARE_API_TOKEN"
+
 
     # Try to retrieve zone information from Cloudflare's API
-    account_zone=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=${BOOTSTRAP_CLOUDFLARE_DOMAIN}&status=active" \
-        -H "X-Auth-Email: ${BOOTSTRAP_CLOUDFLARE_EMAIL}" \
-        -H "X-Auth-Key: ${BOOTSTRAP_CLOUDFLARE_APIKEY}" \
-        -H "Content-Type: application/json"
+    account_zone=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=${BOOTSTRAP_CLOUDFLARE_DOMAIN}&account=${BOOTSTRAP_CLOUDFLARE_ACCOUNT_ID}" \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer ${BOOTSTRAP_CLOUDFLARE_API_TOKEN}"
     )
 
     if [[ "$(echo "${account_zone}" | jq ".success")" == "true" ]]; then
         _log "INFO" "Verified Cloudflare Account and Zone information"
+        echo "${account_zone}"
     else
         errors=$(echo "${account_zone}" | jq -c ".errors")
         _log "ERROR" "Unable to get Cloudflare Account and Zone information ${errors}"
