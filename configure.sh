@@ -186,7 +186,7 @@ verify_cloudflare() {
 
 
     # Try to retrieve zone information from Cloudflare's API
-    account_zone=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=${BOOTSTRAP_CLOUDFLARE_DOMAIN}&account=${BOOTSTRAP_CLOUDFLARE_ACCOUNT_ID}" \
+    account_zone=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=${BOOTSTRAP_CLOUDFLARE_DOMAIN}" \
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer ${BOOTSTRAP_CLOUDFLARE_API_TOKEN}"
     )
