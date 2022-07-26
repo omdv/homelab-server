@@ -13,6 +13,7 @@
         seconds: 5
   vars:
     k3s_become: true
+    k3s_etcd_datastore: false
     k3s_server:
       disable:
         - traefik
