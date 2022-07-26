@@ -12,7 +12,7 @@ postgresql:
   existingSecret: "postgres-secret"
 
   service:
-    type: "ClusterIP"
+    type: "NodePort"
     ports:
       postgresql: 5432
 
