@@ -30,7 +30,8 @@ spec:
           imagePullPolicy: Always
           name: oauth2-proxy
           ports:
-            - containerPort: 4180
+            - name: http-pod-port
+              containerPort: 4180
               protocol: TCP
           volumeMounts:
             - mountPath: /volume

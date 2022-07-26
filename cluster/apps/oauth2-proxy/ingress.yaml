@@ -24,4 +24,4 @@ spec:
               service:
                 name: oauth2-proxy
                 port:
-                  number: 4180
+                  name: http

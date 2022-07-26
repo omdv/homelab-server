@@ -10,6 +10,6 @@ spec:
     - name: http
       port: 4180
       protocol: TCP
-      targetPort: 4180
+      targetPort: http-pod-port
   selector:
     app: oauth2-proxy
