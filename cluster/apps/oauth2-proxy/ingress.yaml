@@ -12,20 +12,9 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - auth.zzd.ai
         - auth.hut.sh
       secretName: my-certs-oauth2-proxy
   rules:
-    - host: auth.zzd.ai
-      http:
-        paths:
-          - path: /oauth2
-            pathType: Prefix
-            backend:
-              service:
-                name: oauth2-proxy
-                port:
-                  number: 4180
     - host: auth.hut.sh
       http:
         paths:
