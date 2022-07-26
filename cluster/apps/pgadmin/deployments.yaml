@@ -27,7 +27,8 @@ spec:
         - name: pgadmin
           image: dpage/pgadmin4:6.4
           ports:
-            - containerPort: 80
+            - name: pod-http-port
+              containerPort: 80
               protocol: TCP
           env:
             - name: PGADMIN_DEFAULT_EMAIL
