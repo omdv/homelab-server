@@ -23,13 +23,6 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: data
-          resources:
-            requests:
-              cpu: "5m"
-              memory: "4Mi"
-            limits:
-              cpu: "10m"
-              memory: "16Mi"
       containers:
         - name: pgadmin
           image: dpage/pgadmin4:6.4

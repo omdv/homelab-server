@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: samba
-          image: dperson/samba
+          image: dperson/samba:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 445
