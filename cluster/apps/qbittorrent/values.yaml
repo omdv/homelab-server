@@ -2,7 +2,7 @@
 qbittorrent:
   initContainers:
     update-volume-permission:
-      image: busybox
+      image: busybox:musl
       command: ["sh", "-c", "chown -R 1000:1000 /config"]
       volumeMounts:
         - name: config

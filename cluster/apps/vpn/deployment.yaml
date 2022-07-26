@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: alpine
-          image: alpine
+          image: alpine:latest
           command:
             - /bin/sh
             - -c
