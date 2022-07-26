@@ -20,6 +20,10 @@ spec:
       skipCrds: true
       values: |-
         fullnameOverride: prom
+        kubeStateMetrics:
+          enabled: true
+        prometheus-node-exporter:
+          fullnameOverride: node-exporter
         kubeControllerManager:
           enabled: false
         kubeScheduler:
@@ -28,11 +32,10 @@ spec:
           enabled: false
         grafana:
           enabled: false
-        prometheus-node-exporter:
-          fullnameOverride: node-exporter
-        kubeStateMetrics:
-          enabled: true
-    chart: kube-prometheus-stack
+        alertmanager:
+          enabled: false
+        kubeEtcd:
+          enabled: false
   syncPolicy:
     automated:
       prune: true
