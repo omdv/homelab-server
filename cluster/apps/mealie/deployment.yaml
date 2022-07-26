@@ -21,6 +21,8 @@ spec:
           image: hkotel/mealie:latest
           ports:
             - containerPort: 80
+              protocol: TCP
+              name: http
           volumeMounts:
             - mountPath: /app/data
               name: data-volume
