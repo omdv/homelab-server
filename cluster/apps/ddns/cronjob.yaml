@@ -7,7 +7,7 @@ metadata:
     app: ddns
 
 spec:
-  schedule: "*/15 * * * *"
+  schedule: "*/10 * * * *"
   startingDeadlineSeconds: 200
   jobTemplate:
     spec:
@@ -27,7 +27,4 @@ spec:
                     secretKeyRef:
                       name: ddns-secret
                       key: CLOUDFLARE_DOMAIN
-              envFrom:
-                - configMapRef:
-                    name: ddns-config
           restartPolicy: Never
