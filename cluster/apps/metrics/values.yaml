@@ -10,6 +10,8 @@ kube-prometheus-stack:
     enabled: false
   kubeEtcd:
     enabled: false
+    service:
+      enabled: false
   grafana:
     enabled: false
   prometheus-node-exporter:
