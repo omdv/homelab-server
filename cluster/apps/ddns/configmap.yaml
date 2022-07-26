@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ddns-config
+  labels:
+    app: ddns
+
+data:
+  PUID: "1000"
+  PGID: "1000"
+  CRON: "*/5 * * * *"

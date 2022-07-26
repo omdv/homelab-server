@@ -1,0 +1,33 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ddns
+  labels:
+    app: ddns
+
+spec:
+  schedule: "*/30 * * * *"
+  startingDeadlineSeconds: 200
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cloudflare
+              image: ghcr.io/omdv/cloudflare-ddns:latest
+              env:
+                - name: TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: ddns-secret
+                      key: CLOUDFLARE_API_TOKEN
+                - name: DOMAIN
+                  valueFrom:
+                    secretKeyRef:
+                      name: ddns-secret
+                      key: CLOUDFLARE_DOMAIN
+              envFrom:
+                - configMapRef:
+                    name: ddns-config
+          restartPolicy: Never
