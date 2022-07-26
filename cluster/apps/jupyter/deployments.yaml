@@ -20,7 +20,8 @@ spec:
         - name: jupyter
           image: jupyter/scipy-notebook:latest
           ports:
-            - containerPort: 8888
+            - name: pod-custom-port
+              containerPort: 8888
               protocol: TCP
           command: ["start.sh"]
           args: ["jupyter", "lab"]
