@@ -1,5 +1,5 @@
 ---
 resources:
   - configmap.yaml
-  - external-secret.yaml
+  - secrets.yaml
   - cronjob.yaml
