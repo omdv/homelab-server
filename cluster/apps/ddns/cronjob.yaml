@@ -7,7 +7,7 @@ metadata:
     app: ddns
 
 spec:
-  schedule: "*/30 * * * *"
+  schedule: "*/15 * * * *"
   startingDeadlineSeconds: 200
   jobTemplate:
     spec:
@@ -15,7 +15,7 @@ spec:
         spec:
           containers:
             - name: cloudflare
-              image: ghcr.io/omdv/cloudflare-ddns:latest
+              image: omdv/cloudflare-ddns:latest
               env:
                 - name: TOKEN
                   valueFrom:
