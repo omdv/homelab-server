@@ -20,7 +20,9 @@ spec:
         - name: cyberchef
           image: mpepping/cyberchef:latest
           ports:
-            - containerPort: 8000
+            - name: pod-http-port
+              protocol: TCP
+              containerPort: 8000
           resources:
             requests:
               cpu: "200m"
