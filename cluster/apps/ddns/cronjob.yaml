@@ -17,7 +17,7 @@ spec:
             - name: cloudflare
               image: omdv/cloudflare-ddns:latest
               env:
-                - name: TOKEN
+                - name: API_TOKEN
                   valueFrom:
                     secretKeyRef:
                       name: ddns-secret
