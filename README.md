@@ -153,6 +153,19 @@ argocd login localhost:8080 --insecure --username admin --password $HOMELAB_ARGO
 
 After provisioning ArgoCD will also assume control over its own installation and other applications in `init` folder, which we installed manually in previous steps.
 
+## Cloudflare
+
+Steps above set up the reverse proxy with authentication and certificates. However they expose the server IP. Cloudflare will fix this.
+
+> :exclamation: enable "development" mode in Cloudflare as you add new ingresses to get Let's Encrypt certificate
+
+```bash
+./configure.sh --verify
+cd provision/terraform/cloudflare
+terraform plan
+terraform apply
+```
+
 ## Hardware
 
 This all runs on single machine in acclaimed Node 304 case, which can house 6 HDDs.
@@ -185,6 +198,7 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 - argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
 
 ## Apps to try
+- identity management for local services - freeIPA?
 - local docker registry
 - renovate / automate image tag posting to github
 - kubeflow

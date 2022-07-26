@@ -236,6 +236,8 @@ verify_vault() {
     _has_envar "VAULT_DYNDNS_NAMECHEAP_PASSWORD"
     _has_envar "VAULT_WIREGUARD_COUNTRY"
     _has_envar "VAULT_SAMBA_USER"
+    _has_envar "BOOTSTRAP_CLOUDFLARE_API_TOKEN"
+    _has_envar "BOOTSTRAP_CLOUDFLARE_DOMAIN"
     _log "INFO" "Found variables for Vault injection"
     if test -f "$WIREGUARD_CONFIG_FILE"; then
         _log "INFO" "Found wireguard config file"
@@ -283,6 +285,11 @@ generate_cluster_secrets() {
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/icloudpd "VAULT_ICLOUDPD_APPLE_USER_OM"="$VAULT_ICLOUDPD_APPLE_USER_OM"
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/icloudpd "VAULT_TELEGRAM_BOT_TOKEN"="$VAULT_TELEGRAM_BOT_TOKEN"
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/icloudpd "VAULT_TELEGRAM_BOT_CHAT_ID"="$VAULT_TELEGRAM_BOT_CHAT_ID"
+
+    # initialize secret @ secret/cloudflare
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/cloudflare name=my-cloudflare-secret
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cloudflare "VAULT_CLOUDFLARE_API_TOKEN"="$BOOTSTRAP_CLOUDFLARE_API_TOKEN"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cloudflare "VAULT_CLOUDFLARE_DOMAIN"="$BOOTSTRAP_CLOUDFLARE_DOMAIN"
 }
 
 
