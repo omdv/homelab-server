@@ -20,7 +20,8 @@ spec:
         - name: web-main
           image: nginx:alpine
           ports:
-            - name: web
+            - name: pod-http-port
+              protocol: TCP
               containerPort: 80
           volumeMounts:
             - mountPath: /usr/share/nginx/html
