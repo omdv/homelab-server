@@ -8,8 +8,9 @@ metadata:
 
 spec:
   ports:
-    - protocol: TCP
-      name: web
+    - name: http
+      protocol: TCP
       port: 80
+      targetPort: pod-http-port
   selector:
     app: whoami

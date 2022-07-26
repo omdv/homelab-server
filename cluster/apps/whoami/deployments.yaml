@@ -20,7 +20,8 @@ spec:
         - name: whoami
           image: containous/whoami
           ports:
-            - name: web
+            - name: pod-http-port
+              protocol: TCP
               containerPort: 80
           resources:
             requests:
