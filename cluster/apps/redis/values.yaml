@@ -10,7 +10,7 @@ redis:
         memory: 1Mi
       limits:
         cpu: "0.2"
-        memory: 16Mi
+        memory: 24Mi
     persistence:
       enabled: false
     service:
@@ -25,4 +25,4 @@ redis:
         memory: 1Mi
       limits:
         cpu: "0.2"
-        memory: 16Mi
+        memory: 24Mi

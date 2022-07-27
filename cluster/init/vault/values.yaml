@@ -29,6 +29,14 @@ vault:
         name: kms-creds
         load: false
 
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 250m
+      limits:
+        memory: 256Mi
+        cpu: 250m
+
     standalone:
       config: |
         listener "tcp" {

@@ -1,4 +1,5 @@
 ---
+# https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 argo-cd:
   dex:
     enabled: false
@@ -37,6 +38,14 @@ argo-cd:
           automated:
             prune: true
             selfHeal: true
+  controller:
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
   configs:
     secret:
       argocdServerAdminPassword: $2a$10$YtCUmdJ2B002tKFlEDmB7OmGv2r4xLt428YodSDJsrNIQ.z3wI/UK
