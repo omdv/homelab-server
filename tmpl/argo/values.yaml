@@ -1,4 +1,5 @@
 ---
+# https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 argo-cd:
   dex:
     enabled: false
@@ -28,7 +29,7 @@ argo-cd:
       - name: apps
         project: default
         source:
-          repoURL: ${BOOTSTRAP_GIT_REPOSITORY}
+          repoURL: https://github.com/omdv/homelab-server
           targetRevision: HEAD
           path: cluster/apps/
         destination:
@@ -37,6 +38,14 @@ argo-cd:
           automated:
             prune: true
             selfHeal: true
+  controller:
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
   configs:
     secret:
       argocdServerAdminPassword: ${ARGO_PWD}

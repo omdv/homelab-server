@@ -12,9 +12,9 @@ postgresql:
   existingSecret: "postgres-secret"
 
   service:
-    type: "NodePort"
+    type: "ClusterIP"
     ports:
-      postgresql: 32432
+      postgresql: 5432
 
   persistence:
     enabled: true
@@ -64,9 +64,3 @@ postgresql:
     timeoutSeconds: 5
     failureThreshold: 6
     successThreshold: 1
-
-  # primary:
-  #   service:
-  #     type: NodePort
-  #     nodePorts:
-  #       postgresql: 5432
