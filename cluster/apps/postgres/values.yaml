@@ -1,5 +1,11 @@
 ---
 postgresql:
+  global:
+    postgresql:
+      auth:
+        username: postgres
+        existingSecret: "postgres-secret"
+
   fullnameOverride: "postgresql"
   image:
     registry: docker.io
@@ -9,45 +15,60 @@ postgresql:
     pullSecrets: []
     debug: false
 
-  postgresqlUsername: postgres
-  existingSecret: "postgres-secret"
-
-  additionalContainers:
-    tailscale:
-      name: ts-sidecar
-      image: "ghcr.io/morpig/tailscale-k8s:latest"
-      imagePullPolicy: Always
-      env:
-        - name: TAILSCALE_AUTH_KEY
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: TAILSCALE_AUTH_KEY
-        - name: EXTRA_UP_ARGS
-          value: "--accept-routes"
-      securityContext:
-        capabilities:
-          add:
-            - NET_ADMIN
-
-  service:
-    type: "ClusterIP"
-    ports:
-      postgresql: 5432
-
-  persistence:
-    enabled: true
-    existingClaim: postgres
-    mountPath: /bitnami/postgresql
-    accessModes:
-      - ReadWriteOnce
-
-  securityContext:
-    enabled: true
-    fsGroup: 1000
-  containerSecurityContext:
-    enabled: true
-    runAsUser: 1000
+  primary:
+    service:
+      type: "ClusterIP"
+      ports:
+        postgresql: 5432
+    sidecars:
+      - name: ts-sidecar
+        image: "tailscale/tailscale:1.29.20"
+        imagePullPolicy: Always
+        env:
+          - name: TS_AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: TAILSCALE_AUTH_KEY
+          - name: EXTRA_UP_ARGS
+            value: "--accept-routes"
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+    startupProbe:
+      enabled: false
+      initialDelaySeconds: 30
+      periodSeconds: 15
+      timeoutSeconds: 5
+      failureThreshold: 10
+      successThreshold: 1
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
+    persistence:
+      enabled: true
+      existingClaim: postgres
+      mountPath: /bitnami/postgresql
+      accessModes:
+        - ReadWriteOnce
+    podSecurityContext:
+      enabled: true
+      fsGroup: 1000
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 1000
 
   volumePermissions:
     enabled: true
@@ -59,27 +80,3 @@ postgresql:
       pullSecrets: []
     securityContext:
       runAsUser: 0
-
-  startupProbe:
-    enabled: false
-    initialDelaySeconds: 30
-    periodSeconds: 15
-    timeoutSeconds: 5
-    failureThreshold: 10
-    successThreshold: 1
-
-  livenessProbe:
-    enabled: true
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
-
-  readinessProbe:
-    enabled: true
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
