@@ -3,8 +3,6 @@ paperless:
   image:
     repository: ghcr.io/paperless-ngx/paperless-ngx
     tag: 1.8@sha256:547794ae108db4f8736f767bb6186a19011c7af237ae94aa0a22188cce2ec93d
-    #repository: docker.io/jonaswinkler/paperless-ng
-    #tag: 1.4.5
     pullPolicy: IfNotPresent
 
   envFrom:
@@ -56,3 +54,11 @@ paperless:
     consume:
       enabled: true
       existingClaim: pvc-paperless-consume
+
+  resources:
+    limits:
+      cpu: "50m"
+      memory: "512Mi"
+    requests:
+      cpu: "10m"
+      memory: "256Mi"
