@@ -290,6 +290,10 @@ generate_cluster_secrets() {
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/cloudflare name=my-cloudflare-secret
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cloudflare "VAULT_CLOUDFLARE_API_TOKEN"="$BOOTSTRAP_CLOUDFLARE_API_TOKEN"
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cloudflare "VAULT_CLOUDFLARE_DOMAIN"="$BOOTSTRAP_CLOUDFLARE_DOMAIN"
+
+    # initialize secret @ secret/tailscale
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/tailscale name=my-tailscale-secret
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_AUTH_KEY"="$BOOTSTRAP_TAILSCALE_AUTH_KEY"
 }
 
 
