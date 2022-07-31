@@ -15,8 +15,8 @@ paperless:
     PAPERLESS_DBHOST: "postgresql.postgres.svc.cluster.local"
     PAPERLESS_DBPORT: 5432
     PAPERLESS_TIME_ZONE: "America/Chicago"
-    PAPERLESS_URL: "paperless.hut.sh"
-    PAPERLESS_ALLOWED_HOSTS: "paperless.hut.sh"
+    PAPERLESS_URL: "https://paperless.hut.sh"
+    PAPERLESS_ALLOWED_HOSTS: "https://paperless.hut.sh"
     PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.hut.sh"
     PAPERLESS_OCR_LANGUAGES: "eng ua ru"
     PAPERLESS_PORT: 8000
