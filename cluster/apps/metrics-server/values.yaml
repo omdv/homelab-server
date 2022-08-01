@@ -46,13 +46,14 @@ metrics-server:
     - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
     - --kubelet-use-node-status-port
     - --metric-resolution=15s
+    - --kubelet-insecure-tls
 
   livenessProbe:
     httpGet:
       path: /livez
       port: https
-      scheme: HTTPS
-    initialDelaySeconds: 0
+      scheme: HTTPS*
+    initialDelaySeconds: 300
     periodSeconds: 10
     failureThreshold: 3
 
@@ -61,7 +62,7 @@ metrics-server:
       path: /readyz
       port: https
       scheme: HTTPS
-    initialDelaySeconds: 20
+    initialDelaySeconds: 300
     periodSeconds: 10
     failureThreshold: 3
 
