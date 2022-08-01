@@ -26,21 +26,6 @@ metrics-server:
     runAsNonRoot: true
     runAsUser: 1000
 
-  priorityClassName: system-cluster-critical
-
-  containerPort: 10250
-
-  hostNetwork:
-    enabled: false
-
-  replicas: 1
-
-  podDisruptionBudget:
-    # https://kubernetes.io/docs/tasks/run-application/configure-pdb/
-    enabled: false
-    minAvailable:
-    maxUnavailable:
-
   defaultArgs:
     - --cert-dir=/tmp
     - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
@@ -81,11 +66,10 @@ metrics-server:
     interval: 1m
     scrapeTimeout: 10s
 
-  # See https://github.com/kubernetes-sigs/metrics-server#scaling
   resources:
     requests:
-      cpu: 5m
-      memory: 16Mi
-    limits:
-      cpu: 20m
+      cpu: 100m
       memory: 32Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
