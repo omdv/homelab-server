@@ -1,0 +1,4 @@
+---
+resources:
+  - secret-store.yaml
+  - rbac.yaml

@@ -1,0 +1,15 @@
+# https://github.com/external-secrets/external-secrets/blob/main/deploy/charts/external-secrets/values.yaml
+---
+external-secrets:
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/external-secrets/external-secrets
+    pullPolicy: IfNotPresent
+
+  installCRDs: true
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi

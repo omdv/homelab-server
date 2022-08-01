@@ -1,7 +1,9 @@
 ---
-name: chart
 apiVersion: v2
-version: 1.0.0
+name: my-argocd-chart
+type: application
+version: 0.1.0
+appVersion: "1.0"
 dependencies:
   - name: argo-cd
     version: 4.9.12

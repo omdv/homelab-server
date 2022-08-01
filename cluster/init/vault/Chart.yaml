@@ -1,7 +1,9 @@
 ---
-name: chart
 apiVersion: v2
-version: 1.0.0
+name: my-vault-chart
+type: application
+version: 0.1.0
+appVersion: "1.0"
 dependencies:
   - name: vault
     version: 0.20.1

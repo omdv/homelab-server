@@ -4,7 +4,7 @@ kind: StorageClass
 metadata:
   name: zfspv
   annotations:
-    storageclass.kubernetes.io/is-default-class: "false"
+    storageclass.kubernetes.io/is-default-class: "true"
 parameters:
   recordsize: "4k"
   compression: "off"

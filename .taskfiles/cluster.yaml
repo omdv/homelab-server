@@ -38,13 +38,30 @@ tasks:
       - "helm delete vault -n vault"
       - "kubectl delete pvc/data-vault-0 -n vault"
 
+  secrets:install:
+    desc: Install external-secrets
+    dir: ./
+    cmds:
+      - "kubectl create namespace external-secrets --dry-run=client -o yaml | kubectl apply -f -"
+      - "helm repo add external-secrets https://charts.external-secrets.io && helm dependency update {{.CLUSTER_DIR}}/init/external-secrets"
+      - "helm status external-secrets -n external-secrets || helm install --wait external-secrets -n external-secrets {{.CLUSTER_DIR}}/init/external-secrets"
+      - "kubectl apply -f {{.SECRETS_DIR}}/vault-secret.yaml"
+      - "kubectl apply -k {{.CLUSTER_DIR}}/init/secrets-store"
+
+  secrets:delete:
+    desc: Delete external-secrets
+    dir: ./
+    cmds:
+      - "helm delete external-secrets -n external-secrets"
+      - "kubectl delete $(kubectl get secret -n external-secrets --output name) -n external-secrets"
+
   argo:install:
     desc: Install argo
     dir: ./
     cmds:
       - "kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -"
-      - "helm dependency update {{.CLUSTER_DIR}}/init/argocd"
-      - "helm install argocd -n argocd {{.CLUSTER_DIR}}/init/argocd"
+      - "helm repo add argo https://argoproj.github.io/argo-helm && helm dependency update {{.CLUSTER_DIR}}/init/argocd"
+      - "helm status argocd -n argocd || helm install argocd -n argocd {{.CLUSTER_DIR}}/init/argocd"
 
   argo:init:
     desc: Initialize argo - expecting port-forward svc/argocd-server to 8080
@@ -63,26 +80,6 @@ tasks:
     dir: ./
     cmds:
       - "helm delete argocd -n argocd"
-
-  secrets:install:
-    desc: Install external-secrets
-    dir: ./
-    cmds:
-      - "helm repo add external-secrets https://charts.external-secrets.io && helm repo update"
-      - "helm install external-secrets external-secrets/external-secrets \
-        -n external-secrets \
-        --create-namespace \
-        --set installCRDs=true \
-        --wait"
-      - "kubectl apply -f {{.SECRETS_DIR}}/vault-secret.yaml"
-      - "kubectl apply -k {{.CLUSTER_DIR}}/init/external-secrets"
-
-  secrets:delete:
-    desc: Delete external-secrets
-    dir: ./
-    cmds:
-      - "helm delete external-secrets -n external-secrets"
-      - "kubectl delete $(kubectl get secret -n external-secrets --output name) -n external-secrets"
 
   install:
     desc: Full install
