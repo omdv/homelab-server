@@ -36,6 +36,13 @@ postgresql:
           capabilities:
             add:
               - NET_ADMIN
+    persistence:
+      enabled: true
+      existingClaim: postgres
+      mountPath: /bitnami/postgresql
+      storageClass: ""
+      accessModes:
+        - ReadWriteOnce
     startupProbe:
       enabled: false
       initialDelaySeconds: 30
@@ -57,12 +64,6 @@ postgresql:
       timeoutSeconds: 5
       failureThreshold: 6
       successThreshold: 1
-    persistence:
-      enabled: true
-      existingClaim: postgres
-      mountPath: /bitnami/postgresql
-      accessModes:
-        - ReadWriteOnce
     podSecurityContext:
       enabled: true
       fsGroup: 1000
