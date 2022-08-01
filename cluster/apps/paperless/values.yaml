@@ -55,6 +55,14 @@ paperless:
       enabled: true
       existingClaim: pvc-paperless-consume
 
+  resources:
+    requests:
+      cpu: "10m"
+      memory: "256Mi"
+    limits:
+      cpu: "30m"
+      memory: "512Mi"
+
 common:
   resources:
     limits:
