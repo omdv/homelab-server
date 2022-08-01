@@ -52,7 +52,7 @@ metrics-server:
     httpGet:
       path: /livez
       port: https
-      scheme: HTTPS*
+      scheme: HTTPS
     initialDelaySeconds: 300
     periodSeconds: 10
     failureThreshold: 3
