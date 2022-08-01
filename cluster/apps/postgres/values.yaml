@@ -1,3 +1,4 @@
+# https://github.com/bitnami/charts/blob/master/bitnami/postgresql/values.yaml
 ---
 postgresql:
   global:
@@ -45,6 +46,13 @@ postgresql:
           capabilities:
             add:
               - NET_ADMIN
+        resources:
+          requests:
+            memory: 16Mi
+            cpu: 20m
+          limits:
+            memory: 32Mi
+            cpu: 100m
     persistence:
       enabled: true
       existingClaim: "pvc-postgres"
@@ -85,5 +93,12 @@ postgresql:
       tag: 10-debian-10-r305
       pullPolicy: IfNotPresent
       pullSecrets: []
+    resources:
+      requests:
+        memory: 8Mi
+        cpu: 10m
+      limits:
+        memory: 16Mi
+        cpu: 20m
     securityContext:
       runAsUser: 0

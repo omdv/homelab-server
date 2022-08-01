@@ -53,7 +53,7 @@ metrics-server:
       path: /livez
       port: https
       scheme: HTTPS
-    initialDelaySeconds: 300
+    initialDelaySeconds: 120
     periodSeconds: 10
     failureThreshold: 3
 
@@ -62,7 +62,7 @@ metrics-server:
       path: /readyz
       port: https
       scheme: HTTPS
-    initialDelaySeconds: 300
+    initialDelaySeconds: 120
     periodSeconds: 10
     failureThreshold: 3
 
