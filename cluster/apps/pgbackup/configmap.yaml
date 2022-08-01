@@ -7,8 +7,8 @@ metadata:
     app: pgbackup
 
 data:
-  POSTGRES_HOST: "192.168.1.24"
-  POSTGRES_PORT: "31433"
+  POSTGRES_HOST: "postgresql.postgres.svc.cluster.local"
+  POSTGRES_PORT: "5432"
   POSTGRES_DB: "paperless"
   POSTGRES_USER: "postgres"
   POSTGRES_EXTRA_OPTS: "-Z9 --schema=public --blobs"
