@@ -15,11 +15,20 @@ postgresql:
     pullSecrets: []
     debug: false
 
+  architecture: "standalone"
+
   primary:
     service:
       type: "ClusterIP"
       ports:
         postgresql: 5432
+    resources:
+      limits:
+        memory: 256Mi
+        cpu: 250m
+      requests:
+        memory: 256Mi
+        cpu: 250m
     sidecars:
       - name: ts-sidecar
         image: "tailscale/tailscale:1.29.20"
@@ -41,6 +50,9 @@ postgresql:
       existingClaim: postgres
       mountPath: /bitnami/postgresql
       storageClass: ""
+      selector:
+        matchLabels:
+          app: postgres
       accessModes:
         - ReadWriteOnce
     startupProbe:
