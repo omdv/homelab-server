@@ -57,17 +57,8 @@ paperless:
 
   resources:
     requests:
-      cpu: "10m"
+      cpu: "100m"
       memory: "256Mi"
-    limits:
-      cpu: "30m"
-      memory: "512Mi"
-
-common:
-  resources:
     limits:
       cpu: "500m"
       memory: "512Mi"
-    requests:
-      cpu: "100m"
-      memory: "256Mi"
