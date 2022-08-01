@@ -1,0 +1,90 @@
+# https://raw.githubusercontent.com/kubernetes-sigs/metrics-server/master/charts/metrics-server/values.yaml
+---
+metrics-server:
+  image:
+    repository: k8s.gcr.io/metrics-server/metrics-server
+    pullPolicy: IfNotPresent
+
+  fullnameOverride: "metrics"
+
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+
+  rbac:
+    create: true
+    pspEnabled: false
+
+  apiService:
+    create: true
+
+  podSecurityContext: {}
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+
+  priorityClassName: system-cluster-critical
+
+  containerPort: 10250
+
+  hostNetwork:
+    enabled: false
+
+  replicas: 1
+
+  podDisruptionBudget:
+    # https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+    enabled: false
+    minAvailable:
+    maxUnavailable:
+
+  defaultArgs:
+    - --cert-dir=/tmp
+    - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+    - --kubelet-use-node-status-port
+    - --metric-resolution=15s
+
+  livenessProbe:
+    httpGet:
+      path: /livez
+      port: https
+      scheme: HTTPS
+    initialDelaySeconds: 0
+    periodSeconds: 10
+    failureThreshold: 3
+
+  readinessProbe:
+    httpGet:
+      path: /readyz
+      port: https
+      scheme: HTTPS
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    failureThreshold: 3
+
+  service:
+    type: ClusterIP
+    port: 443
+    annotations: {}
+    labels: {}
+
+  metrics:
+    enabled: false
+
+  serviceMonitor:
+    enabled: false
+    additionalLabels: {}
+    interval: 1m
+    scrapeTimeout: 10s
+
+  # See https://github.com/kubernetes-sigs/metrics-server#scaling
+  resources:
+    requests:
+      cpu: 5m
+      memory: 16Mi
+    limits:
+      cpu: 20m
+      memory: 32Mi

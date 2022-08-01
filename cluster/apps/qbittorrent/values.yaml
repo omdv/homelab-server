@@ -44,16 +44,6 @@ qbittorrent:
           secretName: my-certs-qbittorrent
   metrics:
     enabled: false
-    # enabled: true
-    # exporter:
-    #   image:
-    #     repository: docker.io/esanchezm/prometheus-qbittorrent-exporter
-    #     tag: v1.2.0
-    # serviceMonitor:
-    #   interval: 1m
-    #   scrapeTimeout: 10s
-    # prometheusRule:
-    #   enabled: true
   podSecurityContext:
     runAsUser: 0
     runAsGroup: 0
