@@ -31,7 +31,7 @@ postgresql:
         cpu: 250m
     sidecars:
       - name: ts-sidecar
-        image: "tailscale/tailscale:1.29.20"
+        image: "tailscale/tailscale:v1.29.20"
         imagePullPolicy: Always
         env:
           - name: TS_AUTH_KEY
