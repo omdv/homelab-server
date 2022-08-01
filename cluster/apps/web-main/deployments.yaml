@@ -36,4 +36,4 @@ spec:
       volumes:
         - name: storage-volume
           persistentVolumeClaim:
-            claimName: web-main
+            claimName: pvc-web-main

@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: qbittorrent-downloads
+  name: pv-qbittorrent-downloads
   labels:
     app: qbittorrent
 spec:
@@ -18,7 +18,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: qbittorrent-downloads
+  name: pvc-qbittorrent-downloads
   labels:
     app: qbittorrent
 spec:
@@ -28,13 +28,13 @@ spec:
   resources:
     requests:
       storage: 100Gi
-  volumeName: qbittorrent-downloads
+  volumeName: pv-qbittorrent-downloads
 
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: qbittorrent-config
+  name: pv-qbittorrent-config
   labels:
     app: qbittorrent
 spec:
@@ -50,7 +50,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: qbittorrent-config
+  name: pvc-qbittorrent-config
   labels:
     app: qbittorrent
 spec:
@@ -60,4 +60,4 @@ spec:
   resources:
     requests:
       storage: 100Mi
-  volumeName: qbittorrent-config
+  volumeName: pv-qbittorrent-config

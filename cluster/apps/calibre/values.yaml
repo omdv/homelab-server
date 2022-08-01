@@ -43,7 +43,7 @@ calibre:
   persistence:
     config:
       enabled: true
-      existingClaim: calibre-pvc
+      existingClaim: pvc-calibre
   resources:
     requests:
       memory: 16Mi

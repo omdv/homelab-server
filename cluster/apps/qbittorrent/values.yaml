@@ -62,10 +62,10 @@ qbittorrent:
   persistence:
     config:
       enabled: true
-      existingClaim: qbittorrent-config
+      existingClaim: pvc-qbittorrent-config
     media:
       enabled: true
-      existingClaim: qbittorrent-downloads
+      existingClaim: pvc-qbittorrent-downloads
       mountPath: /media
   podAnnotations:
     setGateway: "true"
