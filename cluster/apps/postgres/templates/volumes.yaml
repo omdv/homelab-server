@@ -2,9 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgres
-  labels:
-    app: postgres
+  name: pv-postgres
 
 spec:
   capacity:
@@ -19,9 +17,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: postgres
-  labels:
-    app: postgres
+  name: pvc-postgres
 
 spec:
   storageClassName: local-path
@@ -30,4 +26,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  volumeName: postgres
+  volumeName: pv-postgres

@@ -10,7 +10,7 @@ postgresql:
   image:
     registry: docker.io
     repository: bitnami/postgresql
-    tag: 13.5.0-debian-10-r76
+    tag: "13.7.0"
     pullPolicy: IfNotPresent
     pullSecrets: []
     debug: false
@@ -31,10 +31,10 @@ postgresql:
         cpu: 250m
     sidecars:
       - name: ts-sidecar
-        image: "tailscale/tailscale:v1.29.20"
+        image: "omdv/tailscale-k8s-sidecar:20220801033750974f6a"
         imagePullPolicy: Always
         env:
-          - name: TS_AUTH_KEY
+          - name: TAILSCALE_AUTH_KEY
             valueFrom:
               secretKeyRef:
                 name: postgres-secret
@@ -47,14 +47,8 @@ postgresql:
               - NET_ADMIN
     persistence:
       enabled: true
-      existingClaim: postgres
-      mountPath: /bitnami/postgresql
-      storageClass: ""
-      selector:
-        matchLabels:
-          app: postgres
-      accessModes:
-        - ReadWriteOnce
+      existingClaim: "pvc-postgres"
+      mountPath: "/bitnami/postgresql"
     startupProbe:
       enabled: false
       initialDelaySeconds: 30
@@ -63,14 +57,14 @@ postgresql:
       failureThreshold: 10
       successThreshold: 1
     livenessProbe:
-      enabled: true
+      enabled: false
       initialDelaySeconds: 30
       periodSeconds: 10
       timeoutSeconds: 5
       failureThreshold: 6
       successThreshold: 1
     readinessProbe:
-      enabled: true
+      enabled: false
       initialDelaySeconds: 5
       periodSeconds: 10
       timeoutSeconds: 5
