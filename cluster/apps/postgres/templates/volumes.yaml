@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /pool/databases/k3s-postgres
+    path: /pool/databases/postgres
 
 ---
 apiVersion: v1
@@ -25,5 +25,5 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 100Gi
   volumeName: pv-postgres
