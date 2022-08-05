@@ -64,7 +64,7 @@ hajimari:
 
   resources:
     requests:
-      cpu: 2main
+      cpu: 2m
       memory: 10Mi
     limits:
       cpu: 12m
