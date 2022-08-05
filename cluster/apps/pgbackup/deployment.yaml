@@ -33,11 +33,11 @@ spec:
               name: volume
           resources:
             requests:
-              cpu: "0.002"
-              memory: "4Mi"
+              cpu: 5m
+              memory: 8Mi
             limits:
-              cpu: "0.05"
-              memory: "32Mi"
+              cpu: 15m
+              memory: 48Mi
       volumes:
         - name: volume
           persistentVolumeClaim:

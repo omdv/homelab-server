@@ -61,3 +61,12 @@ hajimari:
       enabled: true
       accessMode: ReadWriteOnce
       size: 1Gi
+
+common:
+  resources:
+    requests:
+      cpu: 2m
+      memory: 10Mi
+    limits:
+      cpu: 12m
+      memory: 32Mi
