@@ -10,8 +10,8 @@ Mono repo to manage provision of homelab server. Some features:
 - [k3s]: Hashicorp's Vault with external-secrets integration
 - [k3s]: Ingress-nginx with cert-manager and hajimari
 - [k3s]: Oauth2-proxy email authentication/authorization
+- [k3s]: My own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
 - [k3s]: Run apps behind wireguard gateway
-- [k3s]: Kube metrics on prometheus
 
 ## Prior to Deployment
 
