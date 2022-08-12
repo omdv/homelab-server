@@ -28,7 +28,7 @@ application:
     repository: omdv/ib-app
     pullPolicy: Always
     tag: "1.0.0"
-  storageBackend: "local"
+  storageBackend: "sqlite"
   persistence:
     enabled: true
     existingClaim: "pvc-ibkr"
