@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-ibkr
+
+spec:
+  capacity:
+    storage: 100Gi
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /pool/ibgateway
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-ibkr
+
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  volumeName: pv-ibkr

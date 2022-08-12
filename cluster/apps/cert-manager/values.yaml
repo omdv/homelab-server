@@ -5,6 +5,9 @@ cert-manager:
     requests:
       cpu: 10m
       memory: 32Mi
+    limits:
+      cpu: 40m
+      memory: 64Mi
   securityContext:
     runAsNonRoot: true
   prometheus:
