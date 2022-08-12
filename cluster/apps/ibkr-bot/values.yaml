@@ -13,8 +13,14 @@ gateway:
     pullPolicy: IfNotPresent
     tag: "1012"
   existingSecret: "ibkr-secret"
-  tradingMode: "live"
-  resources: {}
+  tradingMode: "paper"
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1024Mi"
 
 application:
   replicaCount: 1
