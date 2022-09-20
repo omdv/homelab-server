@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-znc
+  labels:
+    app: znc
+
+spec:
+  capacity:
+    storage: 1Gi
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /pool/config/znc
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-znc
+  labels:
+    app: znc
+
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-znc

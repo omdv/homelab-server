@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: znc
+  labels:
+    app: znc
+  annotations:
+    argocd.argoproj.io/sync-wave: "15"
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: znc
+  template:
+    metadata:
+      labels:
+        app: znc
+    spec:
+      containers:
+        - name: znc
+          image: znc:1.8.2-slim
+          ports:
+            - name: irc
+              containerPort: 6667
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "10Mi"
+            limits:
+              cpu: "30m"
+              memory: "30Mi"
+          volumeMounts:
+            - name: config
+              mountPath: /znc-data
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: pvc-znc

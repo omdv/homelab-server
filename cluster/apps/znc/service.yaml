@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: znc
+  labels:
+    app: znc
+
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 6667
+      targetPort: irc
+  selector:
+    app: znc
