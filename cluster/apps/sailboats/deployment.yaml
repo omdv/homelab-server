@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scrapper
+  labels:
+    app: scrapper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scrapper
+  template:
+    metadata:
+      labels:
+        app: scrapper
+    spec:
+      containers:
+        - name: scrapper
+          image: ghcr.io/omdv/sailboats-scrapper:latest
+          imagePullPolicy: Always
+          env:
+            - name: PG_HOST
+              value: postgresql.postgres.svc.cluster.local
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "10Mi"
+            limits:
+              cpu: "30m"
+              memory: "30Mi"
