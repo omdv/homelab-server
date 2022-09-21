@@ -19,6 +19,8 @@ spec:
         - name: scrapper
           image: ghcr.io/omdv/sailboats-scrapper:latest
           imagePullPolicy: Always
+          imagePullSecrets:
+            - name: dockerconfigjson-github-com
           env:
             - name: PG_HOST
               value: postgresql.postgres.svc.cluster.local
