@@ -20,6 +20,7 @@ Usage: $(basename "$0") <options>
     -h, --help                      Display help
     --verify                        Verify .config.env settings
     --vault                         Inject env vars into vault
+    --ghcr                          Create ghcr auth secret
 EOF
 }
 
@@ -40,21 +41,12 @@ main() {
         success
     elif [[ "${vault}" == 1 ]]; then
         generate_cluster_secrets
+    elif [[ "${ghcr}" == 1 ]]; then
+        add_github_registry_secret
     else
         # sops configuration file
         envsubst < "${PROJECT_DIR}/tmpl/.sops.yaml" \
             > "${PROJECT_DIR}/.sops.yaml"
-# cluster
-# envsubst < "${PROJECT_DIR}/tmpl/cluster/cluster-settings.yaml" \
-#     > "${PROJECT_DIR}/cluster/base/cluster-settings.yaml"
-# envsubst < "${PROJECT_DIR}/tmpl/argo/values.yaml" \
-#     > "${PROJECT_DIR}/argo/base/values.yaml"
-
-# # wireguard
-# # export WIREGUARD_CONFIG_FILE=$(cat ${PROJECT_DIR}/.wireguard/$(ls ${PROJECT_DIR}/.wireguard/) | base64) &&\
-# envsubst < "${PROJECT_DIR}/tmpl/cluster/wireguard.secrets.sops.yaml" \
-#     > "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
-# sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/wireguard.secrets.sops.yaml"
 
         # template argo values
         export ARGO_PWD=$(htpasswd -nbBC 10 "" $BOOTSTRAP_ARGO_ADMIN_PASSWORD | tr -d ':\n' | sed 's/$2y/$2a/')
@@ -332,6 +324,14 @@ generate_ansible_hosts() {
         printf "        %s:\n" "${BOOTSTRAP_ANSIBLE_HOST_NAME}"
         printf "          ansible_host: %s\n" "${BOOTSTRAP_ANSIBLE_HOST_ADDR}"
     } > "${PROJECT_DIR}/provision/ansible/inventory/hosts.yml"
+}
+
+add_github_registry_secret() {
+kubectl create secret docker-registry dockerconfigjson-github-com \
+    --docker-server=https://ghcr.io \
+    --docker-username=omdv \
+    --docker-password=$GITHUB_GHCR_TOKEN \
+    --namespace=sailboats
 }
 
 _log() {
