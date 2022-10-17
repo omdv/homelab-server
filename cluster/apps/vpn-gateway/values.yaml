@@ -8,8 +8,8 @@ pod-gateway:
     - media
   webhook:
     image:
-      repository: ghcr.io/k8s-at-home/gateway-admision-controller
-      tag: v3.5.0
+      repository: ghcr.io/angelnu/gateway-admision-controller
+      tag: v3.7.0
     gatewayDefault: false
     gatewayLabel: setGateway
     gatewayAnnotation: setGateway
