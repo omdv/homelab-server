@@ -1,8 +1,8 @@
 ---
 pod-gateway:
   image:
-    repository: ghcr.io/k8s-at-home/pod-gateway
-    tag: v1.6.0
+    repository: ghcr.io/angelnu/pod-gateway
+    tag: v1.8.1
   routed_namespaces:
     - vpn
     - media
@@ -19,7 +19,7 @@ pod-gateway:
     VPN_TRAFFIC_PORT: 51820
     NOT_ROUTED_TO_GATEWAY_CIDRS: "10.42.0.0/16 10.43.0.0/16"
     VPN_LOCAL_CIDRS: "192.168.0.0/16 10.0.0.0/8"
-    DNS_LOCAL_CIDRS: "home"
+    DNS_LOCAL_CIDRS: "local"
     K8S_DNS_IPS: "10.43.0.10"
   publicPorts:
     - hostname: qbittorrent
