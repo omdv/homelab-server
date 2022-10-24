@@ -55,7 +55,7 @@ pod-gateway:
       resources:
         requests:
           cpu: "0.005"
-          memory: 16Mi
+          memory: 32Mi
         limits:
           cpu: "0.05"
-          memory: 64Mi
+          memory: 128Mi
