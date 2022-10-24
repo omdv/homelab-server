@@ -1,0 +1,22 @@
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: vpn
+spec:
+  podSelector:
+    matchLabels:
+      app: terminal
+  ingress:
+    - from:
+      # Only allow ingress from K8S
+        - ipBlock:
+            cidr: 10.0.0.0/8
+  egress:
+    - to:
+      # Only allow egress to K8S
+        - ipBlock:
+            cidr: 10.0.0.0/8
+  policyTypes:
+    - Ingress
+    - Egress
