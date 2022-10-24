@@ -258,8 +258,8 @@ generate_cluster_secrets() {
 
     # initialize secret @ secret/wireguard
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/wireguard name=my-wireguard-secret
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_COUNTRY"="$VAULT_WIREGUARD_COUNTRY"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_CONFIG"="$(cat $WIREGUARD_CONFIG_FILE)"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_PRIVATE_KEY"="$VAULT_WIREGUARD_PRIVATE_KEY"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/wireguard "VAULT_WIREGUARD_ADDRESSES"="$VAULT_WIREGUARD_ADDRESSES"
 
     # initialize secret @ secret/postgres
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/postgres name=my-postgres-secret
