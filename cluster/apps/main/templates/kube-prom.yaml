@@ -32,7 +32,7 @@ spec:
         kubeProxy:
           enabled: false
         grafana:
-          enabled: false
+          enabled: true
         alertmanager:
           enabled: false
         kubeEtcd:
