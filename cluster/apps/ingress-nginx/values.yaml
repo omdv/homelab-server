@@ -11,5 +11,5 @@ ingress-nginx:
       - access-log-path: "/var/log/nginx/myaccess.log"
     metrics:
       enabled: true
-    extraArgs:
-      - "--enable-ssl-passthrough"
+    # extraArgs:
+    #   - "--enable-ssl-passthrough"
