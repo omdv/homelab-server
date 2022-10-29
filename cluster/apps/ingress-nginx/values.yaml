@@ -2,14 +2,16 @@
 #Ref: https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 ingress-nginx:
   controller:
-    # hostPort:
-    #   enabled: true
-    #   ports:
-    #     http: 80
-    #     https: 443
     config:
       access-log-path: "/var/log/nginx/myaccess.log"
     metrics:
       enabled: true
+    extraVolumes:
+      - name: access-log-volume
+        persistentVolumeClaim:
+          claimName: pvc-ingress-nginx
+    extraVolumeMounts:
+      - name: access-log-volume
+        mountPath: /var/log/nginx
     # extraArgs:
     #   - "--enable-ssl-passthrough"
