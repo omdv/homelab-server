@@ -1,16 +1,15 @@
 ---
-## nginx configuration
-## Ref: https://github.com/ku2bernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/index.md
-##
-controller:
-  hostPort:
-    enabled: true
-    ports:
-      http: 80
-      https: 443
-  config:
-    - access-log-path: "/var/log/nginx/myaccess.log"
-  metrics:
-    enabled: true
-  extraArgs:
-    - "--enable-ssl-passthrough"
+#Ref: https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
+ingress-nginx:
+  controller:
+    hostPort:
+      enabled: true
+      ports:
+        http: 80
+        https: 443
+    config:
+      - access-log-path: "/var/log/nginx/myaccess.log"
+    metrics:
+      enabled: true
+    extraArgs:
+      - "--enable-ssl-passthrough"
