@@ -2,7 +2,7 @@
 #Ref: https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 ingress-nginx:
   controller:
-    config:
+    logs:
       access-log-path: "/var/log/nginx/myaccess.log"
     metrics:
       enabled: true
@@ -13,5 +13,14 @@ ingress-nginx:
     extraVolumeMounts:
       - name: access-log-volume
         mountPath: /var/log/nginx
+    extraInitContainers:
+      update-volume-permission:
+        image: busybox:musl
+        command: ["sh", "-c", "chown -R 1000:1000 /logs"]
+        volumeMounts:
+          - name: access-log-volume
+            mountPath: /logs
+        securityContext:
+          runAsUser: 0
     # extraArgs:
     #   - "--enable-ssl-passthrough"
