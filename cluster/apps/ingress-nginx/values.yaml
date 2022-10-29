@@ -14,7 +14,7 @@ ingress-nginx:
       - name: access-log-volume
         mountPath: /var/log/nginx
     extraInitContainers:
-      update-volume-permission:
+      - name: update-volume-permission
         image: busybox:musl
         command: ["sh", "-c", "chown -R 1000:1000 /logs"]
         volumeMounts:
