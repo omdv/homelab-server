@@ -8,7 +8,7 @@ ingress-nginx:
         http: 80
         https: 443
     config:
-      - access-log-path: "/var/log/nginx/myaccess.log"
+      access-log-path: "/var/log/nginx/myaccess.log"
     metrics:
       enabled: true
     # extraArgs:
