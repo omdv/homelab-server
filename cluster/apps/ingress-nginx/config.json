@@ -1,7 +1,0 @@
-{
-    "app": {
-        "name": "ingress-nginx",
-        "path": "cluster/base/ingress-nginx",
-        "namespace": "networking"
-    }
-}
