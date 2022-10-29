@@ -2,7 +2,9 @@
 #Ref: https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 ingress-nginx:
   controller:
-    logs:
+    image:
+      runAsUser: 1001
+    config:
       access-log-path: "/var/log/nginx/myaccess.log"
     metrics:
       enabled: true
@@ -16,7 +18,7 @@ ingress-nginx:
     extraInitContainers:
       - name: update-volume-permission
         image: busybox:musl
-        command: ["sh", "-c", "chown -R 1000:1000 /logs"]
+        command: ["sh", "-c", "chown -R 1001:1001 /logs"]
         volumeMounts:
           - name: access-log-volume
             mountPath: /logs
