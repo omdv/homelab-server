@@ -1,6 +1,6 @@
 ---
 ## nginx configuration
-## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/index.md
+## Ref: https://github.com/ku2bernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/index.md
 ##
 controller:
   hostPort:
@@ -8,5 +8,9 @@ controller:
     ports:
       http: 80
       https: 443
+  config:
+    - access-log-path: "/var/log/nginx/myaccess.log"
+  metrics:
+    enabled: true
   extraArgs:
     - "--enable-ssl-passthrough"
