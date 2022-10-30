@@ -37,6 +37,10 @@ spec:
           enabled: false
         grafana:
           enabled: true
+          adminPassword: password
+          dashboards:
+            ingress-nginx:
+              url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
           ingress:
             enabled: true
             ingressClassName: nginx
