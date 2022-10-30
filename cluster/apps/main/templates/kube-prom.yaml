@@ -21,6 +21,10 @@ spec:
       skipCrds: true
       values: |-
         fullnameOverride: prom
+        prometheus:
+          prometheusSpec:
+            podMonitorSelectorNilUsesHelmValues: false
+            serviceMonitorSelectorNilUsesHelmValues: false
         kubeStateMetrics:
           enabled: true
         prometheus-node-exporter:
