@@ -1,22 +1,45 @@
 ---
 kube-prometheus-stack:
   fullnameOverride: prom
+  prometheus:
+    prometheusSpec:
+      podMonitorSelectorNilUsesHelmValues: false
+      serviceMonitorSelectorNilUsesHelmValues: false
   kubeStateMetrics:
     enabled: true
   prometheus-node-exporter:
-    fullnameOverride: node-exporter
+    enabled: true
   kubeControllerManager:
     enabled: false
   kubeScheduler:
     enabled: false
   kubeProxy:
     enabled: false
+  # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
   grafana:
     enabled: true
+    adminPassword: password
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: my-provider
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: true
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/my-provider
+    dashboards:
+      my-provider:
+        ingress-nginx:
+          gnetId: 17187
+          datasource: Prometheus
     ingress:
       enabled: true
       ingressClassName: nginx
-      path:
+      path: /
       hosts:
         - metrics.hut.sh
       annotations:
@@ -24,6 +47,7 @@ kube-prometheus-stack:
         nginx.ingress.kubernetes.io/auth-url: "https://auth.hut.sh/oauth2/auth"
         nginx.ingress.kubernetes.io/auth-signin: "https://auth.hut.sh/oauth2/start?rd=https://$host$uri"
         hajimari.io/enable: "true"
+        hajimari.io/appName: "metrics"
       tls:
         - hosts:
             - metrics.hut.sh
@@ -32,96 +56,3 @@ kube-prometheus-stack:
     enabled: false
   kubeEtcd:
     enabled: false
-
-# ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
-# ##
-# grafana:
-#   enabled: true
-#   namespaceOverride: ""
-#   defaultDashboardsEnabled: true
-#   defaultDashboardsTimezone: utc
-#   adminPassword: prom-operator
-#   rbac:
-#     pspEnabled: false
-#   ingress:
-#     enabled: false
-
-#     ## IngressClassName for Grafana Ingress.
-#     ## Should be provided if Ingress is enable.
-#     ##
-#     # ingressClassName: nginx
-
-#     ## Annotations for Grafana Ingress
-#     ##
-#     annotations: {}
-#       # kubernetes.io/ingress.class: nginx
-#       # kubernetes.io/tls-acme: "true"
-
-#     ## Labels to be added to the Ingress
-#     ##
-#     labels: {}
-
-#     ## Hostnames.
-#     ## Must be provided if Ingress is enable.
-#     ##
-#     # hosts:
-#     #   - grafana.domain.com
-#     hosts: []
-
-#     ## Path for grafana ingress
-#     path: /
-
-#     ## TLS configuration for grafana Ingress
-#     ## Secret must be manually created in the namespace
-#     ##
-#     tls: []
-#     # - secretName: grafana-general-tls
-#     #   hosts:
-#     #   - grafana.example.com
-
-#   sidecar:
-#     dashboards:
-#       enabled: true
-#       label: grafana_dashboard
-#       labelValue: "1"
-
-#       ## Annotations for Grafana dashboard configmaps
-#       ##
-#       annotations: {}
-#       multicluster:
-#         global:
-#           enabled: false
-#         etcd:
-#           enabled: false
-#       provider:
-#         allowUiUpdates: false
-#     datasources:
-#       enabled: true
-#       defaultDatasourceEnabled: true
-
-#       uid: prometheus
-
-#       ## URL of prometheus datasource
-#       ##
-#       # url: http://prometheus-stack-prometheus:9090/
-
-#       # If not defined, will use prometheus.prometheusSpec.scrapeInterval or its default
-#       # defaultDatasourceScrapeInterval: 15s
-
-#       ## Annotations for Grafana datasource configmaps
-#       ##
-#       annotations: {}
-
-#       ## Create datasource for each Pod of Prometheus StatefulSet;
-#       ## this uses headless service `prometheus-operated` which is
-#       ## created by Prometheus Operator
-#       ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/0fee93e12dc7c2ea1218f19ae25ec6b893460590/pkg/prometheus/statefulset.go#L255-L286
-#       createPrometheusReplicasDatasources: false
-#       label: grafana_datasource
-#       labelValue: "1"
-
-#       ## Field with internal link pointing to existing data source in Grafana.
-#       ## Can be provisioned via additionalDataSources
-#       exemplarTraceIdDestinations: {}
-#         # datasourceUid: Jaeger
-#         # traceIdLabelName: trace_id
