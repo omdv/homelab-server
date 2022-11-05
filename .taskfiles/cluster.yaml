@@ -85,7 +85,6 @@ tasks:
     desc: Full install
     dir: ./
     cmds:
-      - task: zfspv
       - task: vault:install
       - "sleep 50s"
       - task: vault:init
