@@ -2,27 +2,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: terminal
-  namespace: vpn
+  name: goaccess
+  namespace: metrics
   labels:
-    app: terminal
+    app: goaccess
   annotations:
     argocd.argoproj.io/sync-wave: "5"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: terminal
+      app: goaccess
   template:
     metadata:
       labels:
-        app: terminal
+        app: goaccess
       annotations:
         setGateway: "true"
     spec:
       containers:
-        - name: alpine
-          image: alpine
+        - name: goaccess
+          image: allinurl/goaccess:1.6.4
           command:
             - /bin/sh
             - -c
@@ -30,15 +30,6 @@ spec:
               sleep 600 &
               wait $!;
               done
-          livenessProbe:
-            exec:
-              command:
-                - sh
-                - -c
-                - if [ $(wget -q -O- https://ipinfo.io/country) = 'SE' ]; then exit 0; else exit $?; fi
-            initialDelaySeconds: 120
-            periodSeconds: 30
-            failureThreshold: 5
           resources:
             requests:
               cpu: "10m"

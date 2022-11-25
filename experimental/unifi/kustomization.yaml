@@ -1,0 +1,8 @@
+---
+namespace: unifi
+
+resources:
+  - volumes.yaml
+  - statefulset.yaml
+  - service.yaml
+  - ingress.yaml
