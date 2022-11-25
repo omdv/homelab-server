@@ -44,7 +44,7 @@ argo-cd:
         cpu: 512m
         memory: 512Mi
       limits:
-        cpu: 1024m
+        cpu: 2048m
         memory: 1024Mi
   configs:
     secret:
