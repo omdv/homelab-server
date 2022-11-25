@@ -1,0 +1,23 @@
+---
+falco:
+  driver:
+    enabled: true
+    kind: module
+  falcosidekick:
+    enabled: true
+  collectors:
+    enabled: false
+  controller:
+    kind: deployment
+  services:
+    - name: k8saudit-webhook
+      type: NodePort
+      ports:
+        - port: 9765
+          nodePort: 30007
+          protocol: TCP
+  falco:
+    rules_file:
+      - /etc/falco/falco_rules.yaml
+      - /etc/falco/falco_rules.local.yaml
+      - /etc/falco/rules.d
