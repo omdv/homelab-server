@@ -41,8 +41,11 @@ argo-cd:
   controller:
     resources:
       requests:
-        cpu: 250m
-        memory: 256Mi
+        cpu: 512m
+        memory: 512Mi
+      limits:
+        cpu: 1024m
+        memory: 1024Mi
   configs:
     secret:
       argocdServerAdminPassword: $2a$10$YtCUmdJ2B002tKFlEDmB7OmGv2r4xLt428YodSDJsrNIQ.z3wI/UK

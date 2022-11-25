@@ -50,4 +50,3 @@ calibre:
       cpu: "0.01"
     limits:
       memory: 256Mi
-      cpu: "0.4"
