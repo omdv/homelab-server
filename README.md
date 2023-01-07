@@ -1,17 +1,25 @@
 # Introduction
 
-Mono repo to manage provision of homelab server. Some features:
+Mono repo to manage provision of homelab server.
 
-- [host]: Ubuntu with zfs pool
-- [host]: Automated external backups
-- [host]: [k3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
-- [k3s]: ArgoCD managed apps / gitops
-- [k3s]: ZFS-based persistent volumes
-- [k3s]: Hashicorp's Vault with external-secrets integration
-- [k3s]: Ingress-nginx with cert-manager and hajimari
-- [k3s]: Oauth2-proxy email authentication/authorization
-- [k3s]: My own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
-- [k3s]: Run apps behind wireguard gateway
+Provisioning:
+- Ubuntu with zfs pool
+- Automated external backups
+- [k3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
+
+
+K3s cluster features and apps:
+- ArgoCD gitops
+- All secrets in Vault with `external-secrets` integration
+- Ingress-nginx with cert-manager and LetsEncrypt
+- Ingress behind Oauth2-proxy with email authentication
+- Selected apps behind wireguard gateway
+- Databases: postgresql, redis, mongodb
+- Paperless NGX document archival
+- Plex media server and samba
+- Sacred Omniboard ML experiment tracking
+- My own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
+
 
 ## Prior to Deployment
 
@@ -191,9 +199,7 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 
 ## TODO
 - add renovate
-- add server connection in pgadmin
 - trusted IPs on ingress
-- add country live check for wireguard
 - appRole vs root token for external-secrets
 - argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
 
@@ -203,6 +209,5 @@ I am considering upgrading to multi-node deployment for "fun" part of it, but th
 - renovate / automate image tag posting to github
 - kubeflow
 - valetudo private cloud for robo vacuum
-- move mongo to k8s
 - velero
 - istio
