@@ -267,6 +267,12 @@ generate_cluster_secrets() {
         kubectl exec -n vault vault-0 -- vault kv patch kv/secret/postgres "$var"="$(echo -n ${!var})"
     done
 
+    # initialize secret @ secret/mongodb
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/mongodb name=my-mongodb-secret
+    for var in "${!VAULT_MONGODB@}"; do
+        kubectl exec -n vault vault-0 -- vault kv patch kv/secret/mongodb "$var"="$(echo -n ${!var})"
+    done
+
     # initialize secret @ secret/samba
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/samba name=my-samba-secret
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/samba "VAULT_SAMBA_USER"="$VAULT_SAMBA_USER"

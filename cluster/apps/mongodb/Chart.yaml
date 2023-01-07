@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: my-mongodb-chart
+type: application
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+  - name: mongodb
+    version: 13.6.0
+    repository: https://charts.bitnami.com/bitnami

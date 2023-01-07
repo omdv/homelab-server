@@ -1,0 +1,55 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/mongodb/values.yaml
+---
+mongodb:
+  image:
+    registry: docker.io
+    repository: bitnami/mongodb
+    tag: 4.4.15-debian-10-r8
+    digest: ""
+
+  auth:
+    enabled: true
+    rootUser: root
+    existingSecret: mongodb-secret
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+
+  persistence:
+    enabled: true
+    existingClaim: "pvc-mongodb"
+    mountPath: "/bitnami/mongodb"
+
+  service:
+    externalIPs:
+      - 192.168.1.24
+
+  volumePermissions:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/bitnami-shell
+      tag: 11-debian-11-r61
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    resources:
+      requests:
+        memory: 8Mi
+        cpu: 10m
+      limits:
+        memory: 16Mi
+        cpu: 20m
+    securityContext:
+      runAsUser: 0
+
+# Snipper to create user and database
+# use sacred
+# db.createUser(
+#   {
+#     user: "sacred",
+#     pwd:  "sacred",   // or cleartext password
+#     roles: [ { role: "readWrite", db: "sacred" } ]
+#   }
+# )
