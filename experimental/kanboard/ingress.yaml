@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kanboard
+  labels:
+    app: kanboard
+    gethomepage.dev/enabled: "true"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.hut.sh/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.hut.sh/oauth2/start?rd=https://$host$uri"
+    gethomepage.dev/name: "kanboard"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - kanboard.hut.sh
+      secretName: my-certs-kanboard
+  rules:
+    - host: kanboard.hut.sh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: whoami
+                port:
+                  name: http

@@ -10,7 +10,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "7"
 spec:
   destination:
-    namespace: postgres
+    namespace: omniboard
     server: {{ .Values.spec.destination.server }}
   project: default
   source:

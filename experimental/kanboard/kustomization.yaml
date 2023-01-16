@@ -1,8 +1,8 @@
 ---
-namespace: apps
+namespace: kanboard
 
 resources:
-  - 01-volumes.yaml
-  - 02-services.yaml
-  - 03-deployments.yaml
-  - 04-ingressroutes.yaml
+  - volumes.yaml
+  - service.yaml
+  - deployment.yaml
+  - ingress.yaml

@@ -20,7 +20,8 @@ spec:
         - name: kanboard
           image: kanboard/kanboard:latest
           ports:
-            - containerPort: 80
+            - name: http
+              containerPort: 80
               protocol: TCP
           volumeMounts:
             - mountPath: /var/www/app/data
