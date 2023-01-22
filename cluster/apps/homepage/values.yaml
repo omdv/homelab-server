@@ -2,7 +2,7 @@
 homepage:
   image:
     repository: ghcr.io/benphelps/homepage
-    tag: 0.6.2
+    tag: v0.6.2
   enableRbac: true
   config:
     kubernetes:
