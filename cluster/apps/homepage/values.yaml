@@ -19,7 +19,6 @@ homepage:
       enabled: true
       ingressClassName: nginx
       labels:
-        gethomepage.dev/enabled: "true"
       annotations:
         gethomepage.dev/name: "Homepage"
         gethomepage.dev/description: "A modern, secure, highly customizable application dashboard."
