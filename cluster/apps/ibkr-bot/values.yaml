@@ -11,7 +11,7 @@ gateway:
   image:
     repository: omdv/ib-gateway
     pullPolicy: IfNotPresent
-    tag: "1012"
+    tag: "1019"
   existingSecret: "ibkr-secret"
   tradingMode: "paper"
   resources:
