@@ -1,37 +1,38 @@
 #https://github.com/omdv/ibkr-trading/blob/master/charts/ibkr-bot/values.yaml
 ---
-nameOverride: ""
-fullnameOverride: "ibkr-bot"
+ibkr-bot:
+  nameOverride: ""
+  fullnameOverride: "ibkr-bot"
 
-serviceAccount:
-  create: true
+  serviceAccount:
+    create: true
 
-gateway:
-  replicaCount: 1
-  image:
-    repository: omdv/ib-gateway
-    pullPolicy: IfNotPresent
-    tag: "1019"
-  existingSecret: "ibkr-secret"
-  tradingMode: "paper"
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "512Mi"
-    limits:
-      cpu: "1000m"
-      memory: "1024Mi"
+  gateway:
+    replicaCount: 1
+    image:
+      repository: omdv/ib-gateway
+      pullPolicy: IfNotPresent
+      tag: "1019"
+    existingSecret: "ibkr-secret"
+    tradingMode: "paper"
+    resources:
+      requests:
+        cpu: "250m"
+        memory: "512Mi"
+      limits:
+        cpu: "1000m"
+        memory: "1024Mi"
 
-application:
-  replicaCount: 1
-  image:
-    repository: omdv/ib-app
-    pullPolicy: Always
-    tag: "latest"
-  configMapName: "ibkr-config"
-  storageBackend: "file"
-  persistence:
-    enabled: true
-    existingClaim: "pvc-ibkr"
-    mountPath: "/data"
-  resources: {}
+  application:
+    replicaCount: 1
+    image:
+      repository: omdv/ib-app
+      pullPolicy: Always
+      tag: "latest"
+    configMapName: "ibkr-config"
+    storageBackend: "file"
+    persistence:
+      enabled: true
+      existingClaim: "pvc-ibkr"
+      mountPath: "/data"
+    resources: {}
