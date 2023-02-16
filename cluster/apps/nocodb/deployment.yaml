@@ -1,0 +1,32 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nocodb
+  labels:
+    app: nocodb
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nocodb
+  template:
+    metadata:
+      labels:
+        app: nocodb
+    spec:
+      containers:
+        - name: nocodb
+          image: nocodb/nocodb:latest
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 8080
+          # resources:
+          #   requests:
+          #     cpu: "200m"
+          #     memory: "200Mi"
+          #   limits:
+          #     cpu: "1000m"
+          #     memory: "800Mi"

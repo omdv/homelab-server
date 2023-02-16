@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nocodb
+  labels:
+    app: nocodb
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.hut.sh/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.hut.sh/oauth2/start?rd=https://$host$uri"
+    hajimari.io/enable: "true"
+
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - nocodb.hut.sh
+      secretName: my-certs-nocodb
+  rules:
+    - host: nocodb.hut.sh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nocodb
+                port:
+                  name: http
