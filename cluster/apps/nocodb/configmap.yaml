@@ -7,5 +7,6 @@ metadata:
     app: nocodb
 
 data:
+  TZ: "America/Chicago"
   NC_PUBLIC_URL: "nocodb.hut.sh"
   NC_DB: "pg://postgresql.postgres.svc.cluster.local:5432?u=nocodb&p=nocodb&d=nocodb"
