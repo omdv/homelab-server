@@ -23,10 +23,20 @@ spec:
             - name: http
               protocol: TCP
               containerPort: 8080
-          # resources:
-          #   requests:
-          #     cpu: "200m"
-          #     memory: "200Mi"
-          #   limits:
-          #     cpu: "1000m"
-          #     memory: "800Mi"
+          envFrom:
+            - configMapRef:
+                name: nocodb-config
+          volumeMounts:
+            - mountPath: /usr/app/data
+              name: data
+          resources:
+            requests:
+              cpu: 200m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-nocodb
