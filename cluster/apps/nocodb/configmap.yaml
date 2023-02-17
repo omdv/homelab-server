@@ -7,6 +7,6 @@ metadata:
     app: nocodb
 
 data:
-  NC_DB: "postgresql.postgres.svc.cluster.local"
+  NC_DB: "pg://postgresql.postgres.svc.cluster.local:5432?u=nocodb&p=nocodb&d=nocodb"
   NC_PUBLIC_URL: "nocodb.hut.sh"
   NC_REDIS_URL: "redis://redis-master.redis.svc.cluster.local:6379"
