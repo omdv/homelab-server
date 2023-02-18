@@ -20,8 +20,9 @@ spec:
         - name: huginn
           image: huginn/huginn:latest
           ports:
-            - containerPort: 3000
+            - name: http
               protocol: TCP
+              containerPort: 3000
           env:
             - name: SMTP_USER_NAME
               valueFrom:
@@ -33,11 +34,6 @@ spec:
                 secretKeyRef:
                   name: huginn-secrets
                   key: HOMELAB_SMTP_FASTMAIL_PASS
-            - name: APP_SECRET_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: huginn-secrets
-                  key: HOMELAB_HUGINN_SESSION_SECRET
           envFrom:
             - configMapRef:
                 name: huginn-config
