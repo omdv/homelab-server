@@ -23,17 +23,6 @@ spec:
             - name: http
               protocol: TCP
               containerPort: 3000
-          env:
-            - name: SMTP_USER_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: huginn-secrets
-                  key: HOMELAB_SMTP_FASTMAIL_USER
-            - name: SMTP_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: huginn-secrets
-                  key: HOMELAB_SMTP_FASTMAIL_PASS
           envFrom:
             - configMapRef:
                 name: huginn-config

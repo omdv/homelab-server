@@ -6,7 +6,7 @@
   vars:
     - user: "{{ lookup('env','HOMELAB_USER') }}"
     - ip4: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
-    - interface: "enp0s31f6"
+    - interface: "enp2s0"
     - zfs_cache: /dev/nvme0n1p2
     - zfs_log: /dev/nvme0n1p3
     - zfs_pool: pool
