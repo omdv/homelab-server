@@ -15,10 +15,12 @@ K3s cluster features and apps:
 - Ingress behind Oauth2-proxy with email authentication
 - Selected apps behind wireguard gateway
 - Databases: postgresql, redis, mongodb
+- Apache Superset to analyze my on-prem databases
 - Paperless NGX document archival
 - Plex media server and samba
 - Sacred Omniboard ML experiment tracking
 - My own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
+- Nocodb deployment for my own trading app
 
 
 ## Prior to Deployment
