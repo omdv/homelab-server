@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: helm-superset
+type: application
+version: 0.2.0
+appVersion: "1.0"
+dependencies:
+  - name: superset
+    version: 0.8.7
+    repository: https://apache.github.io/superset

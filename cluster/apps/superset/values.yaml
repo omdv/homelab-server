@@ -1,0 +1,29 @@
+#https://raw.githubusercontent.com/apache/superset/master/helm/superset/values.yaml
+superset:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/auth-url: "https://auth.hut.sh/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://auth.hut.sh/oauth2/start?rd=https://$host$uri"
+      hajimari.io/enable: "true"
+    hosts:
+      - superset.hut.sh
+    tls:
+      - hosts:
+          - superset.hut.sh
+        secretName: my-certs-superset
+  postgresql:
+    enabled: false
+  redis:
+    enabled: false
+  supersetNode:
+    connections:
+      redis_host: 'redis-master.redis.svc.cluster.local'
+      redis_port: "6379"
+      db_host: 'postgresql.postgres.svc.cluster.local'
+      db_port: "5432"
+      db_user: superset
+      db_pass: superset
+      db_name: superset
