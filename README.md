@@ -178,26 +178,32 @@ terraform apply
 
 ## Hardware
 
-This all runs on single machine in acclaimed Node 304 case, which can house 6 HDDs.
+This all runs on single machine in acclaimed Node 304 case, which can house 6 HDDs, although I use only 4 at the moment.
+
 I am considering upgrading to multi-node deployment for "fun" part of it, but the current form-factor meets all needs and is quiet, functional and aesthetic enough to sit in plain sight in the Living room.
 
-[PCPartPicker Part List](https://pcpartpicker.com/list/RBVDTC)
+In Feb 2023 I upgraded old Intel Celeron to i5-11400 CPU. The average load is about 15% now.
 
-| Type             | Item                                                                                                                                                                                                                 |
-| :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **CPU**          | [Intel Pentium G4560 3.5 GHz Dual-Core Processor](https://pcpartpicker.com/product/8gKhP6/intel-pentium-g4560-35ghz-dual-core-processor-bx80677g4560)                                                                |
-| **CPU Cooler**   | [Noctua NH-L9i 33.84 CFM CPU Cooler](https://pcpartpicker.com/product/xxphP6/noctua-nh-l9i-3384-cfm-cpu-cooler-nh-l9i)                                                                                               |
-| **CPU Cooler**   | [Cooler Master Hyper 212 LED 66.3 CFM Rifle Bearing CPU Cooler](https://pcpartpicker.com/product/YdJkcf/cooler-master-hyper-212-led-663-cfm-rifle-bearing-cpu-cooler-rr-212l-16pr-r1)                                |
-| **Motherboard**  | [ASRock Z270M-ITX/ac Mini ITX LGA1151 Motherboard](https://pcpartpicker.com/product/2Hbkcf/asrock-z270m-itxac-mini-itx-lga1151-motherboard-z270m-itxac)                                                              |
-| **Memory**       | [G.Skill Aegis 16 GB (2 x 8 GB) DDR4-3000 Memory](https://pcpartpicker.com/product/FNprxr/gskill-aegis-16gb-2-x-8gb-ddr4-3000-memory-f43000c16d16gisb)                                                               |
-| **Storage**      | [Kingston A1000 240 GB M.2-2280 NVME Solid State Drive](https://pcpartpicker.com/product/FVfhP6/kingston-a1000-240gb-m2-2280-solid-state-drive-sa1000m8240g)                                                         |
-| **Storage**      | [Western Digital Red 2 TB 3.5" 5400RPM Internal Hard Drive](https://pcpartpicker.com/product/9wW9TW/western-digital-internal-hard-drive-wd20efrx)                                                                    |
-| **Storage**      | [Western Digital Red 2 TB 3.5" 5400RPM Internal Hard Drive](https://pcpartpicker.com/product/9wW9TW/western-digital-internal-hard-drive-wd20efrx)                                                                    |
-| **Storage**      | [Western Digital Red 6 TB 3.5" 5400RPM Internal Hard Drive](https://pcpartpicker.com/product/DhsKHx/western-digital-internal-hard-drive-wd60efrx)                                                                    |
-| **Storage**      | [Western Digital Red 6 TB 3.5" 5400RPM Internal Hard Drive](https://pcpartpicker.com/product/DhsKHx/western-digital-internal-hard-drive-wd60efrx)                                                                    |
-| **Case**         | [Fractal Design Node 304 Mini ITX Tower Case](https://pcpartpicker.com/product/BWFPxr/fractal-design-case-fdcanode304bl)                                                                                             |
-| **Power Supply** | [SeaSonic FOCUS Plus Gold 550 W 80+ Gold Certified Fully Modular ATX Power Supply](https://pcpartpicker.com/product/bkp323/seasonic-focus-plus-gold-550w-80-gold-certified-fully-modular-atx-power-supply-ssr-550fx) |
-| **Case Fan**     | [Noctua NF-A14 PWM 82.5 CFM 140 mm Fan](https://pcpartpicker.com/product/dwR48d/noctua-case-fan-nfa14pwm)                                                                                                            |
+[PCPartPicker Part List](https://pcpartpicker.com/list/262PTn)
+
+Type|Item|Price
+:----|:----|:----
+**CPU** | [Intel Core i5-11400F 2.6 GHz 6-Core Processor](https://pcpartpicker.com/product/qp2WGX/intel-core-i5-11400f-26-ghz-6-core-processor-bx8070811400f) | $129.99 @ Amazon
+**CPU Cooler** | [Noctua NH-L9i 33.84 CFM CPU Cooler](https://pcpartpicker.com/product/xxphP6/noctua-nh-l9i-3384-cfm-cpu-cooler-nh-l9i) | $44.95 @ Amazon
+**CPU Cooler** | [Cooler Master Hyper 212 LED 66.3 CFM Rifle Bearing CPU Cooler](https://pcpartpicker.com/product/YdJkcf/cooler-master-hyper-212-led-663-cfm-rifle-bearing-cpu-cooler-rr-212l-16pr-r1) | Purchased For $24.95
+**Motherboard** | [MSI MPG B560I GAMING EDGE WIFI Mini ITX LGA1200 Motherboard](https://pcpartpicker.com/product/pQ6p99/msi-mpg-b560i-gaming-edge-wifi-mini-itx-lga1200-motherboard-mpg-b560i-gaming-edge-wifi) | $149.99 @ Amazon
+**Memory** | [G.Skill Aegis 16 GB (2 x 8 GB) DDR4-3000 CL16 Memory](https://pcpartpicker.com/product/FNprxr/gskill-aegis-16gb-2-x-8gb-ddr4-3000-memory-f43000c16d16gisb) | Purchased For $104.99
+**Storage** | [Kingston A1000 240 GB M.2-2280 PCIe 3.0 X4 NVME Solid State Drive](https://pcpartpicker.com/product/FVfhP6/kingston-a1000-240gb-m2-2280-solid-state-drive-sa1000m8240g) |-
+**Storage** | [Western Digital Red 2 TB 3.5" 5400 RPM Internal Hard Drive](https://pcpartpicker.com/product/9wW9TW/western-digital-internal-hard-drive-wd20efrx) | Purchased For $86.00
+**Storage** | [Western Digital Red 2 TB 3.5" 5400 RPM Internal Hard Drive](https://pcpartpicker.com/product/9wW9TW/western-digital-internal-hard-drive-wd20efrx) | Purchased For $86.00
+**Storage** | [Western Digital Red 6 TB 3.5" 5400 RPM Internal Hard Drive](https://pcpartpicker.com/product/DhsKHx/western-digital-internal-hard-drive-wd60efrx) | $154.88 @ Amazon
+**Storage** | [Western Digital Red 6 TB 3.5" 5400 RPM Internal Hard Drive](https://pcpartpicker.com/product/DhsKHx/western-digital-internal-hard-drive-wd60efrx) | $154.88 @ Amazon
+**Case** | [Fractal Design Node 304 Mini ITX Tower Case](https://pcpartpicker.com/product/BWFPxr/fractal-design-case-fdcanode304bl) | Purchased For $98.00
+**Power Supply** | [SeaSonic FOCUS Plus 550 Gold 550 W 80+ Gold Certified Fully Modular ATX Power Supply](https://pcpartpicker.com/product/bkp323/seasonic-focus-plus-gold-550w-80-gold-certified-fully-modular-atx-power-supply-ssr-550fx) | Purchased For $80.00
+**Case Fan** | [Noctua A14 PWM 82.5 CFM 140 mm Fan](https://pcpartpicker.com/product/dwR48d/noctua-case-fan-nfa14pwm) | $23.95 @ Amazon
+ | *Prices include shipping, taxes, rebates, and discounts* |
+ | **Total** | **$1138.58**
+ | Generated by [PCPartPicker](https://pcpartpicker.com) 2023-03-02 19:23 EST-0500 |
 
 ## TODO
 - add renovate
