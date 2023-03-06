@@ -10,9 +10,9 @@ ibkr-bot:
   gateway:
     replicaCount: 1
     image:
-      repository: omdv/ib-gateway
+      repository: ghcr.io/unusualalpha/ib-gateway
       pullPolicy: IfNotPresent
-      tag: "1019"
+      tag: "10.19"
     existingSecret: "ibkr-secret"
     tradingMode: "paper"
     resources:
