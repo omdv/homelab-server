@@ -10,7 +10,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "-4"
 spec:
   destination:
-    namespace: cert-manager
+    namespace: networking
     server: {{ .Values.spec.destination.server }}
   project: default
   source:

@@ -10,7 +10,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "5"
 spec:
   destination:
-    namespace: plex
+    namespace: apps
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
