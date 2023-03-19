@@ -21,7 +21,6 @@ K3s cluster features and apps:
 - Sacred Omniboard ML experiment tracking
 - Own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
 - Nocodb deployment for above trading app
-- Soju IRC bouncer ([docker image](https://github.com/omdv/docker-soju))
 
 
 ## Prior to Deployment
