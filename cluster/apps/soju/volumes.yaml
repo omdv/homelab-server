@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-znc
+  name: pv-soju
   labels:
-    app: znc
+    app: soju
 
 spec:
   capacity:
@@ -13,15 +13,15 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /pool/config/znc
+    path: /pool/config/soju
 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-znc
+  name: pvc-soju
   labels:
-    app: znc
+    app: soju
 
 spec:
   storageClassName: local-path
@@ -30,4 +30,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  volumeName: pv-znc
+  volumeName: pv-soju
