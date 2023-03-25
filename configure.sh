@@ -226,7 +226,6 @@ verify_vault() {
     _has_envar "VAULT_OAUTH2_COOKIE_SECRET"
     _has_envar "VAULT_OAUTH2_EMAIL_WHITELIST"
     _has_envar "VAULT_DYNDNS_NAMECHEAP_PASSWORD"
-    _has_envar "VAULT_WIREGUARD_COUNTRY"
     _has_envar "VAULT_SAMBA_USER"
     _has_envar "BOOTSTRAP_CLOUDFLARE_API_TOKEN"
     _has_envar "BOOTSTRAP_CLOUDFLARE_DOMAIN"
@@ -275,19 +274,19 @@ generate_cluster_secrets() {
 
     # initialize secret @ secret/samba
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/samba name=my-samba-secret
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/samba "VAULT_SAMBA_USER"="$VAULT_SAMBA_USER"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/samba "VAULT_SAMBA_PASSWORD"="$VAULT_SAMBA_PASSWORD"
+    for var in "${!VAULT_SAMBA@}"; do
+        kubectl exec -n vault vault-0 -- vault kv patch kv/secret/samba "$var"="$(echo -n ${!var})"
+    done
 
     # initialize secret @ secret/icloudpd
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/icloudpd name=my-icloudpd-secret
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/icloudpd "VAULT_ICLOUDPD_APPLE_USER_OM"="$VAULT_ICLOUDPD_APPLE_USER_OM"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/icloudpd "VAULT_TELEGRAM_BOT_TOKEN"="$VAULT_TELEGRAM_BOT_TOKEN"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/icloudpd "VAULT_TELEGRAM_BOT_CHAT_ID"="$VAULT_TELEGRAM_BOT_CHAT_ID"
 
     # initialize secret @ secret/cloudflare
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/cloudflare name=my-cloudflare-secret
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cloudflare "VAULT_CLOUDFLARE_API_TOKEN"="$BOOTSTRAP_CLOUDFLARE_API_TOKEN"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cloudflare "VAULT_CLOUDFLARE_DOMAIN"="$BOOTSTRAP_CLOUDFLARE_DOMAIN"
+    for var in "${!VAULT_CLOUDFLARE@}"; do
+        kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cloudflare "$var"="$(echo -n ${!var})"
+    done
 
     # initialize secret @ secret/tailscale
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/tailscale name=my-tailscale-secret

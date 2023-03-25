@@ -43,7 +43,7 @@ K3s cluster features and apps:
 
 - Add your variables to `.config.env`.
 
-> :exclamation: You can add an extra level of security and refer to your profile local variables, like I do. This helps with not pushing some values to remote repo by mistake. Git hooks will help with checking it as well.
+> :exclamation: You can add an extra level of security and refer to your profile local variables, or pull secrets from local password-store. Git hooks should prevent you from committing your secrets.
 
 - Install pre-commit hooks
 
