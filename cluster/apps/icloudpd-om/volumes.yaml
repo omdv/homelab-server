@@ -13,7 +13,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /pool/photos/icloud-om
+    path: /pool/photos/icloud-backup-om
 
 ---
 apiVersion: v1
