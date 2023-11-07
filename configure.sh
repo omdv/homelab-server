@@ -291,14 +291,15 @@ generate_cluster_secrets() {
         kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cloudflare "$var"="$(echo -n ${!var})"
     done
 
-    # initialize secret @ secret/tailscale
-    kubectl exec -n vault vault-0 -- vault kv put kv/secret/tailscale name=my-tailscale-secret
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_AUTH_KEY"="$BOOTSTRAP_TAILSCALE_AUTH_KEY"
-
     # initialize secret @ secret/ibkr
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/ibkr name=my-ibkr-secret
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_USER_ID"="$VAULT_TWS_USER_ID"
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_PASSWORD"="$VAULT_TWS_PASSWORD"
+
+    # initialize secret @ secret/tailscale
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/tailscale name=my-tailscale-secret
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_ID"="$VAULT_TAILSCALE_K8S_CLIENT_ID"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_SECRET"="$VAULT_TAILSCALE_K8S_CLIENT_SECRET"
 }
 
 
