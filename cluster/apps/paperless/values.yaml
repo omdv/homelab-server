@@ -27,7 +27,7 @@ paperless:
 
   ingress:
     main:
-      enabled: true
+      enabled: false
       ingressClassName: nginx
       hosts:
         - host: paperless.hut.sh
