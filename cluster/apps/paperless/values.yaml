@@ -27,7 +27,7 @@ paperless:
 
   ingress:
     main:
-      enabled: false
+      enabled: true
       ingressClassName: tailscale
       hosts:
         - host: paperless.hut.sh
