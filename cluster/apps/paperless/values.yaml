@@ -28,7 +28,7 @@ paperless:
   ingress:
     main:
       enabled: false
-      ingressClassName: nginx
+      ingressClassName: tailscale
       hosts:
         - host: paperless.hut.sh
           paths:
