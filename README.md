@@ -10,17 +10,17 @@ Provisioning:
 
 K3s cluster features and apps:
 - ArgoCD gitops
-- All secrets in Vault with `external-secrets` integration
+- Secrets in Vault with `external-secrets` integration
 - Ingress-nginx with cert-manager and LetsEncrypt
-- Ingress behind Oauth2-proxy with email authentication
-- Selected apps behind wireguard gateway
+- Auth either with OAuth proxy or hiding behind `tailscale-k8s-operator`
+- Selected apps connected only via wireguard gateway
 - Databases: postgresql, redis, mongodb
-- Apache Superset to analyze above databases
 - Paperless NGX document archival
 - Plex media server and samba
 - Sacred Omniboard ML experiment tracking
-- Own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
+- My own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
 - Nocodb deployment for above trading app
+- Superset for BI and dashboards for trading performance
 
 
 ## Prior to Deployment
