@@ -10,7 +10,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "10"
 spec:
   destination:
-    namespace: sailboats
+    namespace: apps-dev
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
