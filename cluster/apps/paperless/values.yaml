@@ -3,7 +3,7 @@
 paperless:
   image:
     repository: ghcr.io/paperless-ngx/paperless-ngx
-    tag: 1.17.3@sha256:eb726123140a562eac8db5d729ea738f5d7085d95216ca5cbddd8ef12dbbb909
+    tag: 2.1.3@sha256:01c190595a547c2f39c99806348ba1d1091c218dc3741fb207598f767e2dea3f
     pullPolicy: IfNotPresent
 
   envFrom:
