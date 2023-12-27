@@ -3,7 +3,7 @@
 paperless:
   image:
     repository: ghcr.io/paperless-ngx/paperless-ngx
-    tag: 2.1.3@sha256:01c190595a547c2f39c99806348ba1d1091c218dc3741fb207598f767e2dea3f
+    tag: 1.8@sha256:547794ae108db4f8736f767bb6186a19011c7af237ae94aa0a22188cce2ec93d
     pullPolicy: IfNotPresent
 
   envFrom:
@@ -17,7 +17,7 @@ paperless:
     PAPERLESS_URL: "https://paperless.hut.sh"
     # PAPERLESS_ALLOWED_HOSTS: "https://paperless.hut.sh"
     # PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.hut.sh"
-    PAPERLESS_OCR_LANGUAGES: "eng ua ru"
+    PAPERLESS_OCR_LANGUAGES: "eng"
     PAPERLESS_PORT: 8000
 
   service:
