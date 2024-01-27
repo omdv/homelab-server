@@ -22,8 +22,8 @@ paperless:
 
   service:
     main:
-      # annotations:
-      #   tailscale.com/expose: "true"
+      annotations:
+        tailscale.com/expose: "true"
       ports:
         http:
           port: 80
@@ -31,7 +31,7 @@ paperless:
 
   ingress:
     main:
-      enabled: true
+      enabled: false
       ingressClassName: nginx
       hosts:
         - host: paperless.hut.sh
