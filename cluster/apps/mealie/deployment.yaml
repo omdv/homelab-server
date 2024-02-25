@@ -18,9 +18,12 @@ spec:
     spec:
       containers:
         - name: mealie
-          image: hkotel/mealie:latest
+          image: ghcr.io/mealie-recipes/mealie:v1.2.0
+          envFrom:
+            - configMapRef:
+                name: mealie-config
           ports:
-            - containerPort: 80
+            - containerPort: 9000
               protocol: TCP
               name: http
           volumeMounts:
@@ -33,6 +36,7 @@ spec:
             limits:
               cpu: "500m"
               memory: "300Mi"
+
       volumes:
         - name: data-volume
           persistentVolumeClaim:

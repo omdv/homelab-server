@@ -15,10 +15,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - recipe.hut.sh
+        - recipes.hut.sh
       secretName: my-certs-mealie
   rules:
-    - host: recipe.hut.sh
+    - host: recipes.hut.sh
       http:
         paths:
           - path: /

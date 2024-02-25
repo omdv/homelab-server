@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mealie-config
+  labels:
+    app: mealie
+data:
+  ALLOW_SIGNUP: "true"
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Chicago"
+  MAX_WORKERS: "1"
+  WEB_CONCURRENCY: "1"
+  BASE_URL: "https://recipes.hut.sh"
