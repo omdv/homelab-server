@@ -7,10 +7,10 @@ redis:
     resources:
       requests:
         cpu: "0.01"
-        memory: 1Mi
+        memory: 8Mi
       limits:
         cpu: "0.2"
-        memory: 24Mi
+        memory: 32Mi
     persistence:
       enabled: false
     service:
