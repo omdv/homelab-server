@@ -1,0 +1,151 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/mlflow/values.yaml
+mlflow:
+  global:
+    imageRegistry: ""
+    imagePullSecrets: []
+    storageClass: "zfspv"
+    compatibility:
+      openshift:
+        adaptSecurityContext: disabled
+  kubeVersion: ""
+  nameOverride: ""
+  fullnameOverride: ""
+  namespaceOverride: ""
+  commonLabels: {}
+  commonAnnotations: {}
+  clusterDomain: cluster.local
+  extraDeploy: []
+  image:
+    registry: docker.io
+    repository: bitnami/mlflow
+    tag: 2.10.2-debian-12-r4
+    digest: ""
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+    debug: false
+
+  tracking:
+    enabled: true
+    replicaCount: 1
+    containerPorts:
+      http: 5000
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 5
+      successThreshold: 1
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 5
+      successThreshold: 1
+    startupProbe:
+      enabled: false
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 5
+      successThreshold: 1
+    resources:
+      requests:
+        cpu: 2
+        memory: 512Mi
+      limits:
+        cpu: 3
+        memory: 1024Mi
+    podSecurityContext:
+      enabled: true
+      fsGroupChangePolicy: Always
+      sysctls: []
+      supplementalGroups: []
+      fsGroup: 1001
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      runAsNonRoot: true
+      privileged: false
+      readOnlyRootFilesystem: false
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+      seccompProfile:
+        type: "RuntimeDefault"
+    auth:
+      enabled: false
+    tls:
+      enabled: false
+    pdb:
+      create: false
+
+    service:
+      type: NodePort
+      ports:
+        http: 80
+        https: 443
+      nodePorts:
+        http: "31313"
+        https: ""
+    ingress:
+      enabled: true
+      hostname: mlflow.hut.sh
+      ingressClassName: "nginx"
+      path: /
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/auth-url: "https://auth.hut.sh/oauth2/auth"
+        nginx.ingress.kubernetes.io/auth-signin: "https://auth.hut.sh/oauth2/start?rd=https://$host$uri"
+      tls: true
+    persistence:
+      enabled: true
+      storageClass: "zfspv"
+      mountPath: /bitnami/mlflow
+    metrics:
+      enabled: false
+
+  externalDatabase:
+    host: "postgresql.postgres.svc.cluster.local"
+    port: 5432
+    user: mlflow
+    database: mlflow
+    password: "mlflow"
+
+  externalS3:
+    host: ""
+    port: 80
+    accessKeyID: "minio-user"
+    accessKeySecret: "minio-password"
+    protocol: "http"
+    bucket: "mlflow"
+    serveArtifacts: false
+
+  postgresql:
+    enabled: false
+
+  minio:
+    enabled: false
+    auth:
+      rootUser: minio-user
+      rootPassword: "minio-password"
+      existingSecret: ""
+    defaultBuckets: "mlflow"
+    provisioning:
+      enabled: true
+      extraCommands: ["mc anonymous set download provisioning/mlflow"]
+    tls:
+      enabled: false
+    service:
+      type: ClusterIP
+      loadBalancerIP: ""
+      ports:
+        api: 31111
+
+  volumePermissions:
+    enabled: false
+
+  run:
+    enabled: false
