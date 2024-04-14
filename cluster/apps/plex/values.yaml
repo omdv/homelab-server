@@ -1,10 +1,10 @@
 ---
 plex:
 
-image:
-  repository: ghcr.io/onedr0p/plex
-  pullPolicy: IfNotPresent
-  tag: 1.40.1.8227-c0dd5a73e@sha256:c8d74539a40530fa9770c6d67f37aef8f3a7b3f30ee353c2cb5685b84ed5b04c
+  image:
+    repository: ghcr.io/onedr0p/plex
+    pullPolicy: IfNotPresent
+    tag: 1.40.1.8227-c0dd5a73e@sha256:c8d74539a40530fa9770c6d67f37aef8f3a7b3f30ee353c2cb5685b84ed5b04c
 
   env:
     TZ: "America/Chicago"
