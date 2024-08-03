@@ -11,7 +11,8 @@
       devShells.x86_64-linux.default = pkgs.mkShell {
         nativeBuildInputs = with pkgs; [
           pre-commit
-          helm
+          kubernetes-helm
+          kustomize
         ];
       };
     };
