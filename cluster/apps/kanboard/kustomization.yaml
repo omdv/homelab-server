@@ -1,6 +1,4 @@
 ---
-namespace: kanboard
-
 resources:
   - volumes.yaml
   - service.yaml

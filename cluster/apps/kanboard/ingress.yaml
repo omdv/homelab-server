@@ -10,7 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/auth-url: "https://auth.hut.sh/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: "https://auth.hut.sh/oauth2/start?rd=https://$host$uri"
-    gethomepage.dev/name: "kanboard"
+    hajimari.io/enable: "true"
 spec:
   ingressClassName: nginx
   tls:
@@ -25,6 +25,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: whoami
+                name: kanboard
                 port:
                   name: http
