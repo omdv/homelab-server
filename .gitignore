@@ -33,3 +33,5 @@ talosconfig
 # Charts folders
 charts/
 Chart.lock
+# Debug
+debug/data/*
