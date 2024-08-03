@@ -1,8 +1,0 @@
----
-namespace: options-tracker
-
-resources:
-  - secrets.yaml
-  - deployment.yaml
-  - service.yaml
-  - ingress.yaml
