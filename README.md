@@ -1,24 +1,19 @@
 # Introduction
 
-Mono repo to manage provision of homelab server.
-
-Provisioning:
-I switched from Ubuntu installed by ansible to [nixos](https://github.com/omdv/nix-config). This repo now mostly holds gitops config for k3s.
+Mono repo to manage the k3s cluster on my homelab server. This repo now mostly holds gitops config for k3s. See [nixos](https://github.com/omdv/nix-config) for an example of preparing host system for k3s.
 
 
-K3s cluster features and apps:
+Some of the features of K3s cluster:
 - ArgoCD gitops
 - Secrets in Vault with `external-secrets` integration
 - Ingress-nginx with cert-manager and LetsEncrypt
 - Auth either with OAuth proxy or hiding behind `tailscale-k8s-operator`
 - Selected apps connected only via wireguard gateway
 - Databases: postgresql, redis, mongodb
-- Paperless NGX document archival
+- Paperless document archival
 - Plex media server and samba
-- Sacred Omniboard ML experiment tracking
 - My own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
 - Nocodb deployment for above trading app
-- Superset for BI and dashboards for trading performance
 
 
 ## Prior to Deployment
@@ -50,16 +45,6 @@ task pre-commit:init
 ```
 
 - Add a wireguard config file from your provider into `.bootstrap-secrets` folder and name it `wireguard.conf`.
-
-- Run `./configure.sh --verify` to check dependencies and env vars.
-
-- Baremetal provisioning
-
-```bash
-task ansible:playbook:ubuntu-setup
-task ansible:playbook:ubuntu-prepare
-task ansible:playbook:k3s-install
-```
 
 - Cluster bootstrap.
 
@@ -199,18 +184,3 @@ Type|Item|Price
 **Case** | [Fractal Design Node 304 Mini ITX Tower Case](https://pcpartpicker.com/product/BWFPxr/fractal-design-case-fdcanode304bl) | Purchased For $98.00
 **Power Supply** | [SeaSonic FOCUS Plus 550 Gold 550 W 80+ Gold Certified Fully Modular ATX Power Supply](https://pcpartpicker.com/product/bkp323/seasonic-focus-plus-gold-550w-80-gold-certified-fully-modular-atx-power-supply-ssr-550fx) | Purchased For $80.00
 **Case Fan** | [Noctua A14 PWM 82.5 CFM 140 mm Fan](https://pcpartpicker.com/product/dwR48d/noctua-case-fan-nfa14pwm) | $23.95 @ Amazon
-
-## TODO
-- add renovate
-- trusted IPs on ingress
-- appRole vs root token for external-secrets
-- argocd [cluster secrets](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) in vault
-
-## Apps to try
-- identity management for local services - freeIPA?
-- local docker registry
-- renovate / automate image tag posting to github
-- kubeflow
-- valetudo private cloud for robo vacuum
-- velero
-- istio
