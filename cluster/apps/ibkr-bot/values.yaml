@@ -10,15 +10,14 @@ ibkr-bot:
   gateway:
     replicaCount: 1
     image:
-      repository: ghcr.io/unusualalpha/ib-gateway
+      repository: ghcr.io/extrange/ibkr
       pullPolicy: IfNotPresent
       tag: "10.19"
     existingSecret: "ibkr-secret"
-    tradingMode: "paper"
+    tradingMode: "live"
+    ports:
+      api: "8888"
     resources:
-      requests:
-        cpu: "250m"
-        memory: "512Mi"
       limits:
         cpu: "1000m"
         memory: "1024Mi"
@@ -26,10 +25,11 @@ ibkr-bot:
   application:
     replicaCount: 1
     image:
-      repository: omdv/ib-app
+      repository: omdv/ib-bots
       pullPolicy: Always
       tag: "latest"
     configMapName: "ibkr-config"
+    gatewayPort: "8888"
     storageBackend: "file"
     persistence:
       enabled: true

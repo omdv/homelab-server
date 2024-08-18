@@ -1,6 +1,9 @@
+# https://github.com/hashicorp/vault-helm/blob/main/values.yaml
 ---
 vault:
   global:
+    enabled: true
+    tls_disable: true
     resources:
       requests:
         memory: '16Mi'
@@ -15,7 +18,7 @@ vault:
   server:
     image:
       repository: "hashicorp/vault"
-      tag: "1.10.3"
+      tag: "1.17.2"
 
     readinessProbe:
       enabled: true
