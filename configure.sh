@@ -143,17 +143,12 @@ verify_age() {
 }
 
 verify_binaries() {
-    _has_binary "ansible"
     _has_binary "envsubst"
     _has_binary "git"
-    _has_binary "age"
     _has_binary "helm"
-    _has_binary "ipcalc"
     _has_binary "jq"
-    _has_binary "sops"
     _has_binary "ssh"
     _has_binary "go-task"
-    _has_binary "terraform"
 }
 
 verify_git_repository() {
@@ -291,22 +286,15 @@ generate_cluster_secrets() {
         kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cloudflare "$var"="$(echo -n ${!var})"
     done
 
-    # initialize secret @ secret/ibkr
-    kubectl exec -n vault vault-0 -- vault kv put kv/secret/ibkr name=my-ibkr-secret
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_USER_ID"="$VAULT_TWS_USER_ID"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_PASSWORD"="$VAULT_TWS_PASSWORD"
+    # # initialize secret @ secret/ibkr
+    # kubectl exec -n vault vault-0 -- vault kv put kv/secret/ibkr name=my-ibkr-secret
+    # kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_USER_ID"="$VAULT_TWS_USER_ID"
+    # kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_PASSWORD"="$VAULT_TWS_PASSWORD"
 
-    # initialize secret @ secret/tailscale
-    kubectl exec -n vault vault-0 -- vault kv put kv/secret/tailscale name=my-tailscale-secret
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_ID"="$VAULT_TAILSCALE_K8S_CLIENT_ID"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_SECRET"="$VAULT_TAILSCALE_K8S_CLIENT_SECRET"
-
-    # initialize secret @ secret/aws
-    kubectl exec -n vault vault-0 -- vault kv put kv/secret/mlflow name=my-mlflow-secret
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/mlflow "VAULT_AWS_ACCESS_KEY"="$AWS_STORAGE_ACCESS_KEY"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/mlflow "VAULT_AWS_SECRET_KEY"="$AWS_STORAGE_SECRET_KEY"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/mlflow "VAULT_MLFLOW_S3_BUCKET_NAME"="$MLFLOW_S3_BUCKET_NAME"
-
+    # # initialize secret @ secret/tailscale
+    # kubectl exec -n vault vault-0 -- vault kv put kv/secret/tailscale name=my-tailscale-secret
+    # kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_ID"="$VAULT_TAILSCALE_K8S_CLIENT_ID"
+    # kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_SECRET"="$VAULT_TAILSCALE_K8S_CLIENT_SECRET"
 }
 
 

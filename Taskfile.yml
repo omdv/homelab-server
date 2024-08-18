@@ -13,7 +13,6 @@ vars:
     sh: "git rev-parse --show-toplevel"
   CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
   SECRETS_DIR: "{{.PROJECT_DIR}}/.bootstrap-secrets"
-  ANSIBLE_DIR: "{{.PROJECT_DIR}}/provision/ansible"
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/provision/terraform"
   KUBECONFIG: "{{.PROJECT_DIR}}/provision/kubeconfig"
 
@@ -21,7 +20,6 @@ env:
   BOOTSTRAP_ARGOCD_PASSWORD: "{{ .HOMELAB_ARGO_PASSWORD }}"
 
 includes:
-  ansible: .taskfiles/ansible.yaml
   pre-commit: .taskfiles/pre-commit.yaml
   lint: .taskfiles/lint.yaml
   terraform: .taskfiles/terraform.yaml

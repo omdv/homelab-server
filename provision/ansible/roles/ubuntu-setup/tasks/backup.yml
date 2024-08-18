@@ -1,8 +1,0 @@
----
-- name: install borg
-  apt:
-    name: "{{ packages }}"
-  vars:
-    packages:
-      - borgbackup
-      - borgmatic

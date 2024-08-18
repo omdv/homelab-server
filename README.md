@@ -3,9 +3,7 @@
 Mono repo to manage provision of homelab server.
 
 Provisioning:
-- Ubuntu with zfs pool
-- Automated external backups
-- [k3s cluster](https://github.com/k8s-at-home/template-cluster-k3s)
+I switched from Ubuntu installed by ansible to [nixos](https://github.com/omdv/nix-config). This repo now mostly holds gitops config for k3s.
 
 
 K3s cluster features and apps:
