@@ -16,5 +16,6 @@
   "prettier.ignorePath": ".github/lint/.prettierignore",
   "yaml.schemas": {
     "Kubernetes": "cluster/*.yaml"
-  }
+  },
+  "ansible.python.interpreterPath": "/bin/python"
 }
