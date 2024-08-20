@@ -52,6 +52,9 @@ kube-prometheus-stack:
         - hosts:
             - metrics.hut.sh
           secretName: my-certs-metrics
+    persistence:
+      enabled: true
+      existingClaim: pvc-metrics-grafana
   alertmanager:
     enabled: false
   kubeEtcd:
