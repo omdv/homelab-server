@@ -6,7 +6,6 @@ pod-gateway:
   routed_namespaces:
     - vpn
     - media
-    - bitmagnet
   webhook:
     image:
       repository: ghcr.io/angelnu/gateway-admision-controller
