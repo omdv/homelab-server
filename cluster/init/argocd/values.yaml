@@ -25,31 +25,6 @@ argo-cd:
         - secretName: my-certs-argo
           hosts:
             - argo.hut.sh
-    additionalApplications:
-      - name: apps
-        project: default
-        source:
-          repoURL: https://github.com/omdv/homelab-server
-          targetRevision: HEAD
-          path: cluster/apps/
-        destination:
-          server: https://kubernetes.default.svc
-        syncPolicy:
-          automated:
-            prune: true
-            selfHeal: true
-      - name: init
-        project: default
-        source:
-          repoURL: https://github.com/omdv/homelab-server
-          targetRevision: HEAD
-          path: cluster/init/
-        destination:
-          server: https://kubernetes.default.svc
-        syncPolicy:
-          automated:
-            prune: false
-            selfHeal: true
   controller:
     resources:
       requests:

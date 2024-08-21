@@ -1,0 +1,32 @@
+# https://github.com/argoproj/argo-helm/blob/main/charts/argocd-apps/values.yaml
+argocd-apps:
+  applications:
+    apps:
+      project: apps
+      source:
+        repoURL: https://github.com/omdv/homelab-server
+        targetRevision: HEAD
+        path: cluster/apps/
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+    init:
+      project: init
+      source:
+        repoURL: https://github.com/omdv/homelab-server
+        targetRevision: HEAD
+        path: cluster/init/
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true
+  projects:
+    - name: apps
+      description: "Applications"
+    - name: init
+      description: "Initialization"
