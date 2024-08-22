@@ -62,6 +62,7 @@ tasks:
       - "kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -"
       - "helm repo add argo https://argoproj.github.io/argo-helm && helm dependency update {{.CLUSTER_DIR}}/init/argocd"
       - "helm status argocd -n argocd || helm install argocd -n argocd {{.CLUSTER_DIR}}/init/argocd"
+      - "helm status argocd-apps -n argocd || helm install argocd-apps -n argocd {{.CLUSTER_DIR}}/init/argocd-apps"
 
   argo:init:
     desc: Initialize argo - expecting port-forward svc/argocd-server to 8080

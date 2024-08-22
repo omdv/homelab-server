@@ -2,7 +2,7 @@
 argocd-apps:
   applications:
     apps:
-      project: apps
+      project: default
       source:
         repoURL: https://github.com/omdv/homelab-server
         targetRevision: HEAD
@@ -14,7 +14,7 @@ argocd-apps:
           prune: true
           selfHeal: true
     init:
-      project: init
+      project: default
       source:
         repoURL: https://github.com/omdv/homelab-server
         targetRevision: HEAD
@@ -25,8 +25,3 @@ argocd-apps:
         automated:
           prune: false
           selfHeal: true
-  projects:
-    apps:
-      description: "Applications"
-    init:
-      description: "Initialization"
