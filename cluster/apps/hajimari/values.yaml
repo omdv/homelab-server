@@ -58,9 +58,7 @@ hajimari:
 
   persistence:
     data:
-      enabled: true
-      accessMode: ReadWriteOnce
-      size: 1Gi
+      enabled: false
 
   resources:
     requests:

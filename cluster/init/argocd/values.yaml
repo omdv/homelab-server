@@ -15,13 +15,12 @@ argo-cd:
         hajimari.io/enable: "true"
       labels: {}
       ingressClassName: "nginx"
-      hosts:
-        - argo.hut.sh
+      hostname: "argo.hut.sh"
       paths:
         - /
       pathType: Prefix
       extraPaths:
-      tls:
+      extraTls:
         - secretName: my-certs-argo
           hosts:
             - argo.hut.sh
