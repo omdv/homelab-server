@@ -1,0 +1,95 @@
+# https://github.com/gabe565/charts/blob/main/charts/headscale/values.yaml
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/bjw-s/helm-charts/blob/a081de5/charts/library/common/values.yaml
+#
+headscale:
+  image:
+    repository: ghcr.io/juanfont/headscale
+    pullPolicy: IfNotPresent
+    tag: 0.22.3
+
+  args: ["headscale", "serve"]
+
+  env:
+    #https://github.com/juanfont/headscale/blob/main/config-example.yaml
+    HEADSCALE_DNS_CONFIG_BASE_DOMAIN: hut.sh
+    HEADSCALE_USE_USERNAME_IN_MAGIC_DNS: false
+    HEADSCALE_SERVER_URL: https://tailscale.hut.sh
+
+  service:
+    main:
+      ports:
+        ui:
+          port: 80
+        http:
+          port: 8080
+        metrics:
+          port: 9090
+        grpc:
+          enabled: false
+          port: 50443
+
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+        - host: tailscale.hut.sh
+          paths:
+            - path: /
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      tls:
+        - hosts:
+            - tailscale.hut.sh
+          secretName: my-certs-headscale
+    ui:
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+        - host: tailscale.hut.sh
+          paths:
+            - path: /web
+              service:
+                port: 80
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/auth-url: "https://auth.hut.sh/oauth2/auth"
+        nginx.ingress.kubernetes.io/auth-signin: "https://auth.hut.sh/oauth2/start?rd=https://$host$uri"
+        hajimari.io/enable: "true"
+      tls:
+        - hosts:
+            - tailscale.hut.sh
+          secretName: my-certs-headscale-ui
+
+  configMaps:
+    acl:
+      enabled: false
+      data:
+        policy:
+
+  persistence:
+    config:
+      enabled: true
+      mountPath: /etc/headscale
+      existingClaim: pvc-headscale
+
+  postgresql:
+    enabled: false
+
+  sidecars:
+    ui:
+      image: ghcr.io/gurucomputing/headscale-ui:latest
+
+  serviceMonitor:
+    main:
+      enabled: false
+      endpoints:
+        - port: metrics
+          scheme: http
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
