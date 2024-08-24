@@ -16,7 +16,7 @@ headscale:
   env:
     #https://github.com/juanfont/headscale/blob/main/config-example.yaml
     HEADSCALE_DNS_CONFIG_BASE_DOMAIN: hut.sh
-    HEADSCALE_USE_USERNAME_IN_MAGIC_DNS: false
+    HEADSCALE_DNS_USE_USERNAME_IN_MAGIC_DNS: false
     HEADSCALE_SERVER_URL: https://tailscale.hut.sh
 
   service:
