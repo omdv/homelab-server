@@ -10,7 +10,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   destination:
-    namespace: metrics
+    namespace: metrics-server
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
