@@ -38,11 +38,11 @@ spec:
               name: oauth2-emails
           resources:
             requests:
-              cpu: "10m"
-              memory: "10Mi"
-            limits:
               cpu: "20m"
-              memory: "20Mi"
+              memory: "16Mi"
+            limits:
+              cpu: "40m"
+              memory: "32Mi"
       volumes:
         - name: oauth2-emails
           secret:
