@@ -55,6 +55,13 @@ kube-prometheus-stack:
     persistence:
       enabled: true
       existingClaim: pvc-metrics-grafana
+    resources:
+      limits:
+        cpu: 20m
+        memory: 512Mi
+      requests:
+        cpu: 5m
+        memory: 128Mi
   alertmanager:
     enabled: false
   kubeEtcd:
