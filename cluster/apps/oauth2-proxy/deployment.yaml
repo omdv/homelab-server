@@ -26,7 +26,7 @@ spec:
           envFrom:
             - secretRef:
                 name: oauth2-secret
-          image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0-amd64
+          image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0-amd64
           imagePullPolicy: Always
           name: oauth2-proxy
           ports:
