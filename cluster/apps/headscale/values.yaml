@@ -93,3 +93,11 @@ headscale:
           path: /metrics
           interval: 30s
           scrapeTimeout: 10s
+
+  resources:
+    limits:
+      cpu: 80m
+      memory: 256Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
