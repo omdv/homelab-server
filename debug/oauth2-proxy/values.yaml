@@ -1,0 +1,245 @@
+# https://github.com/oauth2-proxy/manifests/blob/main/helm/oauth2-proxy/values.yaml
+---
+oauth2-proxy:
+  # Oauth client configuration specifics
+  config:
+    # Add config annotations
+    annotations: {}
+    # OAuth client ID (gh and google)
+    clientID: "XXXX"
+    # OAuth client secret (gh and google)
+    clientSecret: "XXXX"
+    # Create a new secret with the following command
+    # openssl rand -base64 32 | head -c 32 | base64
+    # Use an existing secret for OAuth2 credentials (see secret.yaml for required fields)
+    # Example:
+    # existingSecret: secret
+    cookieSecret: "XXXX"
+    # The name of the cookie that oauth2-proxy will create
+    # If left empty, it will default to the release name
+    cookieName: "homelab"
+    google: {}
+    # Default configuration, to be overridden
+    configFile: |-
+      provider = "google"
+      email_domains = [ "*" ]
+      upstreams = [ "file:///dev/null" ]
+      github_users = [ "omdv" ]
+      # cookie_secure = "false"
+      whitelist_domains = "*.hut.sh"
+      # ssl_insecure_skip_verify = "true"
+      redirect_url = "https://auth.hut.sh/oauth2/callback"
+
+  image:
+    repository: "quay.io/oauth2-proxy/oauth2-proxy"
+    # appVersion is used by default
+    tag: ""
+    pullPolicy: "IfNotPresent"
+    command: []
+
+  # Optionally specify an array of imagePullSecrets.
+  # Secrets must be manually created in the namespace.
+  # ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
+  imagePullSecrets: []
+    # - name: myRegistryKeySecretName
+
+  # Set a custom containerPort if required.
+  # This will default to 4180 if this value is not set and the httpScheme set to http
+  # This will default to 4443 if this value is not set and the httpScheme set to https
+  # containerPort: 4180
+
+  extraArgs: {}
+  extraEnv: []
+
+  authenticatedEmailsFile:
+    enabled: true
+    persistence: configmap
+    template: "my-whitelist-emails"
+    restrictedUserAccessKey: "emails"
+
+  envFrom: []
+  # Load environment variables from a ConfigMap(s) and/or Secret(s)
+  # that already exists (created and managed by you).
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+  #
+  # PS: Changes in these ConfigMaps or Secrets will not be automatically
+  #     detected and you must manually restart the relevant Pods after changes.
+  #
+  #  - configMapRef:
+  #      name: special-config
+  #  - secretRef:
+  #      name: special-config-secret
+
+  # -- Custom labels to add into metadata
+  customLabels: {}
+
+  service:
+    type: ClusterIP
+    # when service.type is ClusterIP ...
+    # clusterIP: 192.0.2.20
+    # when service.type is LoadBalancer ...
+    # loadBalancerIP: 198.51.100.40
+    # loadBalancerSourceRanges: 203.0.113.0/24
+    # when service.type is NodePort ...
+    # nodePort: 80
+    portNumber: 80
+    # Protocol set on the service
+    appProtocol: http
+    annotations: {}
+    # foo.io/bar: "true"
+    # configure externalTrafficPolicy
+    externalTrafficPolicy: ""
+    # configure internalTrafficPolicy
+    internalTrafficPolicy: ""
+
+  ## Create or use ServiceAccount
+  serviceAccount:
+    ## Specifies whether a ServiceAccount should be created
+    enabled: true
+    ## The name of the ServiceAccount to use.
+    ## If not set and create is true, a name is generated using the fullname template
+    name:
+    automountServiceAccountToken: true
+    annotations: {}
+
+  ingress:
+    enabled: true
+    className: nginx
+    path: /
+    pathType: ImplementationSpecific
+    hosts:
+      - auth.hut.sh
+    backend:
+      serviceName: oauth2-proxy
+      servicePort: 80
+    # Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
+    # Warning! The configuration is dependant on your current k8s API version capabilities (networking.k8s.io/v1)
+    # extraPaths:
+    # - path: /oauth2
+    #   pathType: Prefix
+    #   backend:
+    #     service:
+    #       name: ssl-redirect
+    #       port:
+    #         name: use-annotation
+    labels: {}
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    tls:
+      - secretName: my-certs-oauth2-proxy
+        hosts:
+          - auth.hut.sh
+
+
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 300Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 300Mi
+
+  extraVolumes: []
+    # - name: ca-bundle-cert
+    #   secret:
+    #     secretName: <secret-name>
+
+  extraVolumeMounts: []
+    # - mountPath: /etc/ssl/certs/
+    #   name: ca-bundle-cert
+
+  # Additional containers to be added to the pod.
+  extraContainers: []
+    #  - name: my-sidecar
+    #    image: nginx:latest
+
+  priorityClassName: ""
+
+  # hostAliases is a list of aliases to be added to /etc/hosts for network name resolution
+  hostAliases: []
+  # - ip: "10.xxx.xxx.xxx"
+  #   hostnames:
+  #     - "auth.example.com"
+  # - ip: 127.0.0.1
+  #   hostnames:
+  #     - chart-example.local
+  #     - example.local
+
+  # [TopologySpreadConstraints](https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/) configuration.
+  # Ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#scheduling
+  # topologySpreadConstraints: []
+
+  # Affinity for pod assignment
+  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # affinity: {}
+
+  # Tolerations for pod assignment
+  # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+
+  # Node labels for pod assignment
+  # Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+
+  # Whether to use secrets instead of environment values for setting up OAUTH2_PROXY variables
+  proxyVarsAsSecrets: true
+
+  # Configure Kubernetes liveness and readiness probes.
+  # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+  # Disable both when deploying with Istio 1.0 mTLS. https://istio.io/help/faq/security/#k8s-health-checks
+  livenessProbe:
+    enabled: false
+    initialDelaySeconds: 0
+    timeoutSeconds: 1
+
+  readinessProbe:
+    enabled: false
+    initialDelaySeconds: 0
+    timeoutSeconds: 5
+    periodSeconds: 10
+    successThreshold: 1
+
+  # Configure Kubernetes security context for container
+  # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  securityContext:
+    enabled: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 2000
+    runAsGroup: 2000
+    seccompProfile:
+      type: RuntimeDefault
+
+  deploymentAnnotations: {}
+  podAnnotations: {}
+  podLabels: {}
+  replicaCount: 1
+  revisionHistoryLimit: 10
+  strategy: {}
+
+  ## PodDisruptionBudget settings
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+
+  ## Horizontal Pod Autoscaling
+  ## ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+  #  targetMemoryUtilizationPercentage: 80
+    annotations: {}
+
+  # Configure Kubernetes security context for pod
+  # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  podSecurityContext: {}
+
+  # whether to use http or https
+  httpScheme: http

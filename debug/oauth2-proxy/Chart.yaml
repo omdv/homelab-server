@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: helm-oauth2-proxy
+type: application
+version: 0.2.0
+appVersion: "1.0"
+dependencies:
+  - name: oauth2-proxy
+    version: 7.7.17
+    repository: https://oauth2-proxy.github.io/manifests

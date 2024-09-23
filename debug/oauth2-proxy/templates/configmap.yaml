@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-whitelist-emails
+data:
+  emails: |
+    XXXX
