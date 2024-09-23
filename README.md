@@ -30,7 +30,7 @@ Some of the features of K3s cluster:
 ### Get GCP oauth2 keys and service account
 
 - [Service account for Vault auto-unseal](https://shadow-soft.com/vault-auto-unseal/)
-- OAuth tokens (TODO: add link/guide)
+- [Setup oauth2-proxy keys](https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/google)
 
 ## Deployment Guide
 
