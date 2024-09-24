@@ -31,11 +31,6 @@ kube-prometheus-stack:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/my-provider
-    dashboards:
-      my-provider:
-        ingress-nginx:
-          gnetId: 17187
-          datasource: Prometheus
     ingress:
       enabled: true
       ingressClassName: nginx
