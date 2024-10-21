@@ -9,7 +9,7 @@ headscale:
   image:
     repository: ghcr.io/juanfont/headscale
     pullPolicy: IfNotPresent
-    tag: 0.22.3
+    tag: 0.23.0
 
   args: ["headscale", "serve"]
 
@@ -25,7 +25,7 @@ headscale:
         ui:
           port: 80
         http:
-          port: 8080
+          port: 8000
         metrics:
           port: 9090
         grpc:
