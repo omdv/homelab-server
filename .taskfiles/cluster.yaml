@@ -37,6 +37,7 @@ tasks:
     cmds:
       - "helm delete vault -n vault"
       - "kubectl delete pvc/data-vault-0 -n vault"
+      - "kubectl delete namespace vault"
 
   secrets:install:
     desc: Install external-secrets

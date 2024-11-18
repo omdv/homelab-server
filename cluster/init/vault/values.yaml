@@ -40,6 +40,13 @@ vault:
         memory: 512Mi
         cpu: 500m
 
+    dataStorage:
+      enabled: true
+      size: 10Gi
+      mountPath: "/vault/data"
+      storageClass: local-path
+      accessMode: ReadWriteOnce
+
     standalone:
       config: |
         listener "tcp" {
