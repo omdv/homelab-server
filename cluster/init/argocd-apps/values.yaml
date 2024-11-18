@@ -13,15 +13,3 @@ argocd-apps:
         automated:
           prune: true
           selfHeal: true
-    init:
-      project: default
-      source:
-        repoURL: https://github.com/omdv/homelab-server
-        targetRevision: HEAD
-        path: cluster/init/
-      destination:
-        server: https://kubernetes.default.svc
-      syncPolicy:
-        automated:
-          prune: false
-          selfHeal: true
