@@ -15,11 +15,18 @@ headscale:
 
   env:
     #https://github.com/juanfont/headscale/blob/main/config-example.yaml
-    HEADSCALE_DNS_CONFIG_BASE_DOMAIN: hut.sh
-    HEADSCALE_DNS_USE_USERNAME_IN_MAGIC_DNS: false
-    HEADSCALE_SERVER_URL: https://tailscale.hut.sh
-    HEADSCALE_IP_PREFIXES: "100.64.0.0/10"
-    HEADSCALE_IPV6_PREFIX: "fd7a:115c:a1e0::/48"
+    HEADSCALE_DNS_BASE_DOMAIN: "mydomain.sh"
+    HEADSCALE_PREFIXES_V4: "100.64.0.0/10"
+    HEADSCALE_PREFIXES_V6: "fd7a:115c:a1e0::/48"
+
+    HEADSCALE_DNS_NAMESERVERS_GLOBAL: "1.1.1.1 1.0.0.1"
+    HEADSCALE_DNS_MAGIC_DNS: "true"
+
+    HEADSCALE_DERP_URLS: "https://controlplane.tailscale.com/derpmap/default"
+    HEADSCALE_DERP_AUTO_UPDATE_ENABLED: "true"
+    HEADSCALE_DERP_UPDATE_FREQUENCY: "24h"
+
+    HEADSCALE_EPHEMERAL_NODE_INACTIVITY_TIMEOUT: "30m"
 
   service:
     main:
