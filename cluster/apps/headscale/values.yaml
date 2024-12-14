@@ -18,6 +18,8 @@ headscale:
     HEADSCALE_DNS_CONFIG_BASE_DOMAIN: hut.sh
     HEADSCALE_DNS_USE_USERNAME_IN_MAGIC_DNS: false
     HEADSCALE_SERVER_URL: https://tailscale.hut.sh
+    HEADSCALE_IP_PREFIXES: "100.64.0.0/10"
+    HEADSCALE_IPV6_PREFIX: "fd7a:115c:a1e0::/48"
 
   service:
     main:
