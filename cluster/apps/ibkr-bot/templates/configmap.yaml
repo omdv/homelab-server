@@ -1,9 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: ibkr-config
-
-data:
-  MKT_DATA_TYPE: "4"
-  DOWNLOAD_EVERY_MINS: "30"
