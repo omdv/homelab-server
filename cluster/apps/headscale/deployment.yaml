@@ -181,7 +181,7 @@ spec:
   tls:
     - hosts:
         - tailscale.hut.sh
-      secretName: headscale-api-tls
+      secretName: my-certs-headscale-api
   rules:
     - host: tailscale.hut.sh
       http:
@@ -210,7 +210,7 @@ spec:
   tls:
     - hosts:
         - tailscale.hut.sh
-      secretName: headscale-ui-tls
+      secretName: my-certs-headscale-ui
   rules:
     - host: tailscale.hut.sh
       http:
