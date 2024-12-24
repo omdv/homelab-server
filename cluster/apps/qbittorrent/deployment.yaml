@@ -1,0 +1,75 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  labels:
+    app: qbittorrent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+      annotations:
+        setGateway: "true"
+    spec:
+      initContainers:
+        - name: update-volume-permission
+          image: busybox:musl
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+          command: ["sh", "-c", "chown -R 1000:1000 /config", "chown -R 1000:1000 /downloads"]
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: downloads
+              mountPath: /downloads
+          envFrom:
+            - configMapRef:
+                name: qbittorrent-config
+          securityContext:
+            runAsUser: 0
+      containers:
+        - name: qbittorrent
+          image: lscr.io/linuxserver/qbittorrent:4.6.7
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+          envFrom:
+            - configMapRef:
+                name: qbittorrent-config
+          ports:
+            - containerPort: 8080
+              name: webui
+            - containerPort: 18289
+              name: torrent-tcp
+            - containerPort: 18289
+              protocol: UDP
+              name: torrent-udp
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: pvc-qbittorrent-config
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: pvc-qbittorrent-downloads

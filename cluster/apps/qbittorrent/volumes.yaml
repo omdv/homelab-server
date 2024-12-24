@@ -5,14 +5,15 @@ metadata:
   name: pv-qbittorrent-downloads
   labels:
     app: qbittorrent
+
 spec:
   capacity:
-    storage: 1Ti
+    storage: 1000Gi
   storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /pool/media/downloads
+    path: /pool/downloads
 
 ---
 apiVersion: v1
@@ -21,13 +22,14 @@ metadata:
   name: pvc-qbittorrent-downloads
   labels:
     app: qbittorrent
+
 spec:
   storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100Gi
+      storage: 1000Gi
   volumeName: pv-qbittorrent-downloads
 
 ---
@@ -37,9 +39,10 @@ metadata:
   name: pv-qbittorrent-config
   labels:
     app: qbittorrent
+
 spec:
   capacity:
-    storage: 1Gi
+    storage: 1000Gi
   storageClassName: local-path
   accessModes:
     - ReadWriteOnce
@@ -53,11 +56,12 @@ metadata:
   name: pvc-qbittorrent-config
   labels:
     app: qbittorrent
+
 spec:
   storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
+      storage: 1000Gi
   volumeName: pv-qbittorrent-config

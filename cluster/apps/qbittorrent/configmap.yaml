@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qbittorrent-config
+data:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Chicago"
+  WEBUI_PORT: "8080"
+  TORRENTING_PORT: "18289"
