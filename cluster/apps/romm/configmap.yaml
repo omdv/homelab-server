@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: romm-config
+data:
+  DB_HOST: mariadb.databases.svc.cluster.local
+  DB_NAME: romm
+  DB_USER: romm
+  DB_PASSWD: romm
+  REDIS_HOST: redis-master.redis.svc.cluster.local
+  ENABLE_RESCAN_ON_FILESYSTEM_CHANGE: "false"

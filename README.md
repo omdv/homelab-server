@@ -9,9 +9,10 @@ Some of the features of K3s cluster:
 - Ingress-nginx with cert-manager and LetsEncrypt
 - Auth either with OAuth proxy or hiding behind `tailscale-k8s-operator`
 - Selected apps connected only via wireguard gateway
-- Databases: postgresql, redis, mongodb
+- Databases: postgresql, redis, mariadb
 - Paperless document archival
 - Plex media server and samba
+- [Romm.app](https://romm.app/)
 - My own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
 - Nocodb deployment for above trading app
 

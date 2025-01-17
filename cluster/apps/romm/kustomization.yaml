@@ -1,0 +1,9 @@
+---
+resources:
+  - configmap.yaml
+  - secrets.yaml
+  - pv.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml

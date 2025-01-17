@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: romm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: romm
+  template:
+    metadata:
+      labels:
+        app: romm
+    spec:
+      containers:
+        - name: romm
+          image: rommapp/romm:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: romm-config
+            - secretRef:
+                name: romm-secret
+          volumeMounts:
+            - name: romm-storage
+              mountPath: /romm/resources
+            - name: romm-cached-data
+              mountPath: /redis-data
+            - name: romm-library
+              mountPath: /romm/library
+            - name: romm-assets
+              mountPath: /romm/assets
+            - name: romm-config
+              mountPath: /romm/config
+      volumes:
+        - name: romm-storage
+          persistentVolumeClaim:
+            claimName: pvc-romm-resources
+        - name: romm-cached-data
+          persistentVolumeClaim:
+            claimName: pvc-romm-cached-data
+        - name: romm-library
+          persistentVolumeClaim:
+            claimName: pvc-romm-library
+        - name: romm-assets
+          persistentVolumeClaim:
+            claimName: pvc-romm-assets
+        - name: romm-config
+          persistentVolumeClaim:
+            claimName: pvc-romm-config
