@@ -49,3 +49,10 @@ spec:
         - name: romm-config
           persistentVolumeClaim:
             claimName: pvc-romm-config
+      resources:
+        requests:
+          cpu: 10
+          memory: 256Mi
+        limits:
+          cpu: 100
+          memory: 2Gi

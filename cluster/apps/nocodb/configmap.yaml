@@ -9,5 +9,5 @@ metadata:
 data:
   TZ: "America/Chicago"
   NC_PUBLIC_URL: "https://nocodb.hut.sh"
-  NC_DB: "pg://postgresql.postgres.svc.cluster.local:5432?u=nocodb&p=nocodb&d=nocodb"
+  NC_DB: "pg://postgresql.databases.svc.cluster.local:5432?u=nocodb&p=nocodb&d=nocodb"
   NC_DISABLE_TELE: "true"

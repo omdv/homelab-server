@@ -108,7 +108,7 @@ mlflow:
       enabled: false
 
   externalDatabase:
-    host: "postgresql.postgres.svc.cluster.local"
+    host: "postgresql.databases.svc.cluster.local"
     port: 5432
     user: mlflow
     database: mlflow

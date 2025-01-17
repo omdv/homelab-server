@@ -7,7 +7,7 @@ metadata:
     app: pgbackup
 
 data:
-  POSTGRES_HOST: "postgresql.postgres.svc.cluster.local"
+  POSTGRES_HOST: "postgresql.databases.svc.cluster.local"
   POSTGRES_PORT: "5432"
   POSTGRES_DB: "paperless,sailboats,options"
   POSTGRES_USER: "postgres"
