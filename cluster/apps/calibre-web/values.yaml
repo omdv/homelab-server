@@ -40,7 +40,7 @@ calibre-web:
   resources:
     requests:
       memory: 16Mi
-      cpu: "0.01"
+      cpu: 100m
     limits:
       memory: 256Mi
-      cpu: "0.1"
+      cpu: 500m
