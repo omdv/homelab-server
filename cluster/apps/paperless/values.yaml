@@ -10,7 +10,7 @@ paperless:
     - secretRef:
         name: paperless-secret
   env:
-    PAPERLESS_REDIS: "redis://redis-master.redis.svc.cluster.local:6379"
+    PAPERLESS_REDIS: "redis://redis-master.databases.svc.cluster.local:6379"
     PAPERLESS_DBHOST: "postgresql.postgres.svc.cluster.local"
     PAPERLESS_DBPORT: 5432
     PAPERLESS_TIME_ZONE: "America/Chicago"
