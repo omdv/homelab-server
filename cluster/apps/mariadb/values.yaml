@@ -1,0 +1,105 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/mariadb/values.yaml
+mariadb:
+  image:
+    registry: docker.io
+    repository: bitnami/mariadb
+    tag: 11.4.4-debian-12-r2
+    digest: ""
+    pullPolicy: IfNotPresent
+
+  architecture: standalone
+  auth:
+    existingSecret: mariadb-secret
+
+  primary:
+    configuration: |-
+      [mysqld]
+      skip-name-resolve
+      explicit_defaults_for_timestamp
+      basedir=/opt/bitnami/mariadb
+      datadir=/bitnami/mariadb/data
+      plugin_dir=/opt/bitnami/mariadb/plugin
+      port={{ .Values.primary.containerPorts.mysql }}
+      socket=/opt/bitnami/mariadb/tmp/mysql.sock
+      tmpdir=/opt/bitnami/mariadb/tmp
+      max_allowed_packet=16M
+      bind-address=*
+      pid-file=/opt/bitnami/mariadb/tmp/mysqld.pid
+      log-error=/opt/bitnami/mariadb/logs/mysqld.log
+      character-set-server=UTF8
+      collation-server=utf8_general_ci
+      slow_query_log=0
+      long_query_time=10.0
+      binlog_expire_logs_seconds=2592000
+      {{- if .Values.tls.enabled }}
+      ssl_cert=/opt/bitnami/mariadb/certs/{{ .Values.tls.certFilename }}
+      ssl_key=/opt/bitnami/mariadb/certs/{{ .Values.tls.certKeyFilename }}
+      {{- if (include "mariadb.tlsCACert" .) }}
+      ssl_ca={{ include "mariadb.tlsCACert" . }}
+      {{- end }}
+      {{- end }}
+
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+
+    resources:
+      requests:
+        cpu: 2
+        memory: 512Mi
+      limits:
+        cpu: 3
+        memory: 1024Mi
+
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 120
+      periodSeconds: 10
+      timeoutSeconds: 1
+      failureThreshold: 3
+      successThreshold: 1
+
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 1
+      failureThreshold: 3
+      successThreshold: 1
+
+    persistence:
+      enabled: true
+      existingClaim: pvc-mariadb
+
+    service:
+      type: ClusterIP
+      ports:
+        mysql: 3306
+        metrics: 9104
+      nodePorts:
+        mysql: ""
+      clusterIP: ""
+
+  volumePermissions:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/os-shell
+      tag: 12-debian-12-r34
+      digest: ""
+      pullPolicy: IfNotPresent
+    resourcesPreset: "nano"
+
+  metrics:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/mysqld-exporter
+      tag: 0.16.0-debian-12-r3
+      digest: ""
+      pullPolicy: IfNotPresent
+
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9104"

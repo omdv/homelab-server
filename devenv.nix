@@ -6,5 +6,6 @@
     pkgs.envsubst
     pkgs.age
     pkgs.pre-commit
+    pkgs.mariadb
   ];
 }
