@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: romm
+  labels:
+    app: romm
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: romm
@@ -12,11 +14,64 @@ spec:
       labels:
         app: romm
     spec:
+      serviceAccountName: romm-service-account
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
+      initContainers:
+        - name: volume-permissions
+          image: busybox:1.37.0
+          command: ["sh", "-c", "chown -R 1000:1000 /romm/resources /redis-data /romm/library /romm/assets /romm/config"]
+          volumeMounts:
+            - name: romm-storage
+              mountPath: /romm/resources
+            - name: romm-cached-data
+              mountPath: /redis-data
+            - name: romm-library
+              mountPath: /romm/library
+            - name: romm-assets
+              mountPath: /romm/assets
+            - name: romm-config
+              mountPath: /romm/config
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
       containers:
         - name: romm
-          image: rommapp/romm:latest
+          image: rommapp/romm:3.7.2
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            capabilities:
+              drop:
+                - ALL
           ports:
-            - containerPort: 8080
+            - name: web
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /api/heartbeat
+              port: web
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /api/heartbeat
+              port: web
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
           envFrom:
             - configMapRef:
                 name: romm-config
@@ -33,6 +88,13 @@ spec:
               mountPath: /romm/assets
             - name: romm-config
               mountPath: /romm/config
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
       volumes:
         - name: romm-storage
           persistentVolumeClaim:
@@ -49,10 +111,3 @@ spec:
         - name: romm-config
           persistentVolumeClaim:
             claimName: pvc-romm-config
-      resources:
-        requests:
-          cpu: 10
-          memory: 256Mi
-        limits:
-          cpu: 100
-          memory: 2Gi

@@ -8,9 +8,9 @@ metadata:
 
 spec:
   ports:
-    - name: http
+    - port: 8080
+      name: web
       protocol: TCP
-      port: 8080
-      targetPort: 8080
+      targetPort: web
   selector:
     app: romm

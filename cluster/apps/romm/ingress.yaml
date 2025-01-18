@@ -27,4 +27,4 @@ spec:
               service:
                 name: romm
                 port:
-                  name: http
+                  name: web
