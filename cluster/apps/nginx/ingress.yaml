@@ -12,10 +12,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - hut.sh
+        - x9.rs
       secretName: my-certs-main
   rules:
-    - host: hut.sh
+    - host: x9.rs
       http:
         paths:
           - path: /

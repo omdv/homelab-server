@@ -7,18 +7,18 @@ metadata:
     app: nocodb
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/auth-url: "https://auth.hut.sh/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "https://auth.hut.sh/oauth2/start?rd=https://$host$uri"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.x9.rs/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.x9.rs/oauth2/start?rd=https://$host$uri"
     hajimari.io/enable: "true"
 
 spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - nocodb.hut.sh
+        - nocodb.x9.rs
       secretName: my-certs-nocodb
   rules:
-    - host: nocodb.hut.sh
+    - host: nocodb.x9.rs
       http:
         paths:
           - path: /
