@@ -7,5 +7,6 @@
     pkgs.age
     pkgs.pre-commit
     pkgs.mariadb
+    pkgs.popeye
   ];
 }
