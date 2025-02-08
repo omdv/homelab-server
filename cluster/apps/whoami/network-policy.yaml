@@ -10,11 +10,17 @@ spec:
     - Ingress
     - Egress
   ingress:
-    - ports:
+    - from:
+        - namespaceSelector: {}
+      ports:
         - port: 80
           protocol: TCP
+        - port: 443
+          protocol: TCP
   egress:
-    - ports:
+    - to:
+        - namespaceSelector: {}
+      ports:
         - port: 53
           protocol: UDP
         - port: 53
