@@ -15,9 +15,17 @@ spec:
         app: it-tools
     spec:
       serviceAccountName: it-tools-service-account
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: node-role.kubernetes.io/worker
+                    operator: Exists
       initContainers:
         - name: init-nginx-temp
-          image: busybox
+          image: busybox:1.37.0
           command: ["/bin/sh", "-c"]
           args:
             - |
@@ -30,6 +38,13 @@ spec:
               mountPath: /var/cache/nginx
             - name: nginx-run
               mountPath: /var/run
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 50m
+              memory: 32Mi
       containers:
         - name: it-tools
           image: ghcr.io/corentinth/it-tools:2024.10.22-7ca5933
