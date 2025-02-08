@@ -16,6 +16,13 @@ spec:
       labels:
         app: pgbackup
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/master
+                    operator: Exists
       containers:
         - name: pgbackup
           image: prodrigestivill/postgres-backup-local:latest
@@ -33,10 +40,10 @@ spec:
               name: volume
           resources:
             requests:
-              cpu: 10m
+              cpu: 50m
               memory: 16Mi
             limits:
-              cpu: 50m
+              cpu: 100m
               memory: 64Mi
       volumes:
         - name: volume
