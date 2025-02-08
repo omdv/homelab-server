@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: helm-influxdb
+type: application
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+  - name: influxdb
+    version: 4.12.5
+    repository: https://helm.influxdata.com

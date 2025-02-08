@@ -26,9 +26,9 @@ oauth2-proxy:
       upstreams = [ "file:///dev/null" ]
       github_users = [ "omdv" ]
       # cookie_secure = "false"
-      whitelist_domains = "*.hut.sh"
+      whitelist_domains = "*.x9.rs"
       # ssl_insecure_skip_verify = "true"
-      redirect_url = "https://auth.hut.sh/oauth2/callback"
+      redirect_url = "https://auth.x9.rs/oauth2/callback"
 
   image:
     repository: "quay.io/oauth2-proxy/oauth2-proxy"
@@ -108,7 +108,7 @@ oauth2-proxy:
     path: /
     pathType: ImplementationSpecific
     hosts:
-      - auth.hut.sh
+      - auth.x9.rs
     backend:
       serviceName: oauth2-proxy
       servicePort: 80
@@ -128,7 +128,7 @@ oauth2-proxy:
     tls:
       - secretName: my-certs-oauth2-proxy
         hosts:
-          - auth.hut.sh
+          - auth.x9.rs
 
 
   resources: {}

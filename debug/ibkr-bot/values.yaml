@@ -1,0 +1,38 @@
+#https://github.com/omdv/ibkr-trading/blob/master/charts/ibkr-bot/values.yaml
+---
+ibkr-bot:
+  nameOverride: ""
+  fullnameOverride: "ibkr-bot"
+
+  serviceAccount:
+    create: true
+
+  gateway:
+    replicaCount: 1
+    image:
+      repository: ghcr.io/extrange/ibkr
+      pullPolicy: IfNotPresent
+      tag: "10.19"
+    existingSecret: "ibkr-secret"
+    tradingMode: "live"
+    ports:
+      api: "8888"
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "1024Mi"
+
+  application:
+    replicaCount: 1
+    image:
+      repository: omdv/ib-bots
+      pullPolicy: Always
+      tag: "latest"
+    configMapName: "ibkr-config"
+    gatewayPort: "8888"
+    storageBackend: "file"
+    persistence:
+      enabled: true
+      existingClaim: "pvc-ibkr"
+      mountPath: "/data"
+    resources: {}

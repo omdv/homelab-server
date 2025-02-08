@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zipline-config
+data:
+  CORE_RETURN_HTTPS: "true"
+  CORE_HOST: "0.0.0.0"
+  CORE_PORT: "3000"
+  CORE_LOGGER: "true"
+  CORE_DATABASE_URL: "postgres://zipline:zipline@postgresql.databases.svc.cluster.local/zipline"
+  DATASOURCE_TYPE: "local"
+  DATASOURCE_LOCAL_DIRECTORY: "/zipline/uploads"

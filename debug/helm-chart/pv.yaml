@@ -2,30 +2,28 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-unifi
-  labels:
-    app: unifi-controller
+  name: pv-zipline-uploads
+
 spec:
   capacity:
-    storage: 1Gi
+    storage: 100Gi
   storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /pool/config/unifi
+    path: /pool/zipline/uploads
 
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
-  name: pvc-unifi
-  labels:
-    app: unifi-controller
+  name: pv-zipline-public
+
 spec:
+  capacity:
+    storage: 100Gi
   storageClassName: local-path
   accessModes:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  volumeName: pv-unifi
+  hostPath:
+    path: /pool/zipline/public

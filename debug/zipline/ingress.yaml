@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zipline
+  labels:
+    app: zipline
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    hajimari.io/enable: "true"
+
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - zipline.x9.rs
+      secretName: my-certs-zipline
+  rules:
+    - host: zipline.x9.rs
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: zipline
+                port:
+                  number: 3000
