@@ -8,5 +8,6 @@
     pkgs.pre-commit
     pkgs.mariadb
     pkgs.popeye
+    pkgs.ansible
   ];
 }
