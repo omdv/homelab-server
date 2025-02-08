@@ -13,6 +13,13 @@ spec:
     spec:
       template:
         spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: node-role.kubernetes.io/worker
+                        operator: Exists
           containers:
             - name: cloudflare
               image: omdv/cloudflare-ddns:202207262350133633d8
