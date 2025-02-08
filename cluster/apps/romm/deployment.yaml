@@ -19,6 +19,13 @@ spec:
         fsGroup: 1000
         runAsUser: 1000
         runAsGroup: 1000
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
       initContainers:
         - name: volume-permissions
           image: busybox:1.37.0
