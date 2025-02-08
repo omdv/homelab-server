@@ -1,0 +1,7 @@
+---
+resources:
+  - serviceaccount.yaml
+  - network-policy.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
