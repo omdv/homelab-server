@@ -3,3 +3,5 @@ resources:
   - services.yaml
   - deployments.yaml
   - ingress.yaml
+  - network-policy.yaml
+  - service-account.yaml
