@@ -1,9 +1,18 @@
 ---
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 argo-cd:
+  global:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
   dex:
     enabled: false
   server:
+    replicas: 2
     extraArgs:
       - --insecure
     ingress:
@@ -24,6 +33,8 @@ argo-cd:
         - secretName: my-certs-argo
           hosts:
             - argo.x9.rs
+  repoServer:
+    replicas: 2
   controller:
     resources:
       requests:
