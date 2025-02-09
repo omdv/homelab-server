@@ -1,11 +1,18 @@
 ---
-#Ref: https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
+# Ref: https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 ingress-nginx:
   controller:
     image:
       runAsUser: 101
     config:
       access-log-path: "/var/log/nginx/myaccess.log"
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: node-role.kubernetes.io/worker
+                  operator: Exists
     metrics:
       enabled: true
       serviceMonitor:
