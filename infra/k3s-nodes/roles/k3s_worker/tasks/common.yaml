@@ -1,0 +1,17 @@
+---
+- name: Hardening the system first by running the hardening script
+  # https://github.com/akcryptoguy/vps-harden
+  command: |
+    echo "ssh into the host with root password"
+    echo "run hardening script"
+    echo "sudo git clone https://github.com/akcryptoguy/vps-harden.git && cd vps-harden && sudo bash get-hard.sh"
+    echo "mkdir /home/om/.ssh && touch /home/om/.ssh/authorized_keys"
+    echo "chmod 700 /home/om/.ssh && chmod 600 /home/om/.ssh/authorized_keys"
+    echo "nano /home/om/.ssh/authorized_keys"
+    echo "sudo chown -R om:om /home/om/.ssh"
+
+
+- name: Install tailscale
+  command: |
+    echo "curl -fsSL https://tailscale.com/install.sh | sh"
+    echo "register tailscale on custom login server"

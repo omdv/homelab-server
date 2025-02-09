@@ -1,0 +1,9 @@
+all:
+  children:
+    k3s_worker:
+      hosts:
+        worker-1:
+          ansible_host: 192.210.141.198
+          ansible_user: om
+          ansible_ssh_private_key_file: /home/om/.ssh/id_rsa
+          ansible_port: 11111

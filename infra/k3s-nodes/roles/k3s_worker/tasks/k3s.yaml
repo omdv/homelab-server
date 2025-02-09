@@ -1,0 +1,57 @@
+---
+- name: Download K3s install script
+  get_url:
+    url: https://get.k3s.io
+    dest: /tmp/k3s-install.sh
+    mode: '0755'
+
+- name: Install K3s worker node
+  shell: |
+    set -x  # Enable command tracing
+    export INSTALL_K3S_SKIP_START=true
+    export K3S_URL=https://100.105.105.100:6443
+    export K3S_TOKEN="{{ lookup('env', 'K3S_NODE_TOKEN') }}"
+    sh /tmp/k3s-install.sh
+  args:
+    creates: /usr/local/bin/k3s
+  register: install_result
+  failed_when: install_result.rc != 0
+  become: true
+
+- name: Debug installation output
+  debug:
+    var: install_result
+  when: install_result is defined
+
+- name: Clean up install script
+  file:
+    path: /tmp/k3s-install.sh
+    state: absent
+
+- name: Create K3s service configuration directory
+  block:
+    - file:
+        path: /etc/rancher/k3s
+        state: directory
+        mode: '0755'
+        recurse: true
+  become: true
+
+- name: Configure K3s agent
+  copy:
+    dest: /etc/rancher/k3s/config.yaml
+    content: |
+      server: https://100.105.105.100:6443
+      token: "{{ lookup('env', 'K3S_NODE_TOKEN') }}"
+      node-external-ip: "100.105.105.101"
+      vpn-auth: "name=tailscale,joinKey={{ lookup('env', 'K3S_TAILSCALE_JOIN_KEY') }}"
+    mode: '0600'
+  become: true
+
+- name: Enable and start K3s service
+  systemd:
+    name: k3s-agent
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  become: true

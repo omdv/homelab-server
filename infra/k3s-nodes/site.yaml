@@ -1,0 +1,6 @@
+# main playbook
+- hosts: k3s_worker
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - k3s_worker
