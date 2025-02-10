@@ -16,16 +16,36 @@ spec:
       labels:
         app: pgbackup
     spec:
+      serviceAccountName: pgbackup
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: node-role.kubernetes.io/master
+                  - key: node-role.kubernetes.io/control-plane
                     operator: Exists
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+      initContainers:
+        - name: volume-permissions
+          image: busybox:1.37.0
+          command: ["sh", "-c", "chown -R 1000:1000 /backups && chmod -R 755 /backups"]
+          volumeMounts:
+            - mountPath: /backups
+              name: volume
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
       containers:
         - name: pgbackup
-          image: prodrigestivill/postgres-backup-local:latest
+          image: prodrigestivill/postgres-backup-local:17
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -45,6 +65,12 @@ spec:
             limits:
               cpu: 100m
               memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
       volumes:
         - name: volume
           persistentVolumeClaim:

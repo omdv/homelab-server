@@ -7,6 +7,12 @@ metadata:
     app: pgbackup
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 100Gi
   storageClassName: local-path

@@ -4,3 +4,5 @@ resources:
   - secrets.yaml
   - volumes.yaml
   - deployment.yaml
+  - service-account.yaml
+  - network-policy.yaml
