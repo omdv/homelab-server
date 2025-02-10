@@ -1,3 +1,4 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/redis/values.yaml
 ---
 redis:
   architecture: standalone
@@ -13,12 +14,13 @@ redis:
         memory: 32Mi
     persistence:
       enabled: false
+    automountServiceAccountToken: false
     service:
       type: ClusterIP
       ports:
         redis: 6379
   replica:
-    replicaCount: 1
+    replicaCount: 2
     resources:
       requests:
         cpu: "0.01"
@@ -26,3 +28,6 @@ redis:
       limits:
         cpu: "0.2"
         memory: 32Mi
+  networkPolicy:
+    enabled: true
+    allowExternal: false
