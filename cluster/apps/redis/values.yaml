@@ -30,4 +30,4 @@ redis:
         memory: 32Mi
   networkPolicy:
     enabled: true
-    allowExternal: false
+    allowExternal: true
