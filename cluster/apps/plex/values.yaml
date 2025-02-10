@@ -1,3 +1,4 @@
+# https://github.com/k8s-at-home/charts/blob/master/charts/stable/plex/values.yaml
 ---
 plex:
 
@@ -20,6 +21,14 @@ plex:
       enabled: false
     dnla-udp:
       enabled: false
+
+  affinity:
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
 
   ingress:
     main:
