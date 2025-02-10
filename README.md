@@ -16,6 +16,10 @@ Some of the features of K3s cluster:
 - My own [Interactive Brokers trading bot](https://github.com/omdv/ibkr-trading)
 - Nocodb deployment for above trading app
 
+## Infrastructure
+
+Started as single-node cluster leaving on a server in my house. Now I have a hybrid deployment with few nodes across the different providers (mostly cheap vps, like racknerd), connected via tailscale mesh network. Details on provisioning will be added later.
+
 
 ## Prior to Deployment
 
