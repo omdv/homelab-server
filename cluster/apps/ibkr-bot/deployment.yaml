@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ibkr-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibkr-gateway
+  template:
+    metadata:
+      labels:
+        app: ibkr-gateway
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
+      serviceAccountName: ibkr-gateway-service-account
+      containers:
+        - name: ibkr-gateway
+          image: ghcr.io/extrange/ibkr:10.30
+          ports:
+            - name: novnc
+              containerPort: 6080
+            - name: api
+              containerPort: 8888
+            - name: command-server
+              containerPort: 7462
+          livenessProbe:
+            tcpSocket:
+              port: api
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: api
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 3
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ibkr-gateway-secret
+                  key: username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ibkr-gateway-secret
+                  key: password
+          envFrom:
+            - configMapRef:
+                name: ibkr-config
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1024Mi
+            limits:
+              cpu: 1000m
+              memory: 2048Mi

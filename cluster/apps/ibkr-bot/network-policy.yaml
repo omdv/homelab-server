@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ibkr-gateway-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      app: ibkr-gateway
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ibkr-trading
+        - podSelector:
+            matchLabels:
+              app: ibkr-trading-app
+      ports:
+        - port: 8888
+          protocol: TCP
+        - port: 7462
+          protocol: TCP
+  egress:
+    - to:
+        - namespaceSelector: {}
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    # Allow connection to IBKR API endpoints
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0  # Allow all outbound IPs since IBKR might use multiple endpoints
+      ports:
+        - port: 4000
+          protocol: TCP  # TWS API port
+        - port: 4001
+          protocol: TCP  # Live Trading port
+        - port: 4002
+          protocol: TCP  # Paper Trading port
