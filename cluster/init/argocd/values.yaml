@@ -12,7 +12,32 @@ argo-cd:
   dex:
     enabled: false
   server:
-    replicas: 2
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 4
+      targetCPUUtilizationPercentage: 50
+      targetMemoryUtilizationPercentage: 50
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 300
+          policies:
+            - type: Pods
+              value: 1
+              periodSeconds: 180
+        scaleUp:
+          stabilizationWindowSeconds: 300
+          policies:
+            - type: Pods
+              value: 2
+              periodSeconds: 60
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
     extraArgs:
       - --insecure
     ingress:
@@ -35,7 +60,15 @@ argo-cd:
             - argo.x9.rs
   repoServer:
     replicas: 2
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
   controller:
+    replicas: 2
     resources:
       requests:
         cpu: 512m
@@ -43,6 +76,32 @@ argo-cd:
       limits:
         cpu: 2048m
         memory: 1024Mi
+  applicationSet:
+    replicas: 2
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+  redis:
+    enabled: true
+    resources:
+      limits:
+        cpu: 50m
+        memory: 64Mi
+      requests:
+        cpu: 10m
+        memory: 32Mi
+  notifications:
+    resources:
+      limits:
+        cpu: 50m
+        memory: 64Mi
+      requests:
+        cpu: 10m
+        memory: 32Mi
   configs:
     secret:
       argocdServerAdminPassword: $2a$10$YtCUmdJ2B002tKFlEDmB7OmGv2r4xLt428YodSDJsrNIQ.z3wI/UK
