@@ -22,7 +22,15 @@ spec:
                         operator: Exists
           containers:
             - name: cloudflare
+              serviceAccountName: ddns-service-account
               image: omdv/cloudflare-ddns:202207262350133633d8
+              resources:
+                limits:
+                  cpu: "100m"
+                  memory: "64Mi"
+                requests:
+                  cpu: "50m"
+                  memory: "32Mi"
               env:
                 - name: API_TOKEN
                   valueFrom:

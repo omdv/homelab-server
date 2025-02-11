@@ -2,3 +2,4 @@
 resources:
   - secrets.yaml
   - cronjob.yaml
+  - service-account.yaml
