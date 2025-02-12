@@ -1,7 +1,25 @@
+# https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
 ---
 kube-prometheus-stack:
   fullnameOverride: prom
   prometheus:
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        nginx.ingress.kubernetes.io/auth-url: "https://auth.x9.rs/oauth2/auth"
+        nginx.ingress.kubernetes.io/auth-signin: "https://auth.x9.rs/oauth2/start?rd=https://$host$uri"
+        hajimari.io/enable: "true"
+        hajimari.io/appName: "prometheus"
+        hajimari.io/icon: "chart-histogram"
+      hosts:
+        - prometheus.x9.rs
+      paths:
+        - /
+      tls:
+        - secretName: my-certs-prometheus
+          hosts:
+            - prometheus.x9.rs
     prometheusSpec:
       podMonitorSelectorNilUsesHelmValues: false
       serviceMonitorSelectorNilUsesHelmValues: false
