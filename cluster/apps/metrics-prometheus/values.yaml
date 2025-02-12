@@ -5,6 +5,7 @@ kube-prometheus-stack:
   prometheus:
     ingress:
       enabled: true
+      ingressClassName: nginx
       annotations:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
         nginx.ingress.kubernetes.io/auth-url: "https://auth.x9.rs/oauth2/auth"
