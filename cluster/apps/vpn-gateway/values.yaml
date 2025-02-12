@@ -5,7 +5,6 @@ pod-gateway:
     tag: v1.8.1
   routed_namespaces:
     - vpn
-    - media
   webhook:
     image:
       repository: ghcr.io/angelnu/gateway-admision-controller
