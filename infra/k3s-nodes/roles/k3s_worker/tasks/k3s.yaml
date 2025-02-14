@@ -45,6 +45,8 @@
       token: "{{ lookup('env', 'K3S_TOKEN') }}"
       node-external-ip: "100.105.105.101"
       vpn-auth: "name=tailscale,joinKey={{ lookup('env', 'K3S_TAILSCALE_AUTH') }}"
+      node-label:
+        - "node.kubernetes.io/role=worker"
     mode: '0600'
   become: true
 
