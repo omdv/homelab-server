@@ -15,3 +15,16 @@
   command: |
     echo "curl -fsSL https://tailscale.com/install.sh | sh"
     echo "register tailscale on custom login server"
+
+- name: Install openiscsi
+  apt:
+    name: open-iscsi
+    state: present
+  become: true
+
+- name: Make sure openiscsi is enabled
+  service:
+    name: iscsid
+    enabled: true
+    state: restarted
+  become: true
