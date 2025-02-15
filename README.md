@@ -164,6 +164,13 @@ terraform plan
 terraform apply
 ```
 
+## Deployment waves
+- 1: Observability
+- 2: Ingress-nginx
+- 3: Networking (cert-manager, oauth-proxy, vpn)
+- 4: Databases
+- 5: Applications
+
 ## Hardware
 
 This all runs on single machine in acclaimed Node 304 case, which can house 6 HDDs, although I use only 4 at the moment.
