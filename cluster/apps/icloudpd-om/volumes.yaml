@@ -7,6 +7,12 @@ metadata:
     app: icloudpd
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 1000Gi
   storageClassName: local-path
@@ -41,6 +47,12 @@ metadata:
     app: icloudpd
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 1Gi
   storageClassName: local-path

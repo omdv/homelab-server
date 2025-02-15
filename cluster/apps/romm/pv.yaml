@@ -5,6 +5,12 @@ metadata:
   name: pv-romm-resources
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 100Gi
   storageClassName: local-path
@@ -20,6 +26,12 @@ metadata:
   name: pv-romm-cached-data
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 100Gi
   storageClassName: local-path
@@ -35,6 +47,12 @@ metadata:
   name: pv-romm-library
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 1Ti
   storageClassName: local-path
@@ -50,6 +68,12 @@ metadata:
   name: pv-romm-assets
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 100Gi
   storageClassName: local-path
@@ -65,6 +89,12 @@ metadata:
   name: pv-romm-config
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 10Gi
   storageClassName: local-path

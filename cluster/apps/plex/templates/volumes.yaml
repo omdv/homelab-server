@@ -47,6 +47,12 @@ metadata:
     app: plex
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 10Gi
   storageClassName: local-path
@@ -81,6 +87,12 @@ metadata:
     app: plex
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 1Ti
   storageClassName: local-path

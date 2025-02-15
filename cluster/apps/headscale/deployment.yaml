@@ -66,6 +66,12 @@ metadata:
     app: headscale
 
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
   capacity:
     storage: 1Gi
   storageClassName: local-path
