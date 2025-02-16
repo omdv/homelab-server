@@ -16,15 +16,37 @@
     echo "curl -fsSL https://tailscale.com/install.sh | sh"
     echo "register tailscale on custom login server"
 
-- name: Install openiscsi
-  apt:
-    name: open-iscsi
-    state: present
+# - name: Install openiscsi
+#   apt:
+#     name: open-iscsi
+#     state: present
+#   become: true
+
+# - name: Make sure openiscsi is enabled
+#   service:
+#     name: iscsid
+#     enabled: true
+#     state: restarted
+#   become: true
+
+- name: Open firewall ports
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: "{{ 'udp' if item == '51820' else 'any' }}"
+  loop:
+    - "11111"
+    - "51820"
   become: true
 
-- name: Make sure openiscsi is enabled
-  service:
-    name: iscsid
-    enabled: true
-    state: restarted
+- name: Allow Tailscale specific ports
+  ufw:
+    rule: allow
+    interface: tailscale0
+    direction: in
+    port: "{{ item }}"
+    proto: any
+  loop:
+    - "8443" # ingress-nginx
+    - "10250" # metrics
   become: true
