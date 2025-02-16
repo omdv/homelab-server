@@ -29,12 +29,10 @@ main() {
     local vault=
 
     parse_command_line "$@"
-    verify_binaries
 
     if [[ "${verify}" == 1 ]]; then
         verify_ansible_hosts
         verify_age
-        verify_git_repository
         verify_vault
         verify_argo
         verify_cloudflare
@@ -93,13 +91,6 @@ parse_command_line() {
     fi
 }
 
-_has_binary() {
-    command -v "${1}" >/dev/null 2>&1 || {
-        _log "ERROR" "${1} is not installed or not found in \$PATH"
-        exit 1
-    }
-}
-
 _has_envar() {
     local option="${1}"
     # shellcheck disable=SC2015
@@ -140,28 +131,6 @@ verify_age() {
     else
         _log "INFO" "Found Age public key '${BOOTSTRAP_AGE_PUBLIC_KEY}'"
     fi
-}
-
-verify_binaries() {
-    _has_binary "envsubst"
-    _has_binary "git"
-    _has_binary "helm"
-    _has_binary "jq"
-    _has_binary "ssh"
-    _has_binary "go-task"
-}
-
-verify_git_repository() {
-    _has_envar "BOOTSTRAP_GIT_REPOSITORY"
-
-    export GIT_TERMINAL_PROMPT=0
-    pushd "$(mktemp -d)" >/dev/null 2>&1
-    [ "$(git ls-remote "${BOOTSTRAP_GIT_REPOSITORY}" 2> /dev/null)" ] || {
-        _log "ERROR" "Unable to find the remote Git repository '${BOOTSTRAP_GIT_REPOSITORY}'"
-        exit 1
-    }
-    popd >/dev/null 2>&1
-    export GIT_TERMINAL_PROMPT=1
 }
 
 verify_cloudflare() {
@@ -296,7 +265,8 @@ generate_cluster_secrets() {
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_PASSWORD"="$VAULT_IBKR_LIVE_PASSWORD"
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_TRADING_NTFY_TOPIC"="$VAULT_IBKR_TRADING_NTFY_TOPIC"
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_QUOTE_API_KEY"="$VAULT_IBKR_QUOTE_API_KEY"
-
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_GITHUB_PAT"="$VAULT_IBKR_GITHUB_PAT"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_GITHUB_USER"="omdv"
 
     # initialize secret @ secret/linkwarden
     # kubectl exec -n vault vault-0 -- vault kv put kv/secret/linkwarden name=my-linkwarden-secret
@@ -312,52 +282,15 @@ generate_cluster_secrets() {
     # kubectl exec -n vault vault-0 -- vault kv put kv/secret/tailscale name=my-tailscale-secret
     # kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_ID"="$VAULT_TAILSCALE_K8S_CLIENT_ID"
     # kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_SECRET"="$VAULT_TAILSCALE_K8S_CLIENT_SECRET"
-}
 
-
-
-verify_argo() {
-    _has_envar "BOOTSTRAP_ARGO_ADMIN_PASSWORD"
-    _log "INFO" "Found variables for ARGO"
+    # initialize secret @ secret/zipline
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/zipline name=my-zipline-secret
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/zipline "VAULT_ZIPLINE_CORE_SECRET"="$VAULT_ZIPLINE_SECRET"
 }
 
 success() {
     printf "\nAll checks pass!"
     exit 0
-}
-
-generate_ansible_host_secrets() {
-    local node_id=
-    local node_username=
-    local node_password=
-    {
-        node_username="BOOTSTRAP_ANSIBLE_SSH_USERNAME"
-        node_password="BOOTSTRAP_ANSIBLE_SUDO_PASSWORD"
-        printf "kind: Secret\n"
-        printf "ansible_user: %s\n" "${!node_username}"
-        printf "ansible_become_pass: %s\n" "${!node_password}"
-    } > "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${BOOTSTRAP_ANSIBLE_HOST_NAME}.sops.yml"
-    sops --encrypt --in-place "${PROJECT_DIR}/provision/ansible/inventory/host_vars/${BOOTSTRAP_ANSIBLE_HOST_NAME}.sops.yml"
-}
-
-generate_ansible_hosts() {
-    {
-        printf -- "---\n"
-        printf "kubernetes:\n"
-        printf "  children:\n"
-        printf "    master:\n"
-        printf "      hosts:\n"
-        printf "        %s:\n" "${BOOTSTRAP_ANSIBLE_HOST_NAME}"
-        printf "          ansible_host: %s\n" "${BOOTSTRAP_ANSIBLE_HOST_ADDR}"
-    } > "${PROJECT_DIR}/provision/ansible/inventory/hosts.yml"
-}
-
-add_github_registry_secret() {
-kubectl create secret docker-registry dockerconfigjson-github-com \
-    --docker-server=https://ghcr.io \
-    --docker-username=omdv \
-    --docker-password=$GITHUB_GHCR_TOKEN \
-    --namespace=sailboats
 }
 
 _log() {
