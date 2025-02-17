@@ -7,11 +7,11 @@ redis:
   master:
     resources:
       requests:
-        cpu: "0.01"
-        memory: 8Mi
+        cpu: 50m
+        memory: 16Mi
       limits:
-        cpu: "0.2"
-        memory: 32Mi
+        cpu: 200m
+        memory: 64Mi
     persistence:
       enabled: false
     automountServiceAccountToken: false
@@ -23,11 +23,10 @@ redis:
     replicaCount: 2
     resources:
       requests:
-        cpu: "0.01"
-        memory: 2Mi
+        cpu: 50m
+        memory: 16Mi
       limits:
-        cpu: "0.2"
-        memory: 32Mi
+        cpu: 200m
+        memory: 64Mi
   networkPolicy:
     enabled: true
-    allowExternal: true
