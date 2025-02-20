@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: puter-config
+data:
+  TZ: America/Chicago
+  CONFIG_PATH: /etc/puter
+  PUID: "1000"
+  PGID: "1000"

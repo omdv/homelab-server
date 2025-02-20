@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-puter-config
+  labels:
+    app: puter
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  local:
+    path: /pool/puter/config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-puter-data
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  local:
+    path: /pool/puter/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists

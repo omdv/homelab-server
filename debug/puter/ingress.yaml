@@ -1,0 +1,31 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: puter
+  labels:
+    app: puter
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.x9.rs/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.x9.rs/oauth2/start?rd=https://$host$uri"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "remote-desktop"
+
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - puter.x9.rs
+      secretName: my-certs-puter
+  rules:
+    - host: puter.x9.rs
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: puter
+                port:
+                  number: 4100

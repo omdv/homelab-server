@@ -1,0 +1,10 @@
+---
+resources:
+  - configmap.yaml
+  - serviceaccount.yaml
+  - network-policy.yaml
+  - pvc.yaml
+  - pv.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
