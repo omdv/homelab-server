@@ -12,6 +12,13 @@ pod-gateway:
     gatewayDefault: false
     gatewayLabel: setGateway
     gatewayAnnotation: setGateway
+  affinity:
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
   settings:
     VPN_INTERFACE: wg0
     VPN_BLOCK_OTHER_TRAFFIC: false
@@ -28,7 +35,7 @@ pod-gateway:
           port: 18289
   additionalContainers:
     gluetun:
-      image: qmcgaw/gluetun:v3.31.1@sha256:dabf4efdadafd6acce67bf89b11396e5c87dd1e25705b36fc9211730c943db47
+      image: qmcgaw/gluetun:v3.40@sha256:2b42bfa046757145a5155acece417b65b4443c8033fb88661a8e9dcf7fda5a00
       env:
         - name: VPN_TYPE
           value: wireguard
