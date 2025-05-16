@@ -19,12 +19,6 @@ postgresql:
   architecture: "standalone"
 
   primary:
-    nodeAffinity:
-      required:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: node-role.kubernetes.io/control-plane
-                operator: Exists
     service:
       type: "ClusterIP"
       ports:

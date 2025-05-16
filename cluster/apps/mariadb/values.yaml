@@ -39,14 +39,6 @@ mariadb:
       {{- end }}
       {{- end }}
 
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: node-role.kubernetes.io/control-plane
-                  operator: Exists
-
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
