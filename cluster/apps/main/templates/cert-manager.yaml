@@ -7,10 +7,10 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "-5"
 spec:
   destination:
-    namespace: networking
+    namespace: cert-manager
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
@@ -23,3 +23,10 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - RespectSyncWave=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
