@@ -7,7 +7,7 @@ ingress-nginx:
       tag: "v1.12.0"
       runAsNonRoot: true
       runAsUser: 101
-    replicaCount: 2
+    replicaCount: 1
     config:
       access-log-path: "/var/log/nginx/myaccess.log"
     metrics:
