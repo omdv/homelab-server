@@ -13,7 +13,7 @@ metadata:
   name: headscale-config
 data:
   config.yaml: |
-    server_url: https://tailscale.x9.rs
+    server_url: https://tailscale.kblb.io
     listen_addr: 0.0.0.0:8000
     metrics_listen_addr: 0.0.0.0:9090
     grpc_listen_addr: 0.0.0.0:50443
@@ -23,7 +23,7 @@ data:
       allocation: sequential
     dns:
       magic_dns: true
-      base_domain: ts.x9.rs
+      base_domain: ts.kblb.io
       nameservers:
         global:
           - 1.1.1.1
@@ -134,7 +134,7 @@ spec:
               name: ui
           env:
             - name: HEADSCALE_URL
-              value: "https://tailscale.x9.rs"
+              value: "https://tailscale.kblb.io"
           resources:
             requests:
               memory: "64Mi"
@@ -186,10 +186,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - tailscale.x9.rs
+        - tailscale.kblb.io
       secretName: my-certs-headscale-api
   rules:
-    - host: tailscale.x9.rs
+    - host: tailscale.kblb.io
       http:
         paths:
           - path: /
@@ -208,17 +208,17 @@ metadata:
   name: headscale-ui
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/auth-url: "https://auth.x9.rs/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "https://auth.x9.rs/oauth2/start?rd=https://$host$uri"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
     hajimari.io/enable: "true"
 spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - tailscale.x9.rs
+        - tailscale.kblb.io
       secretName: my-certs-headscale-ui
   rules:
-    - host: tailscale.x9.rs
+    - host: tailscale.kblb.io
       http:
         paths:
           - path: /web

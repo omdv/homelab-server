@@ -12,10 +12,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - x9.rs
+        - kblb.io
       secretName: my-certs-main
   rules:
-    - host: x9.rs
+    - host: kblb.io
       http:
         paths:
           - path: /

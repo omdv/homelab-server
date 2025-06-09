@@ -11,4 +11,4 @@ data:
   TZ: "America/Chicago"
   MAX_WORKERS: "1"
   WEB_CONCURRENCY: "1"
-  BASE_URL: "https://recipes.x9.rs"
+  BASE_URL: "https://recipes.kblb.io"

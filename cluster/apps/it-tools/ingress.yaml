@@ -13,10 +13,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - it.x9.rs
+        - it.kblb.io
       secretName: my-certs-it-tools
   rules:
-    - host: it.x9.rs
+    - host: it.kblb.io
       http:
         paths:
           - path: /

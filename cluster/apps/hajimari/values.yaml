@@ -43,17 +43,17 @@ hajimari:
       enabled: true
       ingressClassName: nginx
       hosts:
-        - host: hj.x9.rs
+        - host: hj.kblb.io
           paths:
             - path: /
               pathType: Prefix
       annotations:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        nginx.ingress.kubernetes.io/auth-url: "https://auth.x9.rs/oauth2/auth"
-        nginx.ingress.kubernetes.io/auth-signin: "https://auth.x9.rs/oauth2/start?rd=https://$host$uri"
+        nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
+        nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
       tls:
         - hosts:
-            - hj.x9.rs
+            - hj.kblb.io
           secretName: my-certs-hajimari
 
   persistence:

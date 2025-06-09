@@ -12,10 +12,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - auth.x9.rs
+        - auth.kblb.io
       secretName: my-certs-oauth2-proxy
   rules:
-    - host: auth.x9.rs
+    - host: auth.kblb.io
       http:
         paths:
           - path: /oauth2

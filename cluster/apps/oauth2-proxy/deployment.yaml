@@ -20,8 +20,8 @@ spec:
             - --provider=google
             - --upstream=file:///dev/null
             - --http-address=0.0.0.0:4180
-            - --cookie-domain=.x9.rs
-            - --whitelist-domain=.x9.rs
+            - --cookie-domain=.kblb.io
+            - --whitelist-domain=.kblb.io
             - --authenticated-emails-file=/volume/emails
           envFrom:
             - secretRef:
