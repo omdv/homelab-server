@@ -36,6 +36,7 @@ calibre:
         nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
         nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
         hajimari.io/enable: "true"
+        hajimari.io/icon: "book-edit"
       tls:
         - hosts:
             - calibre.kblb.io
