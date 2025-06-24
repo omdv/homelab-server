@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: karakeep-web
+  labels:
+    app: karakeep-web
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    hajimari.io/enable: "true"
+    hajimari.io/appName: "karakeep"
+    hajimari.io/icon: "archive-star"
+
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - karakeep.kblb.io
+      secretName: my-certs-karakeep
+  rules:
+    - host: karakeep.kblb.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: karakeep-web
+                port:
+                  number: 3000

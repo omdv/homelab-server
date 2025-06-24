@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: karakeep-config
+data:
+  NEXTAUTH_URL: "https://karakeep.kblb.io"
+  KARAKEEP_VERSION: "release"
+  DISABLE_SIGNUPS: "true"
