@@ -33,8 +33,11 @@ talosconfig
 # Charts folders
 charts/
 Chart.lock
+
 # Debug
 debug/data/*
+debug/
+
 # Devenv
 .devenv*
 devenv.local.nix
