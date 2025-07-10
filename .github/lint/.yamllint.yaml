@@ -2,8 +2,13 @@
 ignore: |
   *.sops.*
   gotk-components.yaml
+  ./cluster/apps/main/templates/*.yaml
 extends: default
 rules:
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
   truthy:
     allowed-values: ["true", "false", "on"]
   comments:
@@ -15,4 +20,3 @@ rules:
   brackets:
     min-spaces-inside: 0
     max-spaces-inside: 0
-  indentation: enable
