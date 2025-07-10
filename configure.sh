@@ -286,6 +286,12 @@ generate_cluster_secrets() {
     # initialize secret @ secret/zipline
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/zipline name=my-zipline-secret
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/zipline "VAULT_ZIPLINE_CORE_SECRET"="$VAULT_ZIPLINE_SECRET"
+
+    # initialize secret @ secret/karakeep
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/karakeep name=my-karakeep-secret
+    for var in "${!VAULT_KARAKEEP@}"; do
+        kubectl exec -n vault vault-0 -- vault kv patch kv/secret/karakeep "$var"="$(echo -n ${!var})"
+    done
 }
 
 success() {

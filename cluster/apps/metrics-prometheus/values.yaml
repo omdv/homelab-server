@@ -72,11 +72,11 @@ kube-prometheus-stack:
       existingClaim: pvc-metrics-grafana
     resources:
       limits:
-        cpu: 20m
-        memory: 512Mi
+        cpu: 200m
+        memory: 1024Mi
       requests:
-        cpu: 5m
-        memory: 128Mi
+        cpu: 100m
+        memory: 512Mi
   alertmanager:
     enabled: false
   kubeEtcd:
