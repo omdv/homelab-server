@@ -1,0 +1,44 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kolmafia
+  labels:
+    app: kolmafia
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kolmafia
+  template:
+    metadata:
+      labels:
+        app: kolmafia
+    spec:
+      initContainers:
+        - name: volume-owner
+          image: busybox:1.37.0
+          command: ["sh", "-c", "chown -R 1000:1000 /headless/.kolmafia"]
+          volumeMounts:
+            - name: kolmafia-data
+              mountPath: /headless/.kolmafia
+      containers:
+        - name: kolmafia
+          image: ghcr.io/omdv/kolmafia-docker/kolmafia:latest
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 6901
+          env:
+            - name: VNC_PASSWORDLESS
+              value: "true"
+            - name: VNC_RESOLUTION
+              value: "1280x720"
+          volumeMounts:
+            - name: kolmafia-data
+              mountPath: /headless/.kolmafia
+      volumes:
+        - name: kolmafia-data
+          persistentVolumeClaim:
+            claimName: pvc-kolmafia
