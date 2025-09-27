@@ -8,7 +8,7 @@ n8n:
       nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
       nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
       hajimari.io/enable: "true"
-      hajimari.io/icon: "automation"
+      hajimari.io/icon: "application-variable"
     className: "nginx"
     hosts:
       - host: n8n.kblb.io
@@ -44,21 +44,6 @@ n8n:
 
     securityContext: {}
 
-    # here you can specify lifecycle hooks - it can be used e.g., to easily add packages to the container without building
-    # your own docker image
-    # see https://github.com/8gears/n8n-helm-chart/pull/30
-    lifecycle: {}
-
-    #  here's the sample configuration to add mysql-client to the container
-    # lifecycle:
-    #  postStart:
-    #    exec:
-    #      command: ["/bin/sh", "-c", "apk add mysql-client"]
-
-    # here you can override a command for main container
-    # it may be used to override a starting script (e.g., to resolve issues like https://github.com/n8n-io/n8n/issues/6412) or run additional preparation steps (e.g., installing additional software)
-    command: []
-
     # sample configuration that overrides starting script and solves above issue (also it runs n8n as root, so be careful):
     # command:
     #  - tini
@@ -67,31 +52,25 @@ n8n:
     #  - -c
     #  - chmod o+rx /root; chown -R node /root/.n8n || true; chown -R node /root/.n8n; ln -s /root/.n8n /home/node; chown -R node /home/node || true; node /usr/local/bin/n8n
 
-    # here you can override the livenessProbe for the main container
-    # it may be used to increase the timeout for the livenessProbe (e.g., to resolve issues like
-
     livenessProbe:
       httpGet:
         path: /healthz
         port: http
-      # initialDelaySeconds: 30
-      # periodSeconds: 10
-      # timeoutSeconds: 5
-      # failureThreshold: 6
-      # successThreshold: 1
-
-    # here you can override the readinessProbe for the main container
-    # it may be used to increase the timeout for the readinessProbe (e.g., to resolve issues like
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
 
     readinessProbe:
       httpGet:
         path: /healthz
         port: http
-      # initialDelaySeconds: 30
-      # periodSeconds: 10
-      # timeoutSeconds: 5
-      # failureThreshold: 6
-      # successThreshold: 1
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
 
     # List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started.
     # See https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
