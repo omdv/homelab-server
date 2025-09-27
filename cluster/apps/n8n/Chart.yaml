@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: helm-n8n
+type: application
+version: 0.2.0
+appVersion: "1.0"
+dependencies:
+  - name: n8n
+    version: 1.0.15
+    repository: oci://8gears.container-registry.com/library

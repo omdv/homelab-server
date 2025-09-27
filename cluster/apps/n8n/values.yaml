@@ -1,0 +1,132 @@
+# https://github.com/8gears/n8n-helm-chart
+---
+n8n:
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
+      hajimari.io/enable: "true"
+      hajimari.io/icon: "automation"
+    className: "nginx"
+    hosts:
+      - host: n8n.kblb.io
+        paths:
+          - /
+    tls:
+      - hosts:
+          - n8n.kblb.io
+        secretName: my-certs-n8n
+
+  main:
+    config:
+      n8n:
+        db:
+          type: postgresdb
+          postgresdb:
+            host: postgresql.databases.svc.cluster.local
+            port: 5432
+            user: n8n
+            password: n8n-db-pwd
+            database: n8n
+
+    persistence:
+      enabled: true
+      type: existing
+      existingClaim: pvc-n8n
+
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+
+    securityContext: {}
+
+    # here you can specify lifecycle hooks - it can be used e.g., to easily add packages to the container without building
+    # your own docker image
+    # see https://github.com/8gears/n8n-helm-chart/pull/30
+    lifecycle: {}
+
+    #  here's the sample configuration to add mysql-client to the container
+    # lifecycle:
+    #  postStart:
+    #    exec:
+    #      command: ["/bin/sh", "-c", "apk add mysql-client"]
+
+    # here you can override a command for main container
+    # it may be used to override a starting script (e.g., to resolve issues like https://github.com/n8n-io/n8n/issues/6412) or run additional preparation steps (e.g., installing additional software)
+    command: []
+
+    # sample configuration that overrides starting script and solves above issue (also it runs n8n as root, so be careful):
+    # command:
+    #  - tini
+    #  - --
+    #  - /bin/sh
+    #  - -c
+    #  - chmod o+rx /root; chown -R node /root/.n8n || true; chown -R node /root/.n8n; ln -s /root/.n8n /home/node; chown -R node /home/node || true; node /usr/local/bin/n8n
+
+    # here you can override the livenessProbe for the main container
+    # it may be used to increase the timeout for the livenessProbe (e.g., to resolve issues like
+
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: http
+      # initialDelaySeconds: 30
+      # periodSeconds: 10
+      # timeoutSeconds: 5
+      # failureThreshold: 6
+      # successThreshold: 1
+
+    # here you can override the readinessProbe for the main container
+    # it may be used to increase the timeout for the readinessProbe (e.g., to resolve issues like
+
+    readinessProbe:
+      httpGet:
+        path: /healthz
+        port: http
+      # initialDelaySeconds: 30
+      # periodSeconds: 10
+      # timeoutSeconds: 5
+      # failureThreshold: 6
+      # successThreshold: 1
+
+    # List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started.
+    # See https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+    initContainers: []
+    #    - name: init-data-dir
+    #      image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+    #      command: [ "/bin/sh", "-c", "mkdir -p /home/node/.n8n/" ]
+    #      volumeMounts:
+    #        - name: data
+    #          mountPath: /home/node/.n8n
+
+
+    service:
+      annotations: {}
+      type: ClusterIP
+      port: 5678
+
+    resources: {}
+    # We usually recommend not specifying default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+    autoscaling:
+      enabled: false
+
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  worker:
+    enabled: false
