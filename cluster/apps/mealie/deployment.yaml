@@ -31,11 +31,11 @@ spec:
               name: data-volume
           resources:
             requests:
-              cpu: "100m"
-              memory: "100Mi"
+              cpu: "250m"
+              memory: "256Mi"
             limits:
               cpu: "500m"
-              memory: "300Mi"
+              memory: "512Mi"
 
       volumes:
         - name: data-volume
