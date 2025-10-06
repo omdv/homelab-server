@@ -1,0 +1,39 @@
+# https://github.com/open-webui/helm-charts/blob/main/charts/open-webui/values.yaml
+open-webui:
+  ollama:
+    enabled: false
+
+  pipelines:
+    enabled: false
+
+  tika:
+    enabled: false
+
+  websocket:
+    enabled: true
+    manager: redis
+    url: redis://redis-master.databases.svc.cluster.local:6379/0
+    redis:
+      enabled: false
+
+  resources: {}
+
+  ingress:
+    enabled: true
+    class: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
+      hajimari.io/enable: "true"
+      hajimari.io/icon: "assistant"
+      hajimari.io/title: "LLM Chat"
+    host: "chat.kblb.io"
+    tls: true
+
+  persistence:
+    enabled: true
+    existingClaim: "pvc-open-webui"
+
+  enableOpenaiApi: true
+  openaiBaseApiUrl: "https://openrouter.ai/api/v1"
