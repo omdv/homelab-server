@@ -1,12 +1,15 @@
 # https://github.com/8gears/n8n-helm-chart
 ---
 n8n:
+  image:
+    repository: n8nio/n8n
+    tag: 1.115.3
+    pullPolicy: IfNotPresent
+
   ingress:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
-      nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
-      nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
       hajimari.io/enable: "true"
       hajimari.io/icon: "application-variable"
     className: "nginx"
@@ -81,7 +84,6 @@ n8n:
     #      volumeMounts:
     #        - name: data
     #          mountPath: /home/node/.n8n
-
 
     service:
       annotations: {}
