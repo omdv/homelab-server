@@ -19,7 +19,7 @@ n8n:
           - /
     tls:
       - hosts:
-          - n8n.kblb.io
+          - nodemation.kblb.io
         secretName: my-certs-n8n
 
   main:
