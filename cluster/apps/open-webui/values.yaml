@@ -1,5 +1,8 @@
 # https://github.com/open-webui/helm-charts/blob/main/charts/open-webui/values.yaml
 open-webui:
+  image:
+    repository: ghcr.io/open-webui/open-webui
+    tag: "0.6.36"
   ollama:
     enabled: false
 
