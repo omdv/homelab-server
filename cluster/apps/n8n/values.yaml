@@ -16,7 +16,7 @@ n8n:
     hosts:
       - host: nodemation.kblb.io
         paths:
-          - /
+
     tls:
       - hosts:
           - nodemation.kblb.io
