@@ -3,7 +3,7 @@
 n8n:
   image:
     repository: n8nio/n8n
-    tag: 1.115.3
+    tag: 1.121.2
     pullPolicy: IfNotPresent
 
   ingress:
