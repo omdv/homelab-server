@@ -15,7 +15,7 @@ n8n:
     className: "nginx"
     hosts:
       - host: n8n.kblb.io
-        paths: []
+        paths:
 
     tls:
       - hosts:
