@@ -14,18 +14,13 @@ n8n:
       hajimari.io/icon: "application-variable"
     className: "nginx"
     hosts:
-      - host: nodemation.kblb.io
-        paths:
       - host: n8n.kblb.io
         paths:
 
     tls:
       - hosts:
-          - nodemation.kblb.io
-        secretName: my-certs-n8n
-      - hosts:
           - n8n.kblb.io
-        secretName: my-certs-n8n-2
+        secretName: my-certs-n8n
 
   main:
     config:
