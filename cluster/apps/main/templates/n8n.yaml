@@ -11,12 +11,12 @@ metadata:
 spec:
   destination:
     namespace: apps
-    server: { { .Values.spec.destination.server } }
+    server: {{ .Values.spec.destination.server }}
   project: default
   source:
     path: cluster/apps/n8n
-    repoURL: { { .Values.spec.source.repoURL } }
-    targetRevision: { { .Values.spec.source.targetRevision } }
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:
     automated:
       prune: true
