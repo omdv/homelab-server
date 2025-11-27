@@ -16,11 +16,16 @@ n8n:
     hosts:
       - host: nodemation.kblb.io
         paths:
+      - host: n8n.kblb.io
+        paths:
 
     tls:
       - hosts:
           - nodemation.kblb.io
         secretName: my-certs-n8n
+      - hosts:
+          - n8n.kblb.io
+        secretName: my-certs-n8n-2
 
   main:
     config:
