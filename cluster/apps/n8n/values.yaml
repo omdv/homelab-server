@@ -16,6 +16,7 @@ n8n:
     hosts:
       - host: n8n.kblb.io
         paths:
+          - /
 
     tls:
       - hosts:
