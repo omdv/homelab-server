@@ -35,7 +35,7 @@ n8n:
             password: n8n-db-pwd
             database: n8n
         log:
-          level: info
+          level: debug
         editor_base_url: "https://n8n.kblb.io"
         proxy_hops: 1
 
