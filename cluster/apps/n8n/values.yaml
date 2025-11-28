@@ -3,7 +3,7 @@
 n8n:
   image:
     repository: n8nio/n8n
-    tag: 1.121.2
+    tag: 1.121.3
     pullPolicy: IfNotPresent
 
   ingress:
@@ -34,6 +34,10 @@ n8n:
             user: n8n
             password: n8n-db-pwd
             database: n8n
+        log:
+          level: info
+        editor_base_url: "https://n8n.kblb.io"
+        proxy_hops: 1
 
     persistence:
       enabled: true
