@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ai-reader-token
+  namespace: ai-reader
+  annotations:
+    kubernetes.io/service-account.name: ai-reader
+type: kubernetes.io/service-account-token

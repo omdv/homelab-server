@@ -1,0 +1,6 @@
+---
+resources:
+  - namespace.yaml
+  - service-account.yaml
+  - cluster-role-binding.yaml
+  - token.yaml
