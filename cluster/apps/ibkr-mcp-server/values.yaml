@@ -23,6 +23,8 @@ ibkr:
       host: ibkr.kblb.io
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "chart-line"
       tls:
         - secretName: ibkr-mcp-server-tls
           hosts:
