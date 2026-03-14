@@ -1,0 +1,23 @@
+ibkr:
+  mcpAuth:
+    create: false
+    existingSecret: ibkr-credentials
+
+  gatewaySecret:
+    existingSecret: ibkr-credentials
+
+  mcpServer:
+    ingress:
+      enabled: true
+      className: nginx
+      host: ibkr.kblb.io
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      tls:
+        - secretName: ibkr-mcp-server-tls
+          hosts:
+            - ibkr.kblb.io
+
+  config:
+    enableMcp: "true"
+    ibkrLogLevel: "INFO"

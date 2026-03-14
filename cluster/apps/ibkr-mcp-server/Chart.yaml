@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: ibkr-mcp-server
+type: application
+version: 0.1.0
+appVersion: "0.1.15"
+dependencies:
+  - name: ibkr
+    version: 0.1.15
+    repository: oci://ghcr.io/omdv/charts
