@@ -1,3 +1,0 @@
----
-- include_tasks: common.yaml
-- include_tasks: k3s.yaml
