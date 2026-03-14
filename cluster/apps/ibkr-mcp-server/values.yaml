@@ -1,4 +1,10 @@
 ibkr:
+  ibGateway:
+    image:
+      repository: ghcr.io/extrange/ibkr
+      tag: "10.39"
+      pullPolicy: IfNotPresent
+
   mcpAuth:
     create: false
     existingSecret: ibkr-credentials
@@ -7,6 +13,10 @@ ibkr:
     existingSecret: ibkr-credentials
 
   mcpServer:
+    image:
+      repository: ghcr.io/omdv/ibkr-mcp-server
+      tag: "latest"
+      pullPolicy: IfNotPresent
     ingress:
       enabled: true
       className: nginx
