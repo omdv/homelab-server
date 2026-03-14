@@ -2,7 +2,7 @@ ibkr:
   ibGateway:
     image:
       repository: ghcr.io/extrange/ibkr
-      tag: "10.39"
+      tag: "10.37"
       pullPolicy: IfNotPresent
 
   mcpAuth:
@@ -15,7 +15,7 @@ ibkr:
   mcpServer:
     image:
       repository: ghcr.io/omdv/ibkr-mcp-server
-      tag: "latest"
+      tag: "0.1.15"
       pullPolicy: IfNotPresent
     ingress:
       enabled: true
