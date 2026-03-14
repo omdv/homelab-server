@@ -15,7 +15,7 @@ ibkr:
   mcpServer:
     image:
       repository: ghcr.io/omdv/ibkr-mcp-server
-      tag: "0.1.16"
+      tag: "0.1.17"
       pullPolicy: IfNotPresent
     ingress:
       enabled: true
@@ -25,6 +25,7 @@ ibkr:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         hajimari.io/enable: "true"
         hajimari.io/icon: "chart-line"
+        hajimari.io/appName: "ibkr-api"
       tls:
         - secretName: ibkr-mcp-server-tls
           hosts:
