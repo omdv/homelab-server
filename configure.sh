@@ -280,15 +280,16 @@ generate_cluster_secrets() {
     # kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_ID"="$VAULT_TAILSCALE_K8S_CLIENT_ID"
     # kubectl exec -n vault vault-0 -- vault kv patch kv/secret/tailscale "VAULT_TAILSCALE_K8S_CLIENT_SECRET"="$VAULT_TAILSCALE_K8S_CLIENT_SECRET"
 
-    # initialize secret @ secret/zipline
-    kubectl exec -n vault vault-0 -- vault kv put kv/secret/zipline name=my-zipline-secret
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/zipline "VAULT_ZIPLINE_CORE_SECRET"="$VAULT_ZIPLINE_SECRET"
-
     # initialize secret @ secret/karakeep
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/karakeep name=my-karakeep-secret
     for var in "${!VAULT_KARAKEEP@}"; do
         kubectl exec -n vault vault-0 -- vault kv patch kv/secret/karakeep "$var"="$(echo -n ${!var})"
     done
+
+    # initialize secret @ secret/cnpg-aws
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/cnpg-aws name=my-cnpg-aws-secret
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cnpg-aws "VAULT_AWS_CNPG_ACCESS_KEY"="$VAULT_AWS_CNPG_ACCESS_KEY"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cnpg-aws "VAULT_AWS_CNPG_SECRET_KEY"="$VAULT_AWS_CNPG_SECRET_KEY"
 }
 
 success() {
