@@ -19,5 +19,5 @@ ibkr:
             - ibkr.kblb.io
 
   config:
-    enableMcp: "true"
+    enableMcp: "false"
     ibkrLogLevel: "INFO"

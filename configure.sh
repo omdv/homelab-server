@@ -263,10 +263,7 @@ generate_cluster_secrets() {
     kubectl exec -n vault vault-0 -- vault kv put kv/secret/ibkr name=my-ibkr-secret
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_USER_ID"="$VAULT_IBKR_LIVE_USER_ID"
     kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_PASSWORD"="$VAULT_IBKR_LIVE_PASSWORD"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_TRADING_NTFY_TOPIC"="$VAULT_IBKR_TRADING_NTFY_TOPIC"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_QUOTE_API_KEY"="$VAULT_IBKR_QUOTE_API_KEY"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_GITHUB_PAT"="$VAULT_IBKR_GITHUB_PAT"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_GITHUB_USER"="omdv"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/ibkr "VAULT_IBKR_MCP_AUTH_TOKEN"="$VAULT_IBKR_MCP_AUTH_TOKEN"
 
     # initialize secret @ secret/linkwarden
     # kubectl exec -n vault vault-0 -- vault kv put kv/secret/linkwarden name=my-linkwarden-secret
