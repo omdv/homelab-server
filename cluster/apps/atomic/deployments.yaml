@@ -1,0 +1,117 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atomic-server
+  labels:
+    app: atomic-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: atomic-server
+  template:
+    metadata:
+      labels:
+        app: atomic-server
+    spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ['sh', '-c', 'chown -R 999:999 /data']
+          volumeMounts:
+            - name: atomic-data
+              mountPath: /data
+      containers:
+        - name: atomic-server
+          image: ghcr.io/kenforthewin/atomic-server:latest
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 8080
+          volumeMounts:
+            - name: atomic-data
+              mountPath: /data
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+      volumes:
+        - name: atomic-data
+          persistentVolumeClaim:
+            claimName: pvc-atomic
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atomic-web
+  labels:
+    app: atomic-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: atomic-web
+  template:
+    metadata:
+      labels:
+        app: atomic-web
+    spec:
+      containers:
+        - name: atomic-web
+          image: ghcr.io/kenforthewin/atomic-web:latest
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 80
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "32Mi"
+            limits:
+              cpu: "50m"
+              memory: "64Mi"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atomic-proxy
+  labels:
+    app: atomic-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: atomic-proxy
+  template:
+    metadata:
+      labels:
+        app: atomic-proxy
+    spec:
+      containers:
+        - name: atomic-proxy
+          image: nginx:1.28-bookworm
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 80
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "16Mi"
+            limits:
+              cpu: "30m"
+              memory: "32Mi"
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: atomic-nginx-config

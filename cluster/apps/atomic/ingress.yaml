@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: atomic
+  labels:
+    app: atomic
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "book-open-page-variant"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - atomic.kblb.io
+      secretName: my-certs-atomic
+  rules:
+    - host: atomic.kblb.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: atomic-proxy
+                port:
+                  name: http
