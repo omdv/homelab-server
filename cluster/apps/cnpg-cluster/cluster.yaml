@@ -1,0 +1,36 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cnpg-cluster
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:17
+
+  instances: 1
+
+  storage:
+    size: 10Gi
+    storageClass: local-path
+
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: cnpg-backblaze
+
+  postgresql:
+    parameters:
+      log_checkpoints: "on"
+      log_connections: "on"
+      log_disconnections: "on"
+      log_lock_waits: "on"
+      log_temp_files: "-1"
+      log_statement: "ddl"
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+      cpu: 500m

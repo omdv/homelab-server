@@ -221,10 +221,11 @@ generate_cluster_secrets() {
         kubectl exec -n vault vault-0 -- vault kv patch kv/secret/karakeep "$var"="$(echo -n ${!var})"
     done
 
-    # initialize secret @ secret/cnpg-aws
-    kubectl exec -n vault vault-0 -- vault kv put kv/secret/cnpg-aws name=my-cnpg-aws-secret
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cnpg-aws "VAULT_AWS_CNPG_ACCESS_KEY"="$VAULT_AWS_CNPG_ACCESS_KEY"
-    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cnpg-aws "VAULT_AWS_CNPG_SECRET_KEY"="$VAULT_AWS_CNPG_SECRET_KEY"
+    # initialize secret @ secret/cnpg-backblaze
+    kubectl exec -n vault vault-0 -- vault kv put kv/secret/cnpg-backblaze name=my-cnpg-backblaze-secret
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cnpg-backblaze "VAULT_BACKBLAZE_ACCESS_KEY_ID"="$VAULT_BACKBLAZE_ACCESS_KEY_ID"
+    kubectl exec -n vault vault-0 -- vault kv patch kv/secret/cnpg-backblaze "VAULT_BACKBLAZE_ACCESS_SECRET_KEY"="$VAULT_BACKBLAZE_ACCESS_SECRET_KEY"
+
 }
 
 success() {
