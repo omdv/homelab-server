@@ -2,7 +2,7 @@
 open-webui:
   image:
     repository: ghcr.io/open-webui/open-webui
-    tag: "0.8.5"
+    tag: "0.8.12"
   ollama:
     enabled: false
 
