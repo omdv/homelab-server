@@ -24,6 +24,7 @@
             mariadb
             popeye
             ansible
+            jq
           ];
 
           # Environment variables and commands to run when entering the shell.
