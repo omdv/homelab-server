@@ -208,7 +208,7 @@ metadata:
   name: headscale-ui
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    traefik.ingress.kubernetes.io/router.middlewares: traefik-oauth2-proxy-chain@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: networking-oauth2-proxy-chain@kubernetescrd
     hajimari.io/enable: "true"
 spec:
   ingressClassName: traefik
