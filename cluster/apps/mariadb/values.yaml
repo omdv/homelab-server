@@ -3,7 +3,7 @@ mariadb:
   image:
     registry: docker.io
     repository: bitnami/mariadb
-    tag: 11.4.5
+    tag: 12.2.2
     digest: ""
     pullPolicy: IfNotPresent
 
