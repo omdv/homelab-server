@@ -23,6 +23,9 @@ spec:
             - --cookie-domain=.kblb.io
             - --whitelist-domain=.kblb.io
             - --authenticated-emails-file=/volume/emails
+            - --redirect-url=https://auth.kblb.io/oauth2/callback
+            - --skip-provider-button=true
+
           envFrom:
             - secretRef:
                 name: oauth2-secret
