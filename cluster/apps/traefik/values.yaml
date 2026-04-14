@@ -1,0 +1,41 @@
+---
+# Ref: https://github.com/traefik/traefik-helm-chart/blob/master/traefik/VALUES.md
+traefik:
+  deployment:
+    replicas: 1
+
+  ingressClass:
+    enabled: true
+    name: traefik
+    isDefaultClass: true
+
+  providers:
+    kubernetesIngress:
+      enabled: true
+      ingressClass: traefik
+    kubernetesCRD:
+      enabled: true
+      allowCrossNamespace: true
+    kubernetesGateway:
+      enabled: false
+
+  gateway:
+    enabled: false
+
+  gatewayClass:
+    enabled: false
+
+  service:
+    type: LoadBalancer
+
+  logs:
+    access:
+      enabled: true
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 20m
+      memory: 128Mi
