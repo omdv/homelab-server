@@ -16,6 +16,7 @@ repos:
       - id: mixed-line-ending
       - id: check-merge-conflict
       - id: check-yaml
+        args: [--allow-multiple-documents]
         exclude: |
           (?x)^(
               cluster/apps/main/templates/.*\.yaml
