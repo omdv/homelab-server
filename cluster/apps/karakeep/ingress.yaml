@@ -12,7 +12,7 @@ metadata:
     hajimari.io/icon: "archive-star"
 
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - hosts:
         - karakeep.kblb.io

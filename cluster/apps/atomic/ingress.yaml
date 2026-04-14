@@ -10,7 +10,7 @@ metadata:
     hajimari.io/enable: "true"
     hajimari.io/icon: "book-open-page-variant"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - hosts:
         - atomic.kblb.io

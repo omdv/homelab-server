@@ -183,7 +183,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - hosts:
         - tailscale.kblb.io
@@ -208,11 +208,10 @@ metadata:
   name: headscale-ui
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-oauth2-proxy-chain@kubernetescrd
     hajimari.io/enable: "true"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - hosts:
         - tailscale.kblb.io

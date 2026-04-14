@@ -18,7 +18,7 @@ calibre-web:
   ingress:
     main:
       enabled: true
-      ingressClassName: nginx
+      ingressClassName: traefik
       hosts:
         - host: books.kblb.io
           paths:
@@ -26,8 +26,7 @@ calibre-web:
               pathType: Prefix
       annotations:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
-        nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
+        traefik.ingress.kubernetes.io/router.middlewares: traefik-oauth2-proxy-chain@kubernetescrd
         hajimari.io/enable: "true"
         hajimari.io/icon: "book-open-page-variant"
       tls:

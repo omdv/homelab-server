@@ -23,11 +23,10 @@ open-webui:
 
   ingress:
     enabled: true
-    class: "nginx"
+    class: "traefik"
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
-      nginx.ingress.kubernetes.io/auth-url: "https://auth.kblb.io/oauth2/auth"
-      nginx.ingress.kubernetes.io/auth-signin: "https://auth.kblb.io/oauth2/start?rd=https://$host$uri"
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-oauth2-proxy-chain@kubernetescrd
       hajimari.io/enable: "true"
       hajimari.io/icon: "assistant"
       hajimari.io/title: "LLM Chat"
