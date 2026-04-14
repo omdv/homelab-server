@@ -32,6 +32,9 @@ traefik:
     access:
       enabled: true
 
+  api:
+    dashboard: true
+
   resources:
     limits:
       cpu: 200m
