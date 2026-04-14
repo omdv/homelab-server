@@ -7,6 +7,8 @@ spec:
   errors:
     status:
       - "401-403"
+    statusRewrites:
+      "401": 302
     service:
       name: oauth2-proxy
       namespace: networking
