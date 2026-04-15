@@ -6,7 +6,3 @@ resources:
   - cluster.yaml
   - objectstore.yaml
   - scheduled-backup.yaml
-
-
-patches:
-  - path: patch-managed-roles.yaml
