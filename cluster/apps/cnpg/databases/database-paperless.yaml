@@ -2,7 +2,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
   name: paperless
-  namespace: databases
 spec:
   name: paperless
   owner: paperless
