@@ -4,6 +4,12 @@
 stirling-pdf:
   replicaCount: 1
 
+  image:
+    registry: docker.stirlingpdf.com
+    repository: stirlingtools/stirling-pdf
+    tag: "2.9.2"
+    pullPolicy: IfNotPresent
+
   service:
     type: ClusterIP
     externalPort: 8080
