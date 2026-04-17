@@ -1,0 +1,48 @@
+# First-pass values for manual deployment
+# Upstream defaults reference: https://github.com/Stirling-Tools/Stirling-PDF-chart/tree/main/charts/stirling-pdf
+
+stirling-pdf:
+  replicaCount: 1
+
+  service:
+    type: ClusterIP
+    externalPort: 8080
+
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      hajimari.io/enable: "true"
+      hajimari.io/icon: "mdi-file-pdf-box"
+      hajimari.io/appName: "Stirling PDF"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - name: pdf.kblb.io
+        path: /
+        tls: true
+        tlsSecret: pdf-kblb-io-staging-tls
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "2000m"
+      memory: "2Gi"
+
+  # Stirling chart mounts exactly one storage volume (name: storage-volume).
+  # We bind it to a pre-created custom PVC from templates/volumes.yaml.
+  persistence:
+    enabled: true
+    existingClaim: pvc-stirling-pdf
+    accessMode: ReadWriteOnce
+    size: 64Gi
+    path: /tmp
+
+  # Keep enabled so the pod runs with fsGroup=1000 and avoids init image pulls.
+  securityContext:
+    enabled: true
+    fsGroup: 1000
+
+  # Optional hard pin to match static PV node affinity, uncomment if needed:
+  # nodeSelector:
+  #   node-role.kubernetes.io/control-plane: ""

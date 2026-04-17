@@ -1,0 +1,11 @@
+---
+apiVersion: v2
+name: helm-stirling-pdf
+type: application
+version: 0.1.0
+appVersion: "2.5.1"
+dependencies:
+  - name: stirling-pdf-chart
+    alias: stirling-pdf
+    version: 3.1.0
+    repository: https://stirling-tools.github.io/Stirling-PDF-chart

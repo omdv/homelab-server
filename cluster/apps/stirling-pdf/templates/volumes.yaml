@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-stirling-pdf
+  labels:
+    app: stirling-pdf
+spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
+  capacity:
+    storage: 64Gi
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /pool/documents/stirling-pdf/data
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-stirling-pdf
+  labels:
+    app: stirling-pdf
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 64Gi
+  volumeName: pv-stirling-pdf
