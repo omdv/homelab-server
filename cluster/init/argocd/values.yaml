@@ -40,11 +40,15 @@ argo-cd:
         memory: 64Mi
     extraArgs:
       - --insecure
+    service:
+      annotations:
+        traefik.ingress.kubernetes.io/service.serversscheme: http
     ingress:
       enabled: true
       annotations:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        traefik.ingress.kubernetes.io/router.middlewares: networking-oauth2-proxy-chain@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: networking-oauth2-argocd-chain@kubernetescrd
+        traefik.ingress.kubernetes.io/service.serversscheme: http
         hajimari.io/enable: "true"
       labels: {}
       ingressClassName: "traefik"
@@ -102,5 +106,7 @@ argo-cd:
         cpu: 10m
         memory: 32Mi
   configs:
+    # params:
+    #   server.insecure: true
     secret:
       argocdServerAdminPassword: $2a$10$YtCUmdJ2B002tKFlEDmB7OmGv2r4xLt428YodSDJsrNIQ.z3wI/UK
