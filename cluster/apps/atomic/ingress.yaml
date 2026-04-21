@@ -19,10 +19,52 @@ spec:
     - host: atomic.kblb.io
       http:
         paths:
+          - path: /api/
+            pathType: Prefix
+            backend:
+              service:
+                name: atomic-server
+                port:
+                  name: http
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                name: atomic-server
+                port:
+                  name: http
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: atomic-server
+                port:
+                  name: http
+          - path: /.well-known/
+            pathType: Prefix
+            backend:
+              service:
+                name: atomic-server
+                port:
+                  name: http
+          - path: /oauth/
+            pathType: Prefix
+            backend:
+              service:
+                name: atomic-server
+                port:
+                  name: http
+          - path: /mcp
+            pathType: Prefix
+            backend:
+              service:
+                name: atomic-server
+                port:
+                  name: http
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: atomic-proxy
+                name: atomic-web
                 port:
                   name: http

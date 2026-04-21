@@ -29,19 +29,3 @@ spec:
       targetPort: http
   selector:
     app: atomic-web
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: atomic-proxy
-  labels:
-    app: atomic-proxy
-spec:
-  ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: http
-  selector:
-    app: atomic-proxy

@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - volumes.yaml
-  - configmap.yaml
+
   - deployments.yaml
   - services.yaml
   - ingress.yaml
