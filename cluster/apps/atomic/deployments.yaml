@@ -24,7 +24,7 @@ spec:
               mountPath: /data
       containers:
         - name: atomic-server
-          image: ghcr.io/kenforthewin/atomic-server:1.24.0
+          image: ghcr.io/kenforthewin/atomic-server:1.35.1
           ports:
             - name: http
               protocol: TCP
@@ -63,7 +63,7 @@ spec:
     spec:
       containers:
         - name: atomic-web
-          image: ghcr.io/kenforthewin/atomic-web:1.24.0
+          image: ghcr.io/kenforthewin/atomic-web:1.35.1
           ports:
             - name: http
               protocol: TCP
