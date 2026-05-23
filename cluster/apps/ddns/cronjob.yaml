@@ -23,7 +23,7 @@ spec:
           containers:
             - name: cloudflare
               serviceAccountName: ddns-service-account
-              image: omdv/cloudflare-ddns:202207262350133633d8
+              image: omdv/cloudflare-ddns:latest
               resources:
                 limits:
                   cpu: "100m"
@@ -42,4 +42,6 @@ spec:
                     secretKeyRef:
                       name: ddns-secret
                       key: CLOUDFLARE_DOMAIN
+                - name: IGNORE_RECORDS
+                  value: notes
           restartPolicy: Never
