@@ -42,6 +42,4 @@ spec:
                     secretKeyRef:
                       name: ddns-secret
                       key: CLOUDFLARE_DOMAIN
-                - name: IGNORE_RECORDS
-                  value: notes
           restartPolicy: Never
