@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deeptutor
+  labels:
+    app: deeptutor
+spec:
+  ports:
+    - port: 3782
+      name: http
+      protocol: TCP
+      targetPort: http
+  selector:
+    app: deeptutor

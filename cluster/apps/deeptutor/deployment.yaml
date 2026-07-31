@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deeptutor
+  labels:
+    app: deeptutor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deeptutor
+  template:
+    metadata:
+      labels:
+        app: deeptutor
+    spec:
+      containers:
+        - name: deeptutor
+          image: ghcr.io/hkuds/deeptutor:latest
+          ports:
+            - name: http
+              containerPort: 3782
+              protocol: TCP
+          volumeMounts:
+            - name: deeptutor-data
+              mountPath: /app/data
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 2Gi
+      volumes:
+        - name: deeptutor-data
+          persistentVolumeClaim:
+            claimName: pvc-deeptutor-data
