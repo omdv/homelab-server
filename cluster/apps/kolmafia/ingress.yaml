@@ -17,6 +17,7 @@ spec:
   tls:
     - hosts:
         - kol.kblb.io
+        - kol-relay.kblb.io
       secretName: my-certs-kolmafia
   rules:
     - host: kol.kblb.io
@@ -28,4 +29,14 @@ spec:
               service:
                 name: kolmafia
                 port:
-                  name: http
+                  name: web
+    - host: kol-relay.kblb.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kolmafia
+                port:
+                  name: relay

@@ -19,25 +19,32 @@ spec:
       initContainers:
         - name: volume-owner
           image: busybox:1.37.0
-          command: ["sh", "-c", "chown -R 1000:1000 /headless/.kolmafia"]
+          command: ["sh", "-c", "chown -R 1000:1000 /config/.kolmafia"]
           volumeMounts:
             - name: kolmafia-data
-              mountPath: /headless/.kolmafia
+              mountPath: /config/.kolmafia
       containers:
         - name: kolmafia
-          image: ghcr.io/omdv/kolmafia-docker/kolmafia:latest
+          image: ghcr.io/loathers/kolmafia-docker:latest
           ports:
-            - name: http
+            - name: web
               protocol: TCP
-              containerPort: 6901
+              containerPort: 3000
+            - name: relay
+              protocol: TCP
+              containerPort: 60080
           env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
             - name: VNC_PASSWORDLESS
               value: "true"
             - name: VNC_RESOLUTION
               value: "1280x720"
           volumeMounts:
             - name: kolmafia-data
-              mountPath: /headless/.kolmafia
+              mountPath: /config/.kolmafia
       volumes:
         - name: kolmafia-data
           persistentVolumeClaim:
