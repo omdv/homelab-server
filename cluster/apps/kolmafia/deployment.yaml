@@ -41,7 +41,7 @@ spec:
             - name: VNC_PASSWORDLESS
               value: "true"
             - name: VNC_RESOLUTION
-              value: "1280x720"
+              value: "1600x900"
           volumeMounts:
             - name: kolmafia-data
               mountPath: /config/.kolmafia
