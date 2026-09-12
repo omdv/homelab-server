@@ -50,7 +50,7 @@ spec:
               memory: 100Mi
       containers:
         - name: romm
-          image: rommapp/romm:3.7.2
+          image: rommapp/romm:5.1.0
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true

@@ -10,7 +10,15 @@ spec:
     - Ingress
     - Egress
   ingress:
-    - ports:
+    # Only allow edge traffic from Traefik; prevents in-cluster bypass of oauth2-proxy.
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: networking
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
         - port: 8080
           protocol: TCP
   egress:
@@ -35,5 +43,3 @@ spec:
           protocol: UDP
         - port: 53
           protocol: TCP
-    # Deny others
-    - {}
