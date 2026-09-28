@@ -26,6 +26,7 @@ spec:
       containers:
         - name: kolmafia
           image: ghcr.io/loathers/kolmafia-docker:latest
+          imagePullPolicy: Always
           ports:
             - name: web
               protocol: TCP
