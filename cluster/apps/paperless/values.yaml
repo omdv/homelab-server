@@ -14,9 +14,9 @@ paperless:
     PAPERLESS_DBHOST: "cnpg-cluster-rw.cnpg-system.svc.cluster.local"
     PAPERLESS_DBPORT: 5432
     PAPERLESS_TIME_ZONE: "America/Chicago"
-    PAPERLESS_URL: "https://paperless.kblb.io"
-    PAPERLESS_ALLOWED_HOSTS: "https://paperless.kblb.io"
-    PAPERLESS_CORS_ALLOWED_HOSTS: "https://paperless.kblb.io"
+    PAPERLESS_URL: "http://paperless"
+    PAPERLESS_ALLOWED_HOSTS: "paperless"
+    PAPERLESS_CORS_ALLOWED_HOSTS: "http://paperless"
     PAPERLESS_OCR_LANGUAGES: "eng"
     PAPERLESS_PORT: 8000
 
@@ -24,6 +24,7 @@ paperless:
     main:
       annotations:
         tailscale.com/expose: "true"
+        tailscale.com/hostname: "paperless"
       ports:
         http:
           port: 80
@@ -31,22 +32,7 @@ paperless:
 
   ingress:
     main:
-      enabled: true
-      ingressClassName: traefik
-      hosts:
-        - host: paperless.kblb.io
-          paths:
-            - path: /
-              pathType: Prefix
-      annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        traefik.ingress.kubernetes.io/router.middlewares: networking-oauth2-proxy-chain@kubernetescrd
-        hajimari.io/enable: "true"
-        hajimari.io/icon: "text-box-search"
-      tls:
-        - hosts:
-            - paperless.kblb.io
-          secretName: my-certs-paperless
+      enabled: false
 
   persistence:
     data:

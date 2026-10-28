@@ -20,6 +20,10 @@ Some of the features of K3s cluster:
 
 Started as single-node cluster leaving on a server in my house. Now I have a hybrid deployment with few nodes across the different providers (mostly cheap vps, like racknerd), connected via tailscale mesh network. Details on provisioning will be added later.
 
+### Private application access
+
+Paperless is available only to authorized tailnet clients at `http://paperless`. Connect to Tailscale with MagicDNS enabled before opening the endpoint; the former public `paperless.kblb.io` route does not serve Paperless.
+
 
 ## Prior to Deployment
 
