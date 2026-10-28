@@ -19,7 +19,19 @@ spec:
       initContainers:
         - name: volume-owner
           image: busybox:1.37.0
-          command: ["sh", "-c", "chown -R 1000:1000 /config/.kolmafia"]
+          command:
+            - sh
+            - -c
+            - |
+              set -eu
+              mkdir -p /config/.kolmafia/settings
+              touch /config/.kolmafia/settings/GLOBAL_prefs.txt
+              if grep -q '^relayAllowRemoteAccess=' /config/.kolmafia/settings/GLOBAL_prefs.txt; then
+                sed -i 's/^relayAllowRemoteAccess=.*/relayAllowRemoteAccess=true/' /config/.kolmafia/settings/GLOBAL_prefs.txt
+              else
+                echo 'relayAllowRemoteAccess=true' >> /config/.kolmafia/settings/GLOBAL_prefs.txt
+              fi
+              chown -R 1000:1000 /config/.kolmafia
           volumeMounts:
             - name: kolmafia-data
               mountPath: /config/.kolmafia

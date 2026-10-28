@@ -51,3 +51,6 @@ debug/
 
 # pre-commit
 .pre-commit-config.yaml
+
+# openspec
+openspec/
